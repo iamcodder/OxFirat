@@ -11,9 +11,15 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.iamcodder.androidd.bilgisayarMuhendisligi.fragment_bilgisayar_muhendisligi;
+import com.example.iamcodder.androidd.duyurular.fragment_duyurular;
+import com.example.iamcodder.androidd.haberler.fragment_haberler;
+import com.example.iamcodder.androidd.yemekhane.fragment_yemekhane;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String FIRAT_WEB="http://www.firat.edu.tr";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(onListener);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_activity_frameLayout,new fragment_bilgisayar_muhendisligi())
+                .replace(R.id.main_activity_frameLayout,new fragment_haberler())
                 .commit();
     }
 
@@ -44,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
                     Fragment fragment=null;
 
                     switch (menuItem.getItemId()){
+
+                        case R.id.menu_item_haberler:
+                            fragment=new fragment_haberler();
+                            break;
+
+                        case R.id.menu_item_duyuru:
+                            fragment=new fragment_duyurular();
+                            break;
+
                         case R.id.menu_item_bilgisayar:
                             fragment=new fragment_bilgisayar_muhendisligi();
                             break;

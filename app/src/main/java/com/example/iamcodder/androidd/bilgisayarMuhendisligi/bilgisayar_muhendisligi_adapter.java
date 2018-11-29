@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd;
+package com.example.iamcodder.androidd.bilgisayarMuhendisligi;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.iamcodder.androidd.R;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class bilgisayar_muhendisligi_adapter extends RecyclerView.Adapter<bilgis
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view=LayoutInflater.from(mContext).inflate(R.layout.bilgisayar_muhendisligi_cardview,viewGroup,false);
+        View view=LayoutInflater.from(mContext).inflate(R.layout.cardview,viewGroup,false);
 
         return new viewHolder(view);
     }
@@ -46,6 +48,8 @@ public class bilgisayar_muhendisligi_adapter extends RecyclerView.Adapter<bilgis
     public int getItemCount() {
         return haber_linki.size();
     }
+
+
     public class viewHolder extends RecyclerView.ViewHolder{
 
         private CardView mCardview;
@@ -57,9 +61,9 @@ public class bilgisayar_muhendisligi_adapter extends RecyclerView.Adapter<bilgis
             super(itemView);
 
             mCardview=itemView.findViewById(R.id.bilgisayar_cardView);
-            mImageview=itemView.findViewById(R.id.bilgisayar_cardView_resim);
-            mTextview=itemView.findViewById(R.id.bilgisayar_cardView_baslik);
-            mBar=itemView.findViewById(R.id.bilgisayar_cardView_progressBar);
+            mImageview=itemView.findViewById(R.id.cardView_resim);
+            mTextview=itemView.findViewById(R.id.cardView_baslik);
+            mBar=itemView.findViewById(R.id.cardView_progressBar);
 
         }
     }

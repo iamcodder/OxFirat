@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd;
+package com.example.iamcodder.androidd.yemekhane;
 
 
 import android.os.AsyncTask;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.iamcodder.androidd.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,6 +26,7 @@ public class fragment_yemekhane extends Fragment {
     private TextView textView_liste;
     private TextView textView_menu;
     private TextView textView_tarih;
+
 
 
 

@@ -29,14 +29,17 @@
                 android:layout_weight="3">
 
                 <ImageView
-                    android:id="@+id/bilgisayar_cardView_resim"
+                    android:id="@+id/cardView_resim"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:scaleType="centerCrop"/>
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:elevation="10dp"/>
 
                 <ProgressBar
-                    android:id="@+id/bilgisayar_cardView_progressBar"
+                    android:id="@+id/cardView_progressBar"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -49,24 +52,13 @@
                 android:layout_weight="3">
 
                 <TextView
-                    android:id="@+id/bilgisayar_cardView_baslik"
+                    android:id="@+id/cardView_baslik"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@id/bilgisayar_cardView_tarih"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/bilgisayar_cardView_tarih"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
-                    android:text="12/12/2018"
-                    android:textSize="12sp" />
 
             </RelativeLayout>
 
