@@ -9,9 +9,9 @@
         android:icon="@drawable/bullhorn"
         android:id="@+id/menu_item_duyuru"/>
 
-    <item android:title="Bilgisayar Mühendisliği"
-        android:icon="@drawable/ic_computer_black_24dp"
-        android:id="@+id/menu_item_bilgisayar"/>
+    <item android:title="Etkinlikler"
+        android:icon="@drawable/account_group"
+        android:id="@+id/menu_item_etkinlik"/>
 
     <item android:title="Yemekhane"
         android:icon="@drawable/ic_restaurant_menu_black_24dp"

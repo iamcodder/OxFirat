@@ -10,9 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.example.iamcodder.androidd.bilgisayarMuhendisligi.fragment_bilgisayar_muhendisligi;
-import com.example.iamcodder.androidd.duyurular.fragment_duyurular;
+import com.example.iamcodder.androidd.duyurular.fragment_etkinlikler;
 import com.example.iamcodder.androidd.haberler.fragment_haberler;
 import com.example.iamcodder.androidd.yemekhane.fragment_yemekhane;
 
@@ -56,11 +54,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.menu_item_duyuru:
-                            fragment=new fragment_duyurular();
-                            break;
-
-                        case R.id.menu_item_bilgisayar:
-                            fragment=new fragment_bilgisayar_muhendisligi();
+                            fragment=new fragment_etkinlikler();
                             break;
                         case R.id.menu_item_yemekhane:
                             fragment=new fragment_yemekhane();
