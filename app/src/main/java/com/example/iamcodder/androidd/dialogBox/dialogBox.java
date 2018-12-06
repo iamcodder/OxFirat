@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class dialogBox extends DialogFragment {
 
-    private TextView textView_baslik,textView_tarih,textView_ilkParagraf,textView_icerik;
+    private TextView textView_baslik,textView_tarih,textView_icerik;
     private String URL_LINKI;
 
     private RecyclerView recyclerView;
@@ -50,7 +50,6 @@ public class dialogBox extends DialogFragment {
 
         textView_baslik=view.findViewById(R.id.dialogbox_baslik);
         textView_tarih=view.findViewById(R.id.dialogbox_tarih);
-        textView_ilkParagraf=view.findViewById(R.id.dialogbox_ilk_paragraf);
         textView_icerik=view.findViewById(R.id.dialogbox_icerik);
 
 
