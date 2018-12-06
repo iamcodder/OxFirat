@@ -51,14 +51,14 @@ public class fragment_yemekhane extends Fragment {
 
         private String tarih;
         private String menu;
-        private ArrayList<String> yemekListesi;
+        private String yemeklerin_listesi;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             tarih=null;
             menu=null;
-            yemekListesi=new ArrayList<>();
+            yemeklerin_listesi="";
             bar.setVisibility(View.VISIBLE);
         }
 
@@ -68,10 +68,11 @@ public class fragment_yemekhane extends Fragment {
             try {
 
                 Document document=Jsoup.connect("http://uevi.firat.edu.tr").get();
-                Elements elementsListe=document.select("div[class=field-content]");
 
-                for (int i=0;i<4;i++){
-                    yemekListesi.add(elementsListe.select("strong").get(i).text());
+                Elements elementsListe=document.select("div[class=views-field views-field-body]").select("p");
+
+                for (int i=0;i<elementsListe.size();i++){
+                    yemeklerin_listesi=yemeklerin_listesi+elementsListe.get(i).text()+"\n";
                 }
 
                 Elements elementsMenu=document.select("div[class=views-field views-field-title]");
@@ -93,13 +94,9 @@ public class fragment_yemekhane extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            String str_liste="";
-            for (int i=0;i<yemekListesi.size();i++){
-                str_liste=str_liste+yemekListesi.get(i)+"\n";
-            }
             bar.setVisibility(View.INVISIBLE);
             textView_menu.setText(menu);
-            textView_liste.setText(str_liste);
+            textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
 
         }
