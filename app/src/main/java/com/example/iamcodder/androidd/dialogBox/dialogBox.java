@@ -1,7 +1,8 @@
-package com.example.iamcodder.androidd;
+package com.example.iamcodder.androidd.dialogBox;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.iamcodder.androidd.MainActivity;
+import com.example.iamcodder.androidd.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -49,12 +53,18 @@ public class dialogBox extends DialogFragment {
         textView_ilkParagraf=view.findViewById(R.id.dialogbox_ilk_paragraf);
         textView_icerik=view.findViewById(R.id.dialogbox_icerik);
 
+
         recyclerView=view.findViewById(R.id.dialogbox_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
         return view;
     }
 
+
+
+    @SuppressLint("StaticFieldLeak")
     private class haberi_cek extends AsyncTask<Void,Void,Void>{
 
         private Elements elements;
@@ -66,14 +76,16 @@ public class dialogBox extends DialogFragment {
 
         private ArrayList<String> resim_linkleri;
 
-
         int paragraf_sayisi;
+
+        private String haberdeki_link;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             haber_icerigi="";
             resim_linkleri=new ArrayList<>();
+
         }
 
         @Override
@@ -97,7 +109,6 @@ public class dialogBox extends DialogFragment {
                 }
 
 
-
                 haberdeki_resim_sayisi=elements.select("div[class=text-resizable]").select("img").size();
 
                 for(int i=0;i<haberdeki_resim_sayisi;i++){
@@ -105,6 +116,8 @@ public class dialogBox extends DialogFragment {
                     resim_linkleri.add(MainActivity.FIRAT_WEB+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
                 }
 
+
+                haberdeki_link=elements.select("div[class=text-resizable]").select("p").select("a").attr("href");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -119,12 +132,28 @@ public class dialogBox extends DialogFragment {
 
             textView_baslik.setText(haber_basligi);
             textView_tarih.setText(haber_tarihi);
-
             textView_icerik.setText(haber_icerigi);
 
             adapter=new dialogbox_adapter(resim_linkleri,getContext());
 
             recyclerView.setAdapter(adapter);
+
+
+            if(!haberdeki_link.equals("")){
+                haberdeki_link=MainActivity.FIRAT_WEB+haberdeki_link;
+
+                textView_icerik.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i=new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(haberdeki_link));
+                        startActivity(i);
+                    }
+                });
+            }
+
+
+
 
 
         }

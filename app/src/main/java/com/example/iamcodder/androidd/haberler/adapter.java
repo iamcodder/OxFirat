@@ -1,5 +1,6 @@
 package com.example.iamcodder.androidd.haberler;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -9,12 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.iamcodder.androidd.R;
-import com.example.iamcodder.androidd.dialogBox;
+import com.example.iamcodder.androidd.dialogBox.dialogBox;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +29,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     private List<String> haber_linki;
     private FragmentManager manager;
 
-    public adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki,FragmentManager manager) {
+    adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki,FragmentManager manager) {
         okul_web="http://www.firat.edu.tr";
         this.mContext = mContext;
         this.haber_baslik = haber_baslik;
@@ -49,7 +49,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
 
         viewHolder.mBar.setVisibility(View.VISIBLE);
         viewHolder.mTextview.setText(haber_baslik.get(i));
@@ -89,14 +89,14 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         return haber_baslik.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         private CardView mCardview;
         private ImageView mImageview;
         private TextView mTextview;
         private ProgressBar mBar;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardview=itemView.findViewById(R.id.fragment_haberler_carview_design);
             mImageview=itemView.findViewById(R.id.cardView_resim);

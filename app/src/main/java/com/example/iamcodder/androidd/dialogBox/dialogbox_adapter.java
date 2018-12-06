@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd;
+package com.example.iamcodder.androidd.dialogBox;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.iamcodder.androidd.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +20,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
 
     private List<String> resim_linkleri;
     private Context mContext;
+
 
     public dialogbox_adapter(List<String> resim_linkleri, Context mContext) {
         this.resim_linkleri = resim_linkleri;
@@ -32,7 +34,6 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
 
         View view=LayoutInflater.from(mContext).inflate(R.layout.dialogbox_image_design,viewGroup,false);
 
-        System.out.println("SÜLEYMAN 1");
 
         return new dialogViewHolder(view);
     }
@@ -56,6 +57,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
                 Toast.makeText(mContext,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 

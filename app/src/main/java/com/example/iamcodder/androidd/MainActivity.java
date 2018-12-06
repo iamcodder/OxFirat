@@ -1,8 +1,5 @@
 package com.example.iamcodder.androidd;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,7 +9,6 @@ import android.view.MenuItem;
 
 import com.example.iamcodder.androidd.duyurular.fragment_duyurular;
 import com.example.iamcodder.androidd.etkinlik.fragment_etkinlik;
-import com.example.iamcodder.androidd.haberler.adapter;
 import com.example.iamcodder.androidd.haberler.fragment_haberler;
 import com.example.iamcodder.androidd.yemekhane.fragment_yemekhane;
 
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
 
-}
+    }
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener onListener =
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                    Fragment fragment = null;
+                    Fragment fragment ;
 
                     switch (menuItem.getItemId()) {
 
@@ -65,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.menu_item_yemekhane:
                             fragment = new fragment_yemekhane();
                             break;
+                        default:
+                            fragment = new fragment_haberler();
+                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction()
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
 
 
 }

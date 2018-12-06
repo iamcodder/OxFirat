@@ -1,5 +1,6 @@
 package com.example.iamcodder.androidd.duyurular;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.iamcodder.androidd.R;
-import com.example.iamcodder.androidd.dialogBox;
+import com.example.iamcodder.androidd.dialogBox.dialogBox;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     private List<String> list_link;
     private FragmentManager manager;
 
-    public fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link,FragmentManager manager) {
+    fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link,FragmentManager manager) {
         this.mContext = mContext;
         this.list_icerik = list_icerik;
         this.list_tarih = list_tarih;
@@ -43,7 +43,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     }
 
     @Override
-    public void onBindViewHolder(@NonNull duyurularViewHolder duyurularViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull duyurularViewHolder duyurularViewHolder, @SuppressLint("RecyclerView") final int i) {
         duyurularViewHolder.tarih.setText(list_tarih.get(i));
         duyurularViewHolder.icerik.setText(list_icerik.get(i));
 

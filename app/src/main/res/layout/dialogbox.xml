@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/dialogbox_tarih"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="12dp"
             android:textSize="18sp"
             tools:text="Süleyman baba ve müritleri okulu sarmaya başladı" />
@@ -57,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/dialogbox_icerik"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp">
 
         </android.support.v7.widget.RecyclerView>

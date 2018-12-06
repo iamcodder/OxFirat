@@ -1,8 +1,10 @@
 package com.example.iamcodder.androidd.yemekhane;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class fragment_yemekhane extends Fragment {
 
@@ -31,7 +32,7 @@ public class fragment_yemekhane extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootview= inflater.inflate(R.layout.fragment_yemekhane, container, false);
 
@@ -47,6 +48,7 @@ public class fragment_yemekhane extends Fragment {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class yemekhane extends AsyncTask<Void,Void,Void> {
 
         private String tarih;
@@ -72,7 +74,7 @@ public class fragment_yemekhane extends Fragment {
                 Elements elementsListe=document.select("div[class=views-field views-field-body]").select("p");
 
                 for (int i=0;i<elementsListe.size();i++){
-                    yemeklerin_listesi=yemeklerin_listesi+elementsListe.get(i).text()+"\n";
+                    yemeklerin_listesi = yemeklerin_listesi + (elementsListe.get(i).text() + "\n");
                 }
 
                 Elements elementsMenu=document.select("div[class=views-field views-field-title]");

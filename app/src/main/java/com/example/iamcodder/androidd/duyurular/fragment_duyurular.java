@@ -1,8 +1,10 @@
 package com.example.iamcodder.androidd.duyurular;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +32,7 @@ public class fragment_duyurular extends Fragment {
     private FragmentManager manager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         new duyuruCek().execute();
         View rootView= inflater.inflate(R.layout.fragment_duyurular, container, false);
 
@@ -44,6 +46,7 @@ public class fragment_duyurular extends Fragment {
         return rootView;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class duyuruCek extends AsyncTask<Void,Void,Void>{
 
         private Elements duyuruElements;
