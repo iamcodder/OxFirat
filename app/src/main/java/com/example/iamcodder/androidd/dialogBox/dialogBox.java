@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ public class dialogBox extends DialogFragment {
     private RecyclerView recyclerView;
     private dialogbox_adapter adapter;
 
+    private FragmentManager manager;
+
     public dialogBox(){
 
     }
@@ -47,6 +50,8 @@ public class dialogBox extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=LayoutInflater.from(getContext()).inflate(R.layout.dialogbox,container,false);
         new haberi_cek().execute();
+
+        manager=getFragmentManager();
 
         textView_baslik=view.findViewById(R.id.dialogbox_baslik);
         textView_tarih=view.findViewById(R.id.dialogbox_tarih);

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.iamcodder.androidd.R;
 import com.squareup.picasso.Callback;
@@ -22,7 +21,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     private Context mContext;
 
 
-    public dialogbox_adapter(List<String> resim_linkleri, Context mContext) {
+    dialogbox_adapter(List<String> resim_linkleri, Context mContext) {
         this.resim_linkleri = resim_linkleri;
         this.mContext = mContext;
 
@@ -54,10 +53,18 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
 
             @Override
             public void onError(Exception e) {
-                Toast.makeText(mContext,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+
             }
         });
 
+
+
+        dialogViewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -71,7 +78,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
         private ImageView image;
         private ProgressBar bar;
 
-        public dialogViewHolder(@NonNull View itemView) {
+        dialogViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image=itemView.findViewById(R.id.dialogbox_design_imageView);
