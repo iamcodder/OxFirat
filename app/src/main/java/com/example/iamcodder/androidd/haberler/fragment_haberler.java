@@ -22,6 +22,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 
 public class fragment_haberler extends Fragment {
 
@@ -32,6 +34,8 @@ public class fragment_haberler extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar bar;
 
+    private WaveSwipeRefreshLayout swipeRefreshLayout;
+
 
 
     @Override
@@ -40,17 +44,24 @@ public class fragment_haberler extends Fragment {
 
         new haberCek().execute();
 
-        bar=rootView.findViewById(R.id.haberler_progressBar);
+        bar=rootView.findViewById(R.id.fragment_haberler_progressBar);
 
-        recyclerView=rootView.findViewById(R.id.haberler_recycleview);
+        recyclerView=rootView.findViewById(R.id.fragment_haberler_recycleview);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-
-
-
+        swipeRefreshLayout=rootView.findViewById(R.id.fragment_haberler_waveswipe);
+        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new haberCek().execute();
+            }
+        });
 
         return rootView;
+    }
+
+    private void haberleri_yerlestir(){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 
     private class haberCek extends AsyncTask<Void,Void,Void>{
@@ -97,10 +108,13 @@ public class fragment_haberler extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            haberleri_yerlestir();
 
             bar.setVisibility(View.INVISIBLE);
             adapter=new adapter(getContext(),haberBasligi,haberResmi,haberLinki,getFragmentManager());
             recyclerView.setAdapter(adapter);
+
+            swipeRefreshLayout.setRefreshing(false);
 
 
         }

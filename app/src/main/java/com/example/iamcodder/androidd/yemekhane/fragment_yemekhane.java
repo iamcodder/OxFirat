@@ -20,6 +20,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class fragment_yemekhane extends Fragment {
 
 
@@ -28,7 +30,7 @@ public class fragment_yemekhane extends Fragment {
     private TextView textView_menu;
     private TextView textView_tarih;
 
-
+    private WaveSwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -36,13 +38,21 @@ public class fragment_yemekhane extends Fragment {
 
         View rootview= inflater.inflate(R.layout.fragment_yemekhane, container, false);
 
-        bar=rootview.findViewById(R.id.progressBar);
+        new yemekhane().execute();
+
+        bar=rootview.findViewById(R.id.yemekhane_progressbar);
 
         textView_liste =rootview.findViewById(R.id.yemek_listesi);
         textView_menu=rootview.findViewById(R.id.menu);
         textView_tarih=rootview.findViewById(R.id.textView_tarihh);
 
-        new yemekhane().execute();
+        swipeRefreshLayout=rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
+        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new yemekhane().execute();
+            }
+        });
 
         return rootview;
     }
@@ -61,7 +71,6 @@ public class fragment_yemekhane extends Fragment {
             tarih=null;
             menu=null;
             yemeklerin_listesi="";
-            bar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -100,6 +109,8 @@ public class fragment_yemekhane extends Fragment {
             textView_menu.setText(menu);
             textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
+
+            swipeRefreshLayout.setRefreshing(false);
 
         }
     }

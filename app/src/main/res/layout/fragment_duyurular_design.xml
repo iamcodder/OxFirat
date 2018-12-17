@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/fragment_duyurular_cardview"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="150dp"
-    android:layout_height="200dp"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="6dp"
-    android:elevation="8dp"
-    android:layout_margin="12dp"
-    android:fitsSystemWindows="true">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_duyurular_cardview"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="6dp"
+        android:elevation="8dp"
+        android:layout_margin="12dp"
+        android:fitsSystemWindows="true"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/fragment_duyurular_tarih"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="20.11.2018"
-            android:textStyle="bold"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            tools:text="20.11.2018" />
 
         <TextView
             android:id="@+id/fragment_duyurular_icerik"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/fragment_duyurular_tarih"
+            android:layout_centerInParent="true"
             android:layout_margin="8dp"
-            android:gravity="center_vertical"
             android:layout_marginBottom="-11dp"
-            android:layout_centerInParent="true"/>
+            android:gravity="center_vertical" />
 
 
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
-</android.support.v7.widget.CardView>
+</RelativeLayout>

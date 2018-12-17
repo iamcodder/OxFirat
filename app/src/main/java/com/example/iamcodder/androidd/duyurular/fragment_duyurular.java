@@ -12,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.iamcodder.androidd.MainActivity;
 import com.example.iamcodder.androidd.R;
@@ -23,6 +24,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class fragment_duyurular extends Fragment {
 
     private ArrayList<String> duyuru_linki,duyuru_icerigi, duyuru_tarihi;
@@ -31,19 +34,34 @@ public class fragment_duyurular extends Fragment {
 
     private FragmentManager manager;
 
+    private ProgressBar progressBar;
+
+    private WaveSwipeRefreshLayout swipeRefreshLayout;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         new duyuruCek().execute();
         View rootView= inflater.inflate(R.layout.fragment_duyurular, container, false);
+        progressBar=rootView.findViewById(R.id.duyurular_progressbar);
 
         recyclerView=rootView.findViewById(R.id.fragment_duyurular_recyclerview);
         manager=getFragmentManager();
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-
+        swipeRefreshLayout=rootView.findViewById(R.id.fragment_duyurular_waveswipe);
+        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new duyuruCek().execute();
+            }
+        });
 
         return rootView;
+    }
+
+    private void duyurulari_yerlestir(){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -85,8 +103,14 @@ public class fragment_duyurular extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            duyurulari_yerlestir();
+
             adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,manager);
             recyclerView.setAdapter(adapter);
+
+            progressBar.setVisibility(View.INVISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
+
 
 
         }

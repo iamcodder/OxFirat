@@ -8,14 +8,21 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ProgressBar
-        android:id="@+id/haberler_progressBar"
+        android:id="@+id/fragment_haberler_progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_haberler_waveswipe">
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/haberler_recycleview"
+        android:id="@+id/fragment_haberler_recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 </FrameLayout>

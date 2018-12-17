@@ -13,7 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary" />
+
 
     <FrameLayout
         android:id="@+id/fragment_tutucu_frameLayout"
