@@ -89,7 +89,7 @@ public class fragment_etkinlik extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/etkinlikler").get();
+                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/etkinlikler?page=1").get();
                 etkinlikElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
 
                 for (int i=0;i<etkinlikElements.size();i++){

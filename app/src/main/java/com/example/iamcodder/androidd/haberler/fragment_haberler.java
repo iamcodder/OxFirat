@@ -3,7 +3,9 @@ package com.example.iamcodder.androidd.haberler;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -36,17 +38,21 @@ public class fragment_haberler extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
+    public int page_number;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_haberler, container, false);
 
+        page_number=1;
+
         new haberCek().execute();
 
         bar=rootView.findViewById(R.id.fragment_haberler_progressBar);
 
         recyclerView=rootView.findViewById(R.id.fragment_haberler_recycleview);
+
 
         swipeRefreshLayout=rootView.findViewById(R.id.fragment_haberler_waveswipe);
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -56,6 +62,7 @@ public class fragment_haberler extends Fragment {
             }
         });
 
+
         return rootView;
     }
 
@@ -64,7 +71,7 @@ public class fragment_haberler extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 
-    private class haberCek extends AsyncTask<Void,Void,Void>{
+    class haberCek extends AsyncTask<Void,Void,Void>{
 
         private Elements haber1;
 
@@ -82,7 +89,7 @@ public class fragment_haberler extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/haberler").get();
+                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/haberler?page="+page_number).get();
                 haber1=document.select("div[class=row all-news]").select("div[class=banner col-xs-12 col-sm-4 col-md-4 col-lg-3]");
 
 
@@ -108,13 +115,18 @@ public class fragment_haberler extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+
+
             haberleri_yerlestir();
 
-            bar.setVisibility(View.INVISIBLE);
             adapter=new adapter(getContext(),haberBasligi,haberResmi,haberLinki,getFragmentManager());
+
+            bar.setVisibility(View.INVISIBLE);
             recyclerView.setAdapter(adapter);
 
+
             swipeRefreshLayout.setRefreshing(false);
+            page_number++;
 
 
         }

@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.iamcodder.androidd.MainActivity;
 import com.example.iamcodder.androidd.R;
 import com.example.iamcodder.androidd.dialogBox.dialogBox;
 import com.squareup.picasso.Callback;
@@ -29,6 +31,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     private List<String> haber_linki;
     private FragmentManager manager;
 
+
     adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki,FragmentManager manager) {
         okul_web="http://www.firat.edu.tr";
         this.mContext = mContext;
@@ -36,6 +39,8 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         this.haber_resim = haber_resim;
         this.haber_linki = haber_linki;
         this.manager=manager;
+
+
     }
 
     @NonNull
@@ -80,6 +85,10 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
             }
         });
+
+        if(i==haber_baslik.size()-1){
+            Toast.makeText(mContext,"Sona Gelindi",Toast.LENGTH_SHORT).show();
+        }
 
 
     }

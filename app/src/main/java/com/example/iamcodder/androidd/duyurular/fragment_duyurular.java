@@ -81,7 +81,7 @@ public class fragment_duyurular extends Fragment {
         protected Void doInBackground(Void... voids) {
 
             try {
-                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/duyurular").get();
+                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/duyurular?page=1").get();
                 duyuruElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
 
                 for (int i=0;i<duyuruElements.size();i++){
