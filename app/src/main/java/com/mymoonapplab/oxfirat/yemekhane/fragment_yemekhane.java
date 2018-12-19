@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd.yemekhane;
+package com.mymoonapplab.oxfirat.yemekhane;
 
 
 import android.annotation.SuppressLint;
@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.example.iamcodder.androidd.R;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,6 +23,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
+
 
 public class fragment_yemekhane extends Fragment {
 
@@ -32,6 +36,8 @@ public class fragment_yemekhane extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
+    private AdView mAdView;
+    private AdRequest adRequest;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,10 +57,44 @@ public class fragment_yemekhane extends Fragment {
             @Override
             public void onRefresh() {
                 new yemekhane().execute();
+                reklami_yukle();
             }
         });
 
+
+        mAdView = rootview.findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder().addTestDevice("3E7FF03FDF5FBBC77CAE6132656DD77F").build();
+        reklami_yukle();
+
         return rootview;
+    }
+
+    private void reklami_yukle(){
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                reklami_yukle();
+            }
+
+            @Override
+            public void onAdOpened() {
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                reklami_yukle();
+            }
+        });
     }
 
 

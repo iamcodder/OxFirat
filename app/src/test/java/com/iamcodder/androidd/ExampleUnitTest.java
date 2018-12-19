@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd;
+package com.iamcodder.androidd;
 
 import org.junit.Test;
 

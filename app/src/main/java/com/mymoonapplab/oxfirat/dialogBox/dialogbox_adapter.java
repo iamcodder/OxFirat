@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd.dialogBox;
+package com.mymoonapplab.oxfirat.dialogBox;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.example.iamcodder.androidd.R;
+import com.mymoonapplab.oxfirat.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

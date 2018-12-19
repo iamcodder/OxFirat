@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd.haberler;
+package com.mymoonapplab.oxfirat.haberler;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,11 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.iamcodder.androidd.MainActivity;
-import com.example.iamcodder.androidd.R;
-import com.example.iamcodder.androidd.dialogBox.dialogBox;
+import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -85,11 +83,6 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
             }
         });
-
-        if(i==haber_baslik.size()-1){
-            Toast.makeText(mContext,"Sona Gelindi",Toast.LENGTH_SHORT).show();
-        }
-
 
     }
 

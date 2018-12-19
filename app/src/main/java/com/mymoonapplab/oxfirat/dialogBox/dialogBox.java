@@ -1,4 +1,4 @@
-package com.example.iamcodder.androidd.dialogBox;
+package com.mymoonapplab.oxfirat.dialogBox;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.iamcodder.androidd.MainActivity;
-import com.example.iamcodder.androidd.R;
+import com.mymoonapplab.oxfirat.MainActivity;
+import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

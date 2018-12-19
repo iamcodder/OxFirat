@@ -7,54 +7,64 @@
     tools:context=".yemekhane.fragment_yemekhane">
 
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_yemekhane_waveswipe">
-
-    <RelativeLayout
+        android:id="@+id/fragment_yemekhane_waveswipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/yemekhane_progressbar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-
-
-        <TextView
-            android:id="@+id/yemek_listesi"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:layout_centerInParent="true"
-            tools:text="YEEMK \n YEMEK \n YEMEK \n YEMEK" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="GÜNÜN MENÜSÜ"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_above="@id/yemek_listesi"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"/>
+            <ProgressBar
+                android:id="@+id/yemekhane_progressbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
 
-        <TextView
-            android:id="@+id/textView_tarihh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="26/07/2012"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_below="@id/yemek_listesi"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/yemek_listesi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:text="YEEMK \n YEMEK \n YEMEK \n YEMEK" />
+
+            <TextView
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/yemek_listesi"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="GÜNÜN MENÜSÜ" />
+
+            <TextView
+                android:id="@+id/textView_tarihh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/yemek_listesi"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="26/07/2012" />
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-1818679104699845/1210914245" />
+
+        </RelativeLayout>
 
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 

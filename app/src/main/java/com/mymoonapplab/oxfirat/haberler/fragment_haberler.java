@@ -1,21 +1,19 @@
-package com.example.iamcodder.androidd.haberler;
+package com.mymoonapplab.oxfirat.haberler;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.iamcodder.androidd.MainActivity;
-import com.example.iamcodder.androidd.R;
+import com.mymoonapplab.oxfirat.MainActivity;
+import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -38,12 +36,17 @@ public class fragment_haberler extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
-    public int page_number;
+    private int page_number;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_haberler, container, false);
+
+        haberBasligi=new ArrayList<>();
+        haberLinki=new ArrayList<>();
+        haberResmi=new ArrayList<>();
+
 
         page_number=1;
 
@@ -66,23 +69,17 @@ public class fragment_haberler extends Fragment {
         return rootView;
     }
 
+
+
     private void haberleri_yerlestir(){
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 
-    class haberCek extends AsyncTask<Void,Void,Void>{
+    @SuppressLint("StaticFieldLeak")
+    public class haberCek extends AsyncTask<Void,Void,Void>{
 
         private Elements haber1;
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            haberBasligi=new ArrayList<>();
-            haberLinki=new ArrayList<>();
-            haberResmi=new ArrayList<>();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
