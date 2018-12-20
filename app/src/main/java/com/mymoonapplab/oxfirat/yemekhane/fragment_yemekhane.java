@@ -75,19 +75,23 @@ public class fragment_yemekhane extends Fragment {
 
             @Override
             public void onAdLoaded() {
+                System.out.println("REKLAM : yüklendi");
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
+                System.out.println("REKLAM : hatali"+errorCode);
                 reklami_yukle();
             }
 
             @Override
             public void onAdOpened() {
+                System.out.println("REKLAM : açıldı");
             }
 
             @Override
             public void onAdLeftApplication() {
+
             }
 
             @Override

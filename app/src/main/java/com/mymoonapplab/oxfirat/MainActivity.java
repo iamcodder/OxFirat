@@ -1,5 +1,7 @@
 package com.mymoonapplab.oxfirat;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.duyurular.fragment_duyurular;
 import com.mymoonapplab.oxfirat.etkinlik.fragment_etkinlik;
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(!InternetKontrol()){
+            Toast.makeText(this,"LÜTFEN İNTERNETİNİZİ AÇIN",Toast.LENGTH_LONG).show();
+        }
+
         MobileAds.initialize(this, "ca-app-pub-1818679104699845~1785629318");
 
         //Toolbar ekleme
@@ -39,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         load_fragment(new fragment_haberler());
 
+    }
+
+    public boolean InternetKontrol() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager.getActiveNetworkInfo() != null &&
+                manager.getActiveNetworkInfo().isAvailable() &&
+                manager.getActiveNetworkInfo().isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void load_fragment(Fragment fragment){
