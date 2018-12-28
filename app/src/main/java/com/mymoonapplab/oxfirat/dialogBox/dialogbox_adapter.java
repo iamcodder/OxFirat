@@ -1,6 +1,10 @@
 package com.mymoonapplab.oxfirat.dialogBox;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.fullScreenImage;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.dialogViewHolder> {
@@ -38,11 +44,12 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final dialogViewHolder dialogViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final dialogViewHolder dialogViewHolder, final int i) {
 
 
 
         dialogViewHolder.bar.setVisibility(View.VISIBLE);
+
 
         Picasso.get().load(resim_linkleri.get(i)).into(dialogViewHolder.image, new Callback() {
             @Override
@@ -53,7 +60,6 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
 
             @Override
             public void onError(Exception e) {
-
             }
         });
 
@@ -62,7 +68,11 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
         dialogViewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),fullScreenImage.class);
 
+                intent.putExtra("resim_linki",resim_linkleri.get(i));
+
+                v.getContext().startActivity(intent);
             }
         });
 
