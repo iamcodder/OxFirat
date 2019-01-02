@@ -14,9 +14,9 @@
 
     <style name="fullScreenImage" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="android:statusBarColor">@color/colorBlack</item>
-        <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+
+
     </style>
 
 </resources>

@@ -58,6 +58,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         viewHolder.mTextview.setText(haber_baslik.get(i));
 
 
+
         Picasso.get().load(okul_web+haber_resim.get(i))
                 .into(viewHolder.mImageview, new Callback() {
                     @Override
@@ -79,11 +80,10 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
                 dialogBox dialogBox=new dialogBox(fragment_haberler.haberLinki.get(i));
 
-                dialogBox.show(manager,"SELAM");
+                dialogBox.show(manager,"dialogbox_showed");
 
             }
         });
-
     }
 
     @Override

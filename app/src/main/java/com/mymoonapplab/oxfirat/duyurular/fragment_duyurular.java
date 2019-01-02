@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,22 +41,48 @@ public class fragment_duyurular extends Fragment {
 
     private int page_number;
 
+    private int son_duyuru_konumu;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_duyurular, container, false);
-
-        new duyuruCek().execute();
-
-        progressBar=rootView.findViewById(R.id.duyurular_progressbar);
-
-        page_number=1;
 
         duyuru_linki=new ArrayList<>();
         duyuru_icerigi=new ArrayList<>();
         duyuru_tarihi =new ArrayList<>();
 
+        page_number=1;
+
+        new duyuruCek().execute();
+
+        progressBar=rootView.findViewById(R.id.duyurular_progressbar);
+
         recyclerView=rootView.findViewById(R.id.fragment_duyurular_recyclerview);
-        manager=getFragmentManager();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+                son_duyuru_konumu=0;
+                int toplam_duyuru=0;
+
+                LinearLayoutManager manager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+
+                if (manager!=null){
+
+                    son_duyuru_konumu=manager.findLastVisibleItemPosition();
+                    toplam_duyuru=manager.getItemCount();
+                }
+
+                if(son_duyuru_konumu+1==toplam_duyuru){
+                    new duyuruCek().execute();
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         swipeRefreshLayout=rootView.findViewById(R.id.fragment_duyurular_waveswipe);
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -68,10 +95,6 @@ public class fragment_duyurular extends Fragment {
         return rootView;
     }
 
-    private void duyurulari_yerlestir(){
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-    }
 
     @SuppressLint("StaticFieldLeak")
     private class duyuruCek extends AsyncTask<Void,Void,Void>{
@@ -85,6 +108,7 @@ public class fragment_duyurular extends Fragment {
             try {
                 Document document=Jsoup.connect("http://www.firat.edu.tr/tr/duyurular?page="+page_number).get();
                 duyuruElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
+                page_number++;
 
                 for (int i=0;i<duyuruElements.size();i++){
 
@@ -105,15 +129,16 @@ public class fragment_duyurular extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            duyurulari_yerlestir();
 
             adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,manager);
             recyclerView.setAdapter(adapter);
 
+            recyclerView.scrollToPosition(son_duyuru_konumu-1);
+
             progressBar.setVisibility(View.INVISIBLE);
             swipeRefreshLayout.setRefreshing(false);
 
-            page_number++;
+
 
         }
     }
