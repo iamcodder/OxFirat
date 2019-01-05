@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
@@ -34,6 +35,8 @@ public class fragment_etkinlik extends Fragment {
     private RecyclerView recyclerView;
     private fragment_etkinlik_adapter adapter;
     private ProgressBar progressBar;
+    private TextView textview_text_cekilemedi;
+
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -55,6 +58,9 @@ public class fragment_etkinlik extends Fragment {
         new etkinlikCek().execute();
 
         progressBar=rootView.findViewById(R.id.etkinlik_progressbar);
+        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_etkinlikler_textview);
+        textview_text_cekilemedi.setText(R.string.etkinlikler_cekilemedi);
+        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
         recyclerView=rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -130,12 +136,18 @@ public class fragment_etkinlik extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            if(etkinlik_icerik.isEmpty()){
+                textview_text_cekilemedi.setVisibility(View.VISIBLE);
+            }
+
+            else {
+                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+                adapter=new fragment_etkinlik_adapter(getContext(),etkinlik_tarih,etkinlik_icerik,etkinlik_link,getFragmentManager());
+                recyclerView.setAdapter(adapter);
+                recyclerView.scrollToPosition(son_etkinlik_konumu-1);
+            }
+
             progressBar.setVisibility(View.INVISIBLE);
-
-            adapter=new fragment_etkinlik_adapter(getContext(),etkinlik_tarih,etkinlik_icerik,etkinlik_link,getFragmentManager());
-            recyclerView.setAdapter(adapter);
-            recyclerView.scrollToPosition(son_etkinlik_konumu-1);
-
             swipeRefreshLayout.setRefreshing(false);
 
         }

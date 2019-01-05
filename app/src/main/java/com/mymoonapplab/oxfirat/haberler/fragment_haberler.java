@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
@@ -35,6 +36,7 @@ public class fragment_haberler extends Fragment {
     private adapter adapter;
     private RecyclerView recyclerView;
     private ProgressBar bar;
+    private TextView textview_text_cekilemedi;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -56,6 +58,11 @@ public class fragment_haberler extends Fragment {
         new haberCek().execute();
 
         bar = rootView.findViewById(R.id.fragment_haberler_progressBar);
+
+        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_haberler_textview);
+        textview_text_cekilemedi.setText(R.string.haberler_cekilemedi);
+        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+
 
         recyclerView = rootView.findViewById(R.id.fragment_haberler_recycleview);
         recyclerView.setHasFixedSize(true);
@@ -136,17 +143,19 @@ public class fragment_haberler extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            if (haberBasligi.isEmpty()){
+                textview_text_cekilemedi.setVisibility(View.VISIBLE);
+            }
+
+            else {
+                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+                adapter = new adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
+                recyclerView.setAdapter(adapter);
+                recyclerView.scrollToPosition(son_haber_konumu-1);
+            }
 
             bar.setVisibility(View.INVISIBLE);
-
-
-            adapter = new adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
-            recyclerView.setAdapter(adapter);
-            recyclerView.scrollToPosition(son_haber_konumu-1);
-
             swipeRefreshLayout.setRefreshing(false);
-
-
         }
     }
 }

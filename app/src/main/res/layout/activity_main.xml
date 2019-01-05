@@ -19,4 +19,13 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation_menu" />
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/main_activity_bottom_navigation_bar"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-1818679104699845/6834135386" />
+
 </RelativeLayout>

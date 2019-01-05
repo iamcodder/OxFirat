@@ -54,16 +54,6 @@
                 android:textStyle="bold"
                 tools:text="26/07/2012" />
 
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                ads:adSize="SMART_BANNER"
-                ads:adUnitId="ca-app-pub-1818679104699845/6834135386" />
-
         </RelativeLayout>
 
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>

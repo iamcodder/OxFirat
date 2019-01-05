@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
@@ -34,6 +35,7 @@ public class fragment_duyurular extends Fragment {
     private fragment_duyurular_adapter adapter;
 
     private ProgressBar progressBar;
+    private TextView textview_text_cekilemedi;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -54,6 +56,10 @@ public class fragment_duyurular extends Fragment {
         new duyuruCek().execute();
 
         progressBar=rootView.findViewById(R.id.duyurular_progressbar);
+
+        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_duyurular_textview);
+        textview_text_cekilemedi.setText(R.string.duyurular_cekilemedi);
+        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
         recyclerView=rootView.findViewById(R.id.fragment_duyurular_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -127,11 +133,16 @@ public class fragment_duyurular extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            if(duyuru_icerigi.isEmpty()){
+                textview_text_cekilemedi.setVisibility(View.VISIBLE);
+            }
 
-            adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,getFragmentManager());
-            recyclerView.setAdapter(adapter);
-
-            recyclerView.scrollToPosition(son_duyuru_konumu-1);
+            else {
+                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+                adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,getFragmentManager());
+                recyclerView.setAdapter(adapter);
+                recyclerView.scrollToPosition(son_duyuru_konumu-1);
+            }
 
             progressBar.setVisibility(View.INVISIBLE);
             swipeRefreshLayout.setRefreshing(false);

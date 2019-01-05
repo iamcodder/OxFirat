@@ -9,8 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.mymoonapplab.oxfirat.duyurular.fragment_duyurular;
 import com.mymoonapplab.oxfirat.etkinlik.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.haberler.fragment_haberler;
@@ -23,18 +27,18 @@ public class MainActivity extends AppCompatActivity {
 
     public static String FIRAT_WEB = "http://www.firat.edu.tr";
 
-
+    private AdView mAdView;
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        reklamlar();
 
         if(!InternetKontrol()){
             Toast.makeText(this,"LÜTFEN İNTERNETİNİZİ AÇIN",Toast.LENGTH_LONG).show();
         }
-
-        MobileAds.initialize(this, "ca-app-pub-1818679104699845~1785629318");
 
         //Toolbar ekleme
         Toolbar toolbar = findViewById(R.id.fragment_tutucu_toolBar);
@@ -47,6 +51,39 @@ public class MainActivity extends AppCompatActivity {
         load_fragment(new fragment_haberler());
 
     }
+    private void reklamlar(){
+
+        MobileAds.initialize(this, "ca-app-pub-1818679104699845~1785629318");
+        mAdView = findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder().addTestDevice("814B87088029BD05B980A3DB14E3ABF2").build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+                mAdView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                reklamlar();
+            }
+
+            @Override
+            public void onAdOpened() {
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                reklamlar();
+            }
+        });
+    }
+
 
     public boolean InternetKontrol() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -77,19 +114,19 @@ public class MainActivity extends AppCompatActivity {
 
                         case R.id.menu_item_haberler:
                             fragment = new fragment_haberler();
+                            mAdView.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.menu_item_duyuru:
                             fragment = new fragment_duyurular();
+                            mAdView.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.menu_item_etkinlik:
                             fragment = new fragment_etkinlik();
+                            mAdView.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.menu_item_yemekhane:
                             fragment = new fragment_yemekhane();
-                            break;
-
-                        default:
-                            fragment = new fragment_haberler();
+                            mAdView.setVisibility(View.VISIBLE);
                             break;
                     }
                     load_fragment(fragment);

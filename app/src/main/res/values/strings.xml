@@ -6,4 +6,9 @@
     <string name="navigation_view_opened">Navigation Bar Opened</string>
     <string name="navigation_view_closed">Navigation Bar Closed</string>
 
+    <string name="veriler_cekilemedi">Günün menüsü siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek günün menüsü siteden tekrar çekmeye çalışın</string>
+    <string name="haberler_cekilemedi">Haberler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek haberleri siteden tekrar çekmeye çalışın</string>
+    <string name="duyurular_cekilemedi">Duyurular siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek duyuruları siteden tekrar çekmeye çalışın</string>
+    <string name="etkinlikler_cekilemedi">Etkinlikler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek etkinlikleri siteden tekrar çekmeye çalışın</string>
+
 </resources>

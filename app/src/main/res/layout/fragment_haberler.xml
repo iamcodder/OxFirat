@@ -26,4 +26,12 @@
         android:layout_height="match_parent" />
 
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/fragment_haberler_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:hint="@string/haberler_cekilemedi"/>
+
 </FrameLayout>

@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,8 +38,7 @@ public class fragment_yemekhane extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
-    private AdView mAdView;
-    private AdRequest adRequest;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,48 +58,10 @@ public class fragment_yemekhane extends Fragment {
             @Override
             public void onRefresh() {
                 new yemekhane().execute();
-                reklami_yukle();
             }
         });
-
-
-        mAdView = rootview.findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().addTestDevice("3E7FF03FDF5FBBC77CAE6132656DD77F").build();
-        reklami_yukle();
 
         return rootview;
-    }
-
-    private void reklami_yukle(){
-        mAdView.loadAd(adRequest);
-        mAdView.setAdListener(new AdListener() {
-
-            @Override
-            public void onAdLoaded() {
-                System.out.println("REKLAM : yüklendi");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                System.out.println("REKLAM : hatali"+errorCode);
-                reklami_yukle();
-            }
-
-            @Override
-            public void onAdOpened() {
-                System.out.println("REKLAM : açıldı");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-
-            }
-
-            @Override
-            public void onAdClosed() {
-                reklami_yukle();
-            }
-        });
     }
 
 
@@ -155,6 +118,10 @@ public class fragment_yemekhane extends Fragment {
             textView_tarih.setText(tarih);
 
             swipeRefreshLayout.setRefreshing(false);
+
+            if(textView_menu.getText()==""){
+                textView_liste.setText(R.string.veriler_cekilemedi);
+            }
 
         }
     }
