@@ -38,7 +38,6 @@ public class fullScreenImage extends AppCompatActivity {
             }
         });
 
-
     }
 
 }

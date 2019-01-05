@@ -33,8 +33,6 @@ public class fragment_duyurular extends Fragment {
     private RecyclerView recyclerView;
     private fragment_duyurular_adapter adapter;
 
-    private FragmentManager manager;
-
     private ProgressBar progressBar;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
@@ -130,7 +128,7 @@ public class fragment_duyurular extends Fragment {
             super.onPostExecute(aVoid);
 
 
-            adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,manager);
+            adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,getFragmentManager());
             recyclerView.setAdapter(adapter);
 
             recyclerView.scrollToPosition(son_duyuru_konumu-1);

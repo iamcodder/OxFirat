@@ -8,7 +8,7 @@
     tools:context=".fullScreenImage"
     android:background="#000000">
 
-    <ImageView
+    <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
         android:id="@+id/activity_full_screen_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
