@@ -2,12 +2,14 @@ package com.mymoonapplab.oxfirat;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,12 +17,11 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mymoonapplab.oxfirat.duyurular.fragment_duyurular;
 import com.mymoonapplab.oxfirat.etkinlik.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.haberler.fragment_haberler;
 import com.mymoonapplab.oxfirat.yemekhane.fragment_yemekhane;
-
-import com.google.android.gms.ads.MobileAds;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,15 +31,18 @@ public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
     private AdRequest adRequest;
 
+    Fragment fragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         reklamlar();
 
-        if(!InternetKontrol()){
-            Toast.makeText(this,"LÜTFEN İNTERNETİNİZİ AÇIN",Toast.LENGTH_LONG).show();
+        if (!InternetKontrol()) {
+            Toast.makeText(this, "LÜTFEN İNTERNETİNİZİ AÇIN", Toast.LENGTH_LONG).show();
         }
+
 
         //Toolbar ekleme
         Toolbar toolbar = findViewById(R.id.fragment_tutucu_toolBar);
@@ -51,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         load_fragment(new fragment_haberler());
 
     }
-    private void reklamlar(){
+
+    private void reklamlar() {
 
         MobileAds.initialize(this, "ca-app-pub-1818679104699845~1785629318");
         mAdView = findViewById(R.id.adView);
@@ -96,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void load_fragment(Fragment fragment){
+    private void load_fragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_tutucu_frameLayout,fragment)
+                .replace(R.id.fragment_tutucu_frameLayout, fragment)
                 .commit();
     }
 
@@ -107,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                    Fragment fragment=null;
 
                     switch (menuItem.getItemId()) {
 
@@ -134,4 +137,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.settings_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.settings_menu_settings:
+                Toast.makeText(getApplicationContext(), "Ayarlar", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.settings_menu_support:
+                Toast.makeText(getApplicationContext(), "Teşekkürler", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
 }

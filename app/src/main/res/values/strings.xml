@@ -11,4 +11,7 @@
     <string name="duyurular_cekilemedi">Duyurular siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek duyuruları siteden tekrar çekmeye çalışın</string>
     <string name="etkinlikler_cekilemedi">Etkinlikler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek etkinlikleri siteden tekrar çekmeye çalışın</string>
 
+    <string name="settings_menu_settings">Ayarlar</string>
+    <string name="settings_menu_support">Destek Ol</string>
+
 </resources>
