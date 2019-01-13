@@ -37,6 +37,7 @@ public class fragment_etkinlik extends Fragment {
     private ProgressBar progressBar;
     private TextView textview_text_cekilemedi;
 
+    private etkinlikCek etkinlikCekObject=null;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -55,7 +56,8 @@ public class fragment_etkinlik extends Fragment {
 
         page_number=1;
 
-        new etkinlikCek().execute();
+        etkinlikCekObject=new etkinlikCek();
+        etkinlikCekObject.execute();
 
         progressBar=rootView.findViewById(R.id.etkinlik_progressbar);
         textview_text_cekilemedi=rootView.findViewById(R.id.fragment_etkinlikler_textview);
@@ -104,7 +106,6 @@ public class fragment_etkinlik extends Fragment {
 
 
 
-    @SuppressLint("StaticFieldLeak")
     private class etkinlikCek extends AsyncTask<Void,Void,Void>{
 
         private Elements etkinlikElements;
@@ -115,14 +116,14 @@ public class fragment_etkinlik extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/etkinlikler?page="+page_number).get();
+                Document document=Jsoup.connect(getResources().getString(R.string.etkinlik_sitesi)+page_number).get();
                 etkinlikElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
                 page_number++;
 
                 for (int i=0;i<etkinlikElements.size();i++){
                     etkinlik_icerik.add(etkinlikElements.get(i).select("div[class=bottom").text());
                     etkinlik_tarih.add(etkinlikElements.get(i).select("span[class=day]").text());
-                    etkinlik_link.add(MainActivity.FIRAT_WEB +etkinlikElements.get(i).select("a").attr("href"));
+                    etkinlik_link.add(getView().getResources().getString(R.string.okul_sitesi) +etkinlikElements.get(i).select("a").attr("href"));
                 }
 
             } catch (IOException e) {
@@ -150,6 +151,14 @@ public class fragment_etkinlik extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
             swipeRefreshLayout.setRefreshing(false);
 
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(etkinlikCekObject!=null && etkinlikCekObject.cancel(true)){
+            etkinlikCekObject=null;
         }
     }
 

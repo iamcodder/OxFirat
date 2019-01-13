@@ -8,8 +8,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -26,7 +24,6 @@ import com.mymoonapplab.oxfirat.yemekhane.fragment_yemekhane;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String FIRAT_WEB = "http://www.firat.edu.tr";
 
     private AdView mAdView;
     private AdRequest adRequest;
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         reklamlar();
 
         if (!InternetKontrol()) {
-            Toast.makeText(this, "LÜTFEN İNTERNETİNİZİ AÇIN", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.internet_acin, Toast.LENGTH_LONG).show();
         }
 
 
@@ -58,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void reklamlar() {
 
-        MobileAds.initialize(this, "ca-app-pub-1818679104699845~1785629318");
+        MobileAds.initialize(this, getResources().getString(R.string.Mobile_ads_code));
         mAdView = findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().addTestDevice("814B87088029BD05B980A3DB14E3ABF2").build();
+        adRequest = new AdRequest.Builder().addTestDevice(getResources().getString(R.string.Test_device)).build();
         mAdView.loadAd(adRequest);
         mAdView.setAdListener(new AdListener() {
 
@@ -137,29 +134,4 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.settings_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.settings_menu_settings:
-                Toast.makeText(getApplicationContext(), "Ayarlar", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.settings_menu_support:
-                Toast.makeText(getApplicationContext(), "Teşekkürler", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-
-    }
 }

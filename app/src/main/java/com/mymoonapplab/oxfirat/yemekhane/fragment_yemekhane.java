@@ -11,11 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
@@ -38,14 +34,15 @@ public class fragment_yemekhane extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
-
+    private yemekCek yemekCekObject=null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootview= inflater.inflate(R.layout.fragment_yemekhane, container, false);
 
-        new yemekhane().execute();
+        yemekCekObject=new yemekCek();
+        yemekCekObject.execute();
 
         bar=rootview.findViewById(R.id.yemekhane_progressbar);
 
@@ -57,7 +54,7 @@ public class fragment_yemekhane extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new yemekhane().execute();
+                new yemekCek().execute();
             }
         });
 
@@ -66,7 +63,7 @@ public class fragment_yemekhane extends Fragment {
 
 
     @SuppressLint("StaticFieldLeak")
-    private class yemekhane extends AsyncTask<Void,Void,Void> {
+    private class yemekCek extends AsyncTask<Void,Void,Void> {
 
         private String tarih;
         private String menu;
@@ -85,7 +82,7 @@ public class fragment_yemekhane extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect("http://uevi.firat.edu.tr").get();
+                Document document=Jsoup.connect(getResources().getString(R.string.yemekhane_sitesi)).get();
 
                 Elements elementsListe=document.select("div[class=views-field views-field-body]").select("p");
 
@@ -120,9 +117,17 @@ public class fragment_yemekhane extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
 
             if(textView_menu.getText()==""){
-                textView_liste.setText(R.string.veriler_cekilemedi);
+                textView_liste.setText(R.string.yemekhane_cekilemedi);
             }
 
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(yemekCekObject!=null && yemekCekObject.cancel(true)){
+            yemekCekObject=null;
         }
     }
 }

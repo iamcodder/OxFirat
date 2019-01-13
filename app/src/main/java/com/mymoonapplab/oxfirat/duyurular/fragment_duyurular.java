@@ -43,6 +43,8 @@ public class fragment_duyurular extends Fragment {
 
     private int son_duyuru_konumu;
 
+    private duyuruCek duyuruCekObject=null;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_duyurular, container, false);
@@ -51,9 +53,11 @@ public class fragment_duyurular extends Fragment {
         duyuru_icerigi=new ArrayList<>();
         duyuru_tarihi =new ArrayList<>();
 
+        duyuruCekObject=new duyuruCek();
+        duyuruCekObject.execute();
+
         page_number=1;
 
-        new duyuruCek().execute();
 
         progressBar=rootView.findViewById(R.id.duyurular_progressbar);
 
@@ -109,21 +113,25 @@ public class fragment_duyurular extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            try {
-                Document document=Jsoup.connect("http://www.firat.edu.tr/tr/duyurular?page="+page_number).get();
-                duyuruElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
-                page_number++;
+            String duyurular_sitesi=getResources().getString(R.string.duyurular_sitesi);
 
-                for (int i=0;i<duyuruElements.size();i++){
+            if(getView()!=null){
+                try {
+                    Document document=Jsoup.connect(getResources().getString(R.string.duyurular_sitesi)+page_number).get();
+                    duyuruElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
+                    page_number++;
 
-                    duyuru_icerigi.add(duyuruElements.get(i).select("div[class=top]").text());
-                    duyuru_tarihi.add(duyuruElements.get(i).select("span[class=day").text());
-                    duyuru_linki.add(MainActivity.FIRAT_WEB +duyuruElements.get(i).select("a").attr("href"));
+                    for (int i=0;i<duyuruElements.size();i++){
 
+                        duyuru_icerigi.add(duyuruElements.get(i).select("div[class=top]").text());
+                        duyuru_tarihi.add(duyuruElements.get(i).select("span[class=day").text());
+                        duyuru_linki.add(duyurular_sitesi +duyuruElements.get(i).select("a").attr("href"));
+
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
             return null;
@@ -147,9 +155,14 @@ public class fragment_duyurular extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
             swipeRefreshLayout.setRefreshing(false);
 
-
-
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(duyuruCekObject!=null && duyuruCekObject.cancel(true)){
+            duyuruCekObject=null;
+        }
+    }
 }

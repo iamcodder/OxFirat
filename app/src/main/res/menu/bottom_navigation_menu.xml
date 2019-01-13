@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Haberler"
+    <item android:title="@string/haberler"
         android:icon="@drawable/newspaper"
         android:id="@+id/menu_item_haberler"/>
 
-    <item android:title="Duyurular"
+    <item android:title="@string/duyurular"
         android:icon="@drawable/bullhorn"
         android:id="@+id/menu_item_duyuru"/>
 
-    <item android:title="Etkinlikler"
+    <item android:title="@string/etkinlikler"
         android:icon="@drawable/account_group"
         android:id="@+id/menu_item_etkinlik"/>
 
-    <item android:title="Yemekhane"
+    <item android:title="@string/yemekhane"
         android:icon="@drawable/ic_restaurant_menu_black_24dp"
         android:id="@+id/menu_item_yemekhane"/>
 

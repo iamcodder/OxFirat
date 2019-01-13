@@ -32,8 +32,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/fragment_etkinlik_tarih"
             android:layout_margin="8dp"
-            android:gravity="center_vertical"
-            tools:text="asdasdasdasd" />
+            android:gravity="center_vertical"/>
 
 
 

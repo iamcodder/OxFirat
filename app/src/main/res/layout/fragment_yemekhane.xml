@@ -29,8 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:textAlignment="center"
-                android:textSize="18sp"
-                tools:text="YEEMK \n YEMEK \n YEMEK \n YEMEK" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/menu"
@@ -40,8 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="GÜNÜN MENÜSÜ" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_tarihh"
@@ -51,8 +49,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="26/07/2012" />
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

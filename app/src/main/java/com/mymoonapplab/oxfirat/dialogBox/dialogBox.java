@@ -29,18 +29,14 @@ import java.util.ArrayList;
 public class dialogBox extends DialogFragment {
 
     private TextView textView_baslik,textView_tarih,textView_icerik;
-    private String URL_LINKI;
-
     private RecyclerView recyclerView;
     private dialogbox_adapter adapter;
-
-    private FragmentManager manager;
+    private String URL_LINKI;
 
     public dialogBox(){
 
     }
 
-    @SuppressLint("ValidFragment")
     public dialogBox(String URL_LINKI) {
         this.URL_LINKI = URL_LINKI;
     }
@@ -50,8 +46,6 @@ public class dialogBox extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=LayoutInflater.from(getContext()).inflate(R.layout.dialogbox,container,false);
         new haberi_cek().execute();
-
-        manager=getFragmentManager();
 
         textView_baslik=view.findViewById(R.id.dialogbox_baslik);
         textView_tarih=view.findViewById(R.id.dialogbox_tarih);
@@ -117,7 +111,7 @@ public class dialogBox extends DialogFragment {
 
                 for(int i=0;i<haberdeki_resim_sayisi;i++){
 
-                    resim_linkleri.add(MainActivity.FIRAT_WEB+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
+                    resim_linkleri.add(R.string.okul_sitesi+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
                 }
 
 
@@ -144,7 +138,7 @@ public class dialogBox extends DialogFragment {
 
 
             if(!haberdeki_link.equals("")){
-                haberdeki_link=MainActivity.FIRAT_WEB+haberdeki_link;
+                haberdeki_link=R.string.okul_sitesi+haberdeki_link;
 
                 textView_icerik.setOnClickListener(new View.OnClickListener() {
                     @Override

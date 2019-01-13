@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">OxFırat</string>
+
+    <string name="Mobile_ads_code">ca-app-pub-1818679104699845~1785629318</string>
+    <string name="Test_device">D239974A1C94D237A5745EC53CF138BE</string>
+
+    <string name="okul_sitesi">http://www.firat.edu.tr</string>
+    <string name="yemekhane_sitesi">http://uevi.firat.edu.tr</string>
+    <string name="haber_sitesi">http://www.firat.edu.tr/tr/haberler?page=</string>
+    <string name="etkinlik_sitesi">http://www.firat.edu.tr/tr/etkinlikler?page=</string>
+    <string name="duyurular_sitesi">http://www.firat.edu.tr/tr/duyurular?page=</string>
+
+    <string name="haberler">Haberler</string>
+    <string name="duyurular">Duyurular</string>
+    <string name="etkinlikler">Etkinlikler</string>
+    <string name="yemekhane">Yemekhane</string>
+
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+
+
+    <string name="yemekhane_cekilemedi">Günün menüsü siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek günün menüsü siteden tekrar çekmeye çalışın</string>
+    <string name="haberler_cekilemedi">Haberler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek haberleri siteden tekrar çekmeye çalışın</string>
+    <string name="duyurular_cekilemedi">Duyurular siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek duyuruları siteden tekrar çekmeye çalışın</string>
+    <string name="etkinlikler_cekilemedi">Etkinlikler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek etkinlikleri siteden tekrar çekmeye çalışın</string>
+
+
+
+    <string name="internet_acin">Lütfen internetinizi açın</string>
+
+</resources>

@@ -1,17 +1,30 @@
 <resources>
     <string name="app_name">OxFırat</string>
 
+    <string name="Mobile_ads_code">ca-app-pub-1818679104699845~1785629318</string>
+    <string name="Test_device">D239974A1C94D237A5745EC53CF138BE</string>
+
+    <string name="okul_sitesi">http://www.firat.edu.tr</string>
+    <string name="yemekhane_sitesi">http://uevi.firat.edu.tr</string>
+    <string name="haber_sitesi">http://www.firat.edu.tr/tr/haberler?page=</string>
+    <string name="etkinlik_sitesi">http://www.firat.edu.tr/tr/etkinlikler?page=</string>
+    <string name="duyurular_sitesi">http://www.firat.edu.tr/tr/duyurular?page=</string>
+
+    <string name="haberler">News</string>
+    <string name="duyurular">Announcements</string>
+    <string name="etkinlikler">Events</string>
+    <string name="yemekhane">Dining Hall</string>
+
     <string name="hello_blank_fragment">hello_blank_fragment</string>
 
-    <string name="navigation_view_opened">Navigation Bar Opened</string>
-    <string name="navigation_view_closed">Navigation Bar Closed</string>
 
-    <string name="veriler_cekilemedi">Günün menüsü siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek günün menüsü siteden tekrar çekmeye çalışın</string>
-    <string name="haberler_cekilemedi">Haberler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek haberleri siteden tekrar çekmeye çalışın</string>
-    <string name="duyurular_cekilemedi">Duyurular siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek duyuruları siteden tekrar çekmeye çalışın</string>
-    <string name="etkinlikler_cekilemedi">Etkinlikler siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek etkinlikleri siteden tekrar çekmeye çalışın</string>
+    <string name="yemekhane_cekilemedi">The menu of the day could not be retrieved from the site.Please try to take the menu of the day by pulling your finger from top to bottom.</string>
+    <string name="haberler_cekilemedi">News could not be retrieved from the site.Please pull your finger down from the top to try to get the news again from the site</string>
+    <string name="duyurular_cekilemedi">Announcements could not be retrieved from the site.Please pull your finger down from the top to try to get an announcement from the site again</string>
+    <string name="etkinlikler_cekilemedi">Events could not be retrieved from the site.To try to get an event from the site again, please pull your finger down from the top.</string>
 
-    <string name="settings_menu_settings">Ayarlar</string>
-    <string name="settings_menu_support">Destek Ol</string>
+
+    <string name="internet_acin">Please open the internet connection</string>
+
 
 </resources>

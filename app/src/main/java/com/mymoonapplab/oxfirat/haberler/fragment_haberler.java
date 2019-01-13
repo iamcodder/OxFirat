@@ -44,6 +44,8 @@ public class fragment_haberler extends Fragment {
 
     private int son_haber_konumu;
 
+    private haberCek haberCekObject=null;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class fragment_haberler extends Fragment {
 
         page_number = 1;
 
-        new haberCek().execute();
+        haberCekObject=new haberCek();
+        haberCekObject.execute();
 
         bar = rootView.findViewById(R.id.fragment_haberler_progressBar);
 
@@ -113,6 +116,8 @@ public class fragment_haberler extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
+            String okul_sitesi=getResources().getString(R.string.okul_sitesi);
+
             try {
 
                 Document document = Jsoup.connect("http://www.firat.edu.tr/tr/haberler?page=" + page_number).get();
@@ -122,7 +127,7 @@ public class fragment_haberler extends Fragment {
                 for (int i = 0; i < haber1.size(); i++) {
 
                     haberBasligi.add(haber1.get(i).select("div[class=top]").text());
-                    haberLinki.add(MainActivity.FIRAT_WEB + haber1.get(i).select("a").attr("href"));
+                    haberLinki.add(okul_sitesi + haber1.get(i).select("a").attr("href"));
 
                     String parcalama[] = haber1.get(i).select("div").attr("style").split("'");
 
@@ -156,6 +161,14 @@ public class fragment_haberler extends Fragment {
 
             bar.setVisibility(View.INVISIBLE);
             swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(haberCekObject!=null && haberCekObject.cancel(true)){
+            haberCekObject=null;
         }
     }
 }

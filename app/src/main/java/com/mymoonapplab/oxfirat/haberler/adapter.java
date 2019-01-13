@@ -22,7 +22,6 @@ import java.util.List;
 
 public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
-    private String okul_web;
     private Context mContext;
     private List<String> haber_baslik;
     private List<String> haber_resim;
@@ -31,7 +30,6 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
 
     adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki,FragmentManager manager) {
-        okul_web="http://www.firat.edu.tr";
         this.mContext = mContext;
         this.haber_baslik = haber_baslik;
         this.haber_resim = haber_resim;
@@ -59,7 +57,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
 
 
-        Picasso.get().load(okul_web+haber_resim.get(i))
+        Picasso.get().load(mContext.getResources().getString(R.string.okul_sitesi)+haber_resim.get(i))
                 .into(viewHolder.mImageview, new Callback() {
                     @Override
                     public void onSuccess() {
