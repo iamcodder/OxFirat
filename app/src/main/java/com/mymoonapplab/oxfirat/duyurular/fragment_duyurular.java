@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
@@ -30,7 +28,7 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class fragment_duyurular extends Fragment {
 
-    private ArrayList<String> duyuru_linki,duyuru_icerigi, duyuru_tarihi;
+    private ArrayList<String> duyuru_linki, duyuru_icerigi, duyuru_tarihi;
     private RecyclerView recyclerView;
     private fragment_duyurular_adapter adapter;
 
@@ -43,48 +41,48 @@ public class fragment_duyurular extends Fragment {
 
     private int son_duyuru_konumu;
 
-    private duyuruCek duyuruCekObject=null;
+    private duyuruCek duyuruCekObject = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView= inflater.inflate(R.layout.fragment_duyurular, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_duyurular, container, false);
 
-        duyuru_linki=new ArrayList<>();
-        duyuru_icerigi=new ArrayList<>();
-        duyuru_tarihi =new ArrayList<>();
+        duyuru_linki = new ArrayList<>();
+        duyuru_icerigi = new ArrayList<>();
+        duyuru_tarihi = new ArrayList<>();
 
-        duyuruCekObject=new duyuruCek();
+        duyuruCekObject = new duyuruCek();
         duyuruCekObject.execute();
 
-        page_number=1;
+        page_number = 1;
 
 
-        progressBar=rootView.findViewById(R.id.duyurular_progressbar);
+        progressBar = rootView.findViewById(R.id.duyurular_progressbar);
 
-        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_duyurular_textview);
-        textview_text_cekilemedi.setText(R.string.duyurular_cekilemedi);
+        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_duyurular_textview);
+        textview_text_cekilemedi.setText(getResources().getText(R.string.duyurular_cekilemedi));
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
-        recyclerView=rootView.findViewById(R.id.fragment_duyurular_recyclerview);
+        recyclerView = rootView.findViewById(R.id.fragment_duyurular_recyclerview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 
-                son_duyuru_konumu=0;
-                int toplam_duyuru=0;
+                son_duyuru_konumu = 0;
+                int toplam_duyuru = 0;
 
-                LinearLayoutManager manager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                LinearLayoutManager manager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
 
-                if (manager!=null){
+                if (manager != null) {
 
-                    son_duyuru_konumu=manager.findLastVisibleItemPosition();
-                    toplam_duyuru=manager.getItemCount();
+                    son_duyuru_konumu = manager.findLastVisibleItemPosition();
+                    toplam_duyuru = manager.getItemCount();
                 }
 
-                if(son_duyuru_konumu+1==toplam_duyuru){
+                if (son_duyuru_konumu + 1 == toplam_duyuru) {
                     new duyuruCek().execute();
                     progressBar.setVisibility(View.VISIBLE);
                 }
@@ -92,7 +90,7 @@ public class fragment_duyurular extends Fragment {
             }
         });
 
-        swipeRefreshLayout=rootView.findViewById(R.id.fragment_duyurular_waveswipe);
+        swipeRefreshLayout = rootView.findViewById(R.id.fragment_duyurular_waveswipe);
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -105,7 +103,7 @@ public class fragment_duyurular extends Fragment {
 
 
     @SuppressLint("StaticFieldLeak")
-    private class duyuruCek extends AsyncTask<Void,Void,Void>{
+    private class duyuruCek extends AsyncTask<Void, Void, Void> {
 
         private Elements duyuruElements;
 
@@ -113,19 +111,18 @@ public class fragment_duyurular extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String duyurular_sitesi=getResources().getString(R.string.duyurular_sitesi);
 
-            if(getView()!=null){
+            if (getView() != null) {
                 try {
-                    Document document=Jsoup.connect(getResources().getString(R.string.duyurular_sitesi)+page_number).get();
-                    duyuruElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
+                    Document document = Jsoup.connect(getResources().getString(R.string.duyurular_sitesi) + page_number).get();
+                    duyuruElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
                     page_number++;
 
-                    for (int i=0;i<duyuruElements.size();i++){
+                    for (int i = 0; i < duyuruElements.size(); i++) {
 
                         duyuru_icerigi.add(duyuruElements.get(i).select("div[class=top]").text());
                         duyuru_tarihi.add(duyuruElements.get(i).select("span[class=day").text());
-                        duyuru_linki.add(duyurular_sitesi +duyuruElements.get(i).select("a").attr("href"));
+                        duyuru_linki.add(getResources().getString(R.string.okul_sitesi) + duyuruElements.get(i).select("a").attr("href"));
 
                     }
 
@@ -141,15 +138,13 @@ public class fragment_duyurular extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if(duyuru_icerigi.isEmpty()){
+            if (duyuru_icerigi.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
-            }
-
-            else {
+            } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-                adapter=new fragment_duyurular_adapter(getContext(),duyuru_icerigi,duyuru_tarihi,duyuru_linki,getFragmentManager());
+                adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, getFragmentManager());
                 recyclerView.setAdapter(adapter);
-                recyclerView.scrollToPosition(son_duyuru_konumu-1);
+                recyclerView.scrollToPosition(son_duyuru_konumu - 1);
             }
 
             progressBar.setVisibility(View.INVISIBLE);
@@ -161,8 +156,8 @@ public class fragment_duyurular extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(duyuruCekObject!=null && duyuruCekObject.cancel(true)){
-            duyuruCekObject=null;
+        if (duyuruCekObject != null && duyuruCekObject.cancel(true)) {
+            duyuruCekObject = null;
         }
     }
 }

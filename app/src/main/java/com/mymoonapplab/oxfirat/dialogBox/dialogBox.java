@@ -37,6 +37,7 @@ public class dialogBox extends DialogFragment {
 
     }
 
+    @SuppressLint("ValidFragment")
     public dialogBox(String URL_LINKI) {
         this.URL_LINKI = URL_LINKI;
     }
@@ -111,7 +112,7 @@ public class dialogBox extends DialogFragment {
 
                 for(int i=0;i<haberdeki_resim_sayisi;i++){
 
-                    resim_linkleri.add(R.string.okul_sitesi+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
+                    resim_linkleri.add(getResources().getString(R.string.okul_sitesi)+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
                 }
 
 
@@ -138,7 +139,7 @@ public class dialogBox extends DialogFragment {
 
 
             if(!haberdeki_link.equals("")){
-                haberdeki_link=R.string.okul_sitesi+haberdeki_link;
+                haberdeki_link=getResources().getString(R.string.okul_sitesi)+haberdeki_link;
 
                 textView_icerik.setOnClickListener(new View.OnClickListener() {
                     @Override

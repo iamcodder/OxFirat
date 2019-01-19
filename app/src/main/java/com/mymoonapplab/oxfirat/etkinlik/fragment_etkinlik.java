@@ -121,9 +121,11 @@ public class fragment_etkinlik extends Fragment {
                 page_number++;
 
                 for (int i=0;i<etkinlikElements.size();i++){
+
                     etkinlik_icerik.add(etkinlikElements.get(i).select("div[class=bottom").text());
                     etkinlik_tarih.add(etkinlikElements.get(i).select("span[class=day]").text());
                     etkinlik_link.add(getView().getResources().getString(R.string.okul_sitesi) +etkinlikElements.get(i).select("a").attr("href"));
+
                 }
 
             } catch (IOException e) {
