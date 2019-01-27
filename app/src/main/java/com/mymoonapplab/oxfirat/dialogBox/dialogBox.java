@@ -51,12 +51,9 @@ public class dialogBox extends DialogFragment {
         textView_baslik=view.findViewById(R.id.dialogbox_baslik);
         textView_tarih=view.findViewById(R.id.dialogbox_tarih);
         textView_icerik=view.findViewById(R.id.dialogbox_icerik);
-
-
+        
         recyclerView=view.findViewById(R.id.dialogbox_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
 
         return view;
     }
@@ -70,19 +67,21 @@ public class dialogBox extends DialogFragment {
         private String haber_basligi;
         private String haber_tarihi;
         private String haber_icerigi;
+        private String haberdeki_link;
 
         private int haberdeki_resim_sayisi;
+        private int paragraf_sayisi;
 
         private ArrayList<String> resim_linkleri;
 
-        int paragraf_sayisi;
-
-        private String haberdeki_link;
+        private int tablo_sayisi;
+        private String tablodaki_eleman;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             haber_icerigi="";
+            tablodaki_eleman="";
             resim_linkleri=new ArrayList<>();
 
         }
@@ -117,6 +116,14 @@ public class dialogBox extends DialogFragment {
 
 
                 haberdeki_link=elements.select("div[class=text-resizable]").select("p").select("a").attr("href");
+
+                tablo_sayisi=elements.select("div[class=text-resizable]").select("ol").select("li").size();
+
+                for (int i=0;i<tablo_sayisi;i++){
+
+                    haber_icerigi=haber_icerigi+elements.select("div[class=text-resizable]").select("ol").select("li").get(i).text()+"\n \n";
+
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
