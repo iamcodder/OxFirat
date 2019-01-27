@@ -9,10 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,10 +27,10 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 public class fragment_yemekhane extends Fragment {
 
 
-    private ProgressBar bar;
     private TextView textView_liste;
     private TextView textView_menu;
     private TextView textView_tarih;
+    private AVLoadingIndicatorView progress_bar;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -44,7 +44,7 @@ public class fragment_yemekhane extends Fragment {
         yemekCekObject=new yemekCek();
         yemekCekObject.execute();
 
-        bar=rootview.findViewById(R.id.yemekhane_progressbar);
+        progress_bar=rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textView_liste =rootview.findViewById(R.id.yemek_listesi);
         textView_menu=rootview.findViewById(R.id.menu);
@@ -109,12 +109,14 @@ public class fragment_yemekhane extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            bar.setVisibility(View.INVISIBLE);
+            progress_bar.smoothToHide();
             textView_menu.setText(menu);
             textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
 
-            swipeRefreshLayout.setRefreshing(false);
+            if(swipeRefreshLayout.isRefreshing()){
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
             if(textView_menu.getText()==""){
                 textView_liste.setText(R.string.yemekhane_cekilemedi);

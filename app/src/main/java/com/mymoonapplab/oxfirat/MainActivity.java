@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void load_fragment(Fragment fragment) {
+
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_tutucu_frameLayout, fragment)
                 .commit();

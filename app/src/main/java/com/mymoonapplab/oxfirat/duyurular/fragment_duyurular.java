@@ -12,10 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,7 +32,8 @@ public class fragment_duyurular extends Fragment {
     private RecyclerView recyclerView;
     private fragment_duyurular_adapter adapter;
 
-    private ProgressBar progressBar;
+    private AVLoadingIndicatorView progress_bar;
+
     private TextView textview_text_cekilemedi;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
@@ -57,7 +58,7 @@ public class fragment_duyurular extends Fragment {
         page_number = 1;
 
 
-        progressBar = rootView.findViewById(R.id.duyurular_progressbar);
+        progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_duyurular_textview);
         textview_text_cekilemedi.setText(getResources().getText(R.string.duyurular_cekilemedi));
@@ -84,7 +85,7 @@ public class fragment_duyurular extends Fragment {
 
                 if (son_duyuru_konumu + 1 == toplam_duyuru) {
                     new duyuruCek().execute();
-                    progressBar.setVisibility(View.VISIBLE);
+                    progress_bar.smoothToShow();
                 }
 
             }
@@ -147,9 +148,11 @@ public class fragment_duyurular extends Fragment {
                 recyclerView.scrollToPosition(son_duyuru_konumu - 1);
             }
 
-            progressBar.setVisibility(View.INVISIBLE);
-            swipeRefreshLayout.setRefreshing(false);
+            progress_bar.smoothToHide();
 
+            if(swipeRefreshLayout.isRefreshing()){
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 

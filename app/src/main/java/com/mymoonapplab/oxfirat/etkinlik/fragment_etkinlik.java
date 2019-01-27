@@ -1,7 +1,6 @@
 package com.mymoonapplab.oxfirat.etkinlik;
 
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,8 +32,9 @@ public class fragment_etkinlik extends Fragment {
     private ArrayList<String> etkinlik_link;
     private RecyclerView recyclerView;
     private fragment_etkinlik_adapter adapter;
-    private ProgressBar progressBar;
     private TextView textview_text_cekilemedi;
+
+    private AVLoadingIndicatorView progress_bar;
 
     private etkinlikCek etkinlikCekObject=null;
 
@@ -59,7 +58,7 @@ public class fragment_etkinlik extends Fragment {
         etkinlikCekObject=new etkinlikCek();
         etkinlikCekObject.execute();
 
-        progressBar=rootView.findViewById(R.id.etkinlik_progressbar);
+        progress_bar=rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
         textview_text_cekilemedi=rootView.findViewById(R.id.fragment_etkinlikler_textview);
         textview_text_cekilemedi.setText(R.string.etkinlikler_cekilemedi);
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
@@ -84,7 +83,7 @@ public class fragment_etkinlik extends Fragment {
 
                 if(son_etkinlik_konumu+1==toplam_etkinlik_sayisi){
                     new etkinlikCek().execute();
-                    progressBar.setVisibility(View.VISIBLE);
+                    progress_bar.smoothToShow();
                 }
 
 
@@ -150,8 +149,11 @@ public class fragment_etkinlik extends Fragment {
                 recyclerView.scrollToPosition(son_etkinlik_konumu-1);
             }
 
-            progressBar.setVisibility(View.INVISIBLE);
-            swipeRefreshLayout.setRefreshing(false);
+            progress_bar.smoothToHide();
+
+            if(swipeRefreshLayout.isRefreshing()){
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
         }
     }

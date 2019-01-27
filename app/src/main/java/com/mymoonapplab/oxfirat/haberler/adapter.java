@@ -17,6 +17,7 @@ import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
 
-        viewHolder.mBar.setVisibility(View.VISIBLE);
+        viewHolder.mBar.smoothToShow();
         viewHolder.mTextview.setText(haber_baslik.get(i));
 
 
@@ -61,12 +62,12 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
                 .into(viewHolder.mImageview, new Callback() {
                     @Override
                     public void onSuccess() {
-                        viewHolder.mBar.setVisibility(View.INVISIBLE);
+                        viewHolder.mBar.smoothToHide();
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        viewHolder.mBar.setVisibility(View.VISIBLE);
+                        viewHolder.mBar.smoothToHide();
 
                     }
                 });
@@ -93,7 +94,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         private CardView mCardview;
         private ImageView mImageview;
         private TextView mTextview;
-        private ProgressBar mBar;
+        private AVLoadingIndicatorView mBar;
 
 
         ViewHolder(@NonNull View itemView) {
@@ -101,7 +102,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
             mCardview=itemView.findViewById(R.id.fragment_haberler_carview_design);
             mImageview=itemView.findViewById(R.id.cardView_resim);
             mTextview=itemView.findViewById(R.id.cardView_baslik);
-            mBar=itemView.findViewById(R.id.cardView_progressBar);
+            mBar=itemView.findViewById(R.id.cardView_progress_avi);
         }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".yemekhane.fragment_yemekhane">
 
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
@@ -15,12 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:id="@+id/yemekhane_progressbar"
-                style="?android:attr/progressBarStyle"
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/fragmentyemekhane_progress_avi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                app:indicatorName="PacmanIndicator"
+                android:layout_centerInParent="true"
+                app:indicatorColor="@color/colorPrimary"/>
 
 
             <TextView

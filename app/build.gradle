@@ -6,8 +6,8 @@ android {
         applicationId "com.mymoonapplab.oxfirat"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 8
+        versionName "1.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
 
     implementation 'com.github.hsmnzaydn:imagezoom:1.2.1'
+
+    implementation 'com.wang.avi:library:2.1.3'
 
 
 

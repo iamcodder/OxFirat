@@ -51,7 +51,7 @@ public class dialogBox extends DialogFragment {
         textView_baslik=view.findViewById(R.id.dialogbox_baslik);
         textView_tarih=view.findViewById(R.id.dialogbox_tarih);
         textView_icerik=view.findViewById(R.id.dialogbox_icerik);
-        
+
         recyclerView=view.findViewById(R.id.dialogbox_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -75,13 +75,11 @@ public class dialogBox extends DialogFragment {
         private ArrayList<String> resim_linkleri;
 
         private int tablo_sayisi;
-        private String tablodaki_eleman;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             haber_icerigi="";
-            tablodaki_eleman="";
             resim_linkleri=new ArrayList<>();
 
         }

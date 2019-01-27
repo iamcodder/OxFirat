@@ -33,11 +33,14 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop" />
 
-                <ProgressBar
-                    android:id="@+id/cardView_progressBar"
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/cardView_progress_avi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+                    app:indicatorName="BallPulseSyncIndicator"
+                    android:layout_centerInParent="true"
+                    app:indicatorColor="@color/colorPrimary"
+                    style="@style/AVLoadingIndicatorView.Small"/>
 
             </RelativeLayout>
 

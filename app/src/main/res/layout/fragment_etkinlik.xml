@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".etkinlik.fragment_etkinlik">
 
 
@@ -21,11 +22,13 @@
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 
 
-    <ProgressBar
-        android:id="@+id/etkinlik_progressbar"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/fragmentyemekhane_progress_avi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        app:indicatorName="PacmanIndicator"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/fragment_etkinlikler_textview"

@@ -12,11 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,7 +34,7 @@ public class fragment_haberler extends Fragment {
     public static ArrayList<String> haberLinki;
     private adapter adapter;
     private RecyclerView recyclerView;
-    private ProgressBar bar;
+    private AVLoadingIndicatorView progress_bar;
     private TextView textview_text_cekilemedi;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
@@ -44,7 +43,7 @@ public class fragment_haberler extends Fragment {
 
     private int son_haber_konumu;
 
-    private haberCek haberCekObject=null;
+    private haberCek haberCekObject = null;
 
 
     @Override
@@ -57,12 +56,12 @@ public class fragment_haberler extends Fragment {
 
         page_number = 1;
 
-        haberCekObject=new haberCek();
+        haberCekObject = new haberCek();
         haberCekObject.execute();
 
-        bar = rootView.findViewById(R.id.fragment_haberler_progressBar);
+        progress_bar=rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
-        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_haberler_textview);
+        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);
         textview_text_cekilemedi.setText(R.string.haberler_cekilemedi);
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
@@ -76,7 +75,7 @@ public class fragment_haberler extends Fragment {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 
                 int toplam_haber_sayisi = 0;
-                son_haber_konumu=0;
+                son_haber_konumu = 0;
 
                 LinearLayoutManager manager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
 
@@ -85,9 +84,9 @@ public class fragment_haberler extends Fragment {
                     son_haber_konumu = manager.findLastVisibleItemPosition();
                 }
 
-                if(son_haber_konumu+1==toplam_haber_sayisi){
+                if (son_haber_konumu + 1 == toplam_haber_sayisi) {
                     new haberCek().execute();
-                    bar.setVisibility(View.VISIBLE);
+                    progress_bar.smoothToShow();
 
                 }
             }
@@ -116,7 +115,7 @@ public class fragment_haberler extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String okul_sitesi=getResources().getString(R.string.okul_sitesi);
+            String okul_sitesi = getResources().getString(R.string.okul_sitesi);
 
             try {
 
@@ -148,27 +147,29 @@ public class fragment_haberler extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (haberBasligi.isEmpty()){
+            if (haberBasligi.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
-            }
-
-            else {
+            } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
                 adapter = new adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
                 recyclerView.setAdapter(adapter);
-                recyclerView.scrollToPosition(son_haber_konumu-1);
+                recyclerView.scrollToPosition(son_haber_konumu - 1);
             }
 
-            bar.setVisibility(View.INVISIBLE);
-            swipeRefreshLayout.setRefreshing(false);
+            progress_bar.smoothToHide();
+
+            if(swipeRefreshLayout.isRefreshing()){
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(haberCekObject!=null && haberCekObject.cancel(true)){
-            haberCekObject=null;
+        if (haberCekObject != null && haberCekObject.cancel(true)) {
+            haberCekObject = null;
         }
     }
 }

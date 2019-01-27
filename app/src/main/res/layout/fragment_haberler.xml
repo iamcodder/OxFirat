@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".haberler.fragment_haberler">
 
-    <!-- TODO: Update blank fragment layout -->
 
-    <ProgressBar
-        android:id="@+id/fragment_haberler_progressBar"
-        style="?android:attr/progressBarStyle"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/fragmentyemekhane_progress_avi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        app:indicatorName="PacmanIndicator"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/colorPrimary"/>
 
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:layout_width="match_parent"

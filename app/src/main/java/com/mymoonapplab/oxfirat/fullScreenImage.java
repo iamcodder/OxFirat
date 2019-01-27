@@ -10,11 +10,12 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 public class fullScreenImage extends AppCompatActivity {
 
-    private ProgressBar bar;
     private ImageView imageView;
+    private AVLoadingIndicatorView progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +23,14 @@ public class fullScreenImage extends AppCompatActivity {
         setContentView(R.layout.activity_full_screen_image);
 
         imageView = findViewById(R.id.activity_full_screen_imageview);
-        bar=findViewById(R.id.activity_full_screen_progressBar);
+        progress_bar=findViewById(R.id.activity_full_screen_progress_avi);
 
         Intent getIntent = getIntent();
 
         Picasso.get().load(getIntent.getStringExtra("resim_linki")).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
-                bar.setVisibility(View.INVISIBLE);
+                progress_bar.smoothToHide();
             }
 
             @Override
