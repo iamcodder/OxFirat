@@ -150,7 +150,7 @@ public class fragment_duyurular extends Fragment {
 
             progress_bar.smoothToHide();
 
-            if(swipeRefreshLayout.isRefreshing()){
+            if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
@@ -159,6 +159,13 @@ public class fragment_duyurular extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (progress_bar.isEnabled())
+            progress_bar.smoothToHide();
+
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+
         if (duyuruCekObject != null && duyuruCekObject.cancel(true)) {
             duyuruCekObject = null;
         }

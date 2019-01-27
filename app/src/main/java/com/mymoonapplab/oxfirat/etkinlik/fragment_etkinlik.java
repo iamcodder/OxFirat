@@ -36,7 +36,7 @@ public class fragment_etkinlik extends Fragment {
 
     private AVLoadingIndicatorView progress_bar;
 
-    private etkinlikCek etkinlikCekObject=null;
+    private etkinlikCek etkinlikCekObject = null;
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
@@ -47,41 +47,41 @@ public class fragment_etkinlik extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_etkinlik, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
 
-        etkinlik_tarih=new ArrayList<>();
-        etkinlik_icerik=new ArrayList<>();
-        etkinlik_link=new ArrayList<>();
+        etkinlik_tarih = new ArrayList<>();
+        etkinlik_icerik = new ArrayList<>();
+        etkinlik_link = new ArrayList<>();
 
-        page_number=1;
+        page_number = 1;
 
-        etkinlikCekObject=new etkinlikCek();
+        etkinlikCekObject = new etkinlikCek();
         etkinlikCekObject.execute();
 
-        progress_bar=rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
-        textview_text_cekilemedi=rootView.findViewById(R.id.fragment_etkinlikler_textview);
+        progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_etkinlikler_textview);
         textview_text_cekilemedi.setText(R.string.etkinlikler_cekilemedi);
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
-        recyclerView=rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
+        recyclerView = rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 
-                LinearLayoutManager manager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                LinearLayoutManager manager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
 
-                int toplam_etkinlik_sayisi=0;
-                son_etkinlik_konumu=0;
+                int toplam_etkinlik_sayisi = 0;
+                son_etkinlik_konumu = 0;
 
-                if(manager!=null){
-                    toplam_etkinlik_sayisi=manager.getItemCount();
-                    son_etkinlik_konumu=manager.findLastVisibleItemPosition();
+                if (manager != null) {
+                    toplam_etkinlik_sayisi = manager.getItemCount();
+                    son_etkinlik_konumu = manager.findLastVisibleItemPosition();
                 }
 
-                if(son_etkinlik_konumu+1==toplam_etkinlik_sayisi){
+                if (son_etkinlik_konumu + 1 == toplam_etkinlik_sayisi) {
                     new etkinlikCek().execute();
                     progress_bar.smoothToShow();
                 }
@@ -91,7 +91,7 @@ public class fragment_etkinlik extends Fragment {
         });
 
 
-        swipeRefreshLayout=rootView.findViewById(R.id.fragment_etkinlik_waveswipe);
+        swipeRefreshLayout = rootView.findViewById(R.id.fragment_etkinlik_waveswipe);
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -104,8 +104,7 @@ public class fragment_etkinlik extends Fragment {
     }
 
 
-
-    private class etkinlikCek extends AsyncTask<Void,Void,Void>{
+    private class etkinlikCek extends AsyncTask<Void, Void, Void> {
 
         private Elements etkinlikElements;
 
@@ -115,15 +114,15 @@ public class fragment_etkinlik extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect(getResources().getString(R.string.etkinlik_sitesi)+page_number).get();
-                etkinlikElements=document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
+                Document document = Jsoup.connect(getResources().getString(R.string.etkinlik_sitesi) + page_number).get();
+                etkinlikElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
                 page_number++;
 
-                for (int i=0;i<etkinlikElements.size();i++){
+                for (int i = 0; i < etkinlikElements.size(); i++) {
 
                     etkinlik_icerik.add(etkinlikElements.get(i).select("div[class=bottom").text());
                     etkinlik_tarih.add(etkinlikElements.get(i).select("span[class=day]").text());
-                    etkinlik_link.add(getView().getResources().getString(R.string.okul_sitesi) +etkinlikElements.get(i).select("a").attr("href"));
+                    etkinlik_link.add(getView().getResources().getString(R.string.okul_sitesi) + etkinlikElements.get(i).select("a").attr("href"));
 
                 }
 
@@ -138,20 +137,18 @@ public class fragment_etkinlik extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if(etkinlik_icerik.isEmpty()){
+            if (etkinlik_icerik.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
-            }
-
-            else {
+            } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-                adapter=new fragment_etkinlik_adapter(getContext(),etkinlik_tarih,etkinlik_icerik,etkinlik_link,getFragmentManager());
+                adapter = new fragment_etkinlik_adapter(getContext(), etkinlik_tarih, etkinlik_icerik, etkinlik_link, getFragmentManager());
                 recyclerView.setAdapter(adapter);
-                recyclerView.scrollToPosition(son_etkinlik_konumu-1);
+                recyclerView.scrollToPosition(son_etkinlik_konumu - 1);
             }
 
             progress_bar.smoothToHide();
 
-            if(swipeRefreshLayout.isRefreshing()){
+            if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -161,8 +158,15 @@ public class fragment_etkinlik extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(etkinlikCekObject!=null && etkinlikCekObject.cancel(true)){
-            etkinlikCekObject=null;
+
+        if (progress_bar.isEnabled())
+            progress_bar.smoothToHide();
+
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+
+        if (etkinlikCekObject != null && etkinlikCekObject.cancel(true)) {
+            etkinlikCekObject = null;
         }
     }
 

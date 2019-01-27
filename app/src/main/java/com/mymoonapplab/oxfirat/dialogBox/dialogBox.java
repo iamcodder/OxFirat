@@ -1,6 +1,7 @@
 package com.mymoonapplab.oxfirat.dialogBox;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mymoonapplab.oxfirat.MainActivity;
 import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
@@ -28,12 +27,12 @@ import java.util.ArrayList;
 
 public class dialogBox extends DialogFragment {
 
-    private TextView textView_baslik,textView_tarih,textView_icerik;
+    private TextView textView_baslik, textView_tarih, textView_icerik;
     private RecyclerView recyclerView;
     private dialogbox_adapter adapter;
     private String URL_LINKI;
 
-    public dialogBox(){
+    public dialogBox() {
 
     }
 
@@ -45,23 +44,22 @@ public class dialogBox extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=LayoutInflater.from(getContext()).inflate(R.layout.dialogbox,container,false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialogbox, container, false);
         new haberi_cek().execute();
 
-        textView_baslik=view.findViewById(R.id.dialogbox_baslik);
-        textView_tarih=view.findViewById(R.id.dialogbox_tarih);
-        textView_icerik=view.findViewById(R.id.dialogbox_icerik);
+        textView_baslik = view.findViewById(R.id.dialogbox_baslik);
+        textView_tarih = view.findViewById(R.id.dialogbox_tarih);
+        textView_icerik = view.findViewById(R.id.dialogbox_icerik);
 
-        recyclerView=view.findViewById(R.id.dialogbox_recycleview);
+        recyclerView = view.findViewById(R.id.dialogbox_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
 
 
-
     @SuppressLint("StaticFieldLeak")
-    private class haberi_cek extends AsyncTask<Void,Void,Void>{
+    private class haberi_cek extends AsyncTask<Void, Void, Void> {
 
         private Elements elements;
         private String haber_basligi;
@@ -79,8 +77,8 @@ public class dialogBox extends DialogFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            haber_icerigi="";
-            resim_linkleri=new ArrayList<>();
+            haber_icerigi = "";
+            resim_linkleri = new ArrayList<>();
 
         }
 
@@ -88,38 +86,38 @@ public class dialogBox extends DialogFragment {
         protected Void doInBackground(Void... voids) {
 
             try {
-                Document document=Jsoup.connect(URL_LINKI).get();
-                elements=document.select("div[class=col-xs-12 col-md-8 lm-md-t7 lm-xs-t6 lm-xs-b6 searchMain]");
+                Document document = Jsoup.connect(URL_LINKI).get();
+                elements = document.select("div[class=col-xs-12 col-md-8 lm-md-t7 lm-xs-t6 lm-xs-b6 searchMain]");
 
-                haber_basligi=elements.select("div[class=row]").text();
+                haber_basligi = elements.select("div[class=row]").text();
 
-                haber_tarihi=elements.select("div[class=yellow-date]").text();
+                haber_tarihi = elements.select("div[class=yellow-date]").text();
 
-                paragraf_sayisi=elements.select("div[class=text-resizable]").select("p").size();
+                paragraf_sayisi = elements.select("div[class=text-resizable]").select("p").size();
 
-                for (int i=0;i<paragraf_sayisi;i++){
+                for (int i = 0; i < paragraf_sayisi; i++) {
 
-                    if(!elements.select("div[class=text-resizable]").select("p").get(i).text().equals("")){
-                        haber_icerigi=haber_icerigi+elements.select("div[class=text-resizable]").select("p").get(i).text()+"\n \n";
+                    if (!elements.select("div[class=text-resizable]").select("p").get(i).text().equals("")) {
+                        haber_icerigi = haber_icerigi + elements.select("div[class=text-resizable]").select("p").get(i).text() + "\n \n";
                     }
                 }
 
 
-                haberdeki_resim_sayisi=elements.select("div[class=text-resizable]").select("img").size();
+                haberdeki_resim_sayisi = elements.select("div[class=text-resizable]").select("img").size();
 
-                for(int i=0;i<haberdeki_resim_sayisi;i++){
+                for (int i = 0; i < haberdeki_resim_sayisi; i++) {
 
-                    resim_linkleri.add(getResources().getString(R.string.okul_sitesi)+elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
+                    resim_linkleri.add(getString(R.string.okul_sitesi) + elements.select("div[class=text-resizable]").select("img").get(i).attr("src"));
                 }
 
 
-                haberdeki_link=elements.select("div[class=text-resizable]").select("p").select("a").attr("href");
+                haberdeki_link = elements.select("div[class=text-resizable]").select("p").select("a").attr("href");
 
-                tablo_sayisi=elements.select("div[class=text-resizable]").select("ol").select("li").size();
+                tablo_sayisi = elements.select("div[class=text-resizable]").select("ol").select("li").size();
 
-                for (int i=0;i<tablo_sayisi;i++){
+                for (int i = 0; i < tablo_sayisi; i++) {
 
-                    haber_icerigi=haber_icerigi+elements.select("div[class=text-resizable]").select("ol").select("li").get(i).text()+"\n \n";
+                    haber_icerigi = haber_icerigi + elements.select("div[class=text-resizable]").select("ol").select("li").get(i).text() + "\n \n";
 
                 }
 
@@ -134,32 +132,31 @@ public class dialogBox extends DialogFragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            textView_baslik.setText(haber_basligi);
-            textView_tarih.setText(haber_tarihi);
-            textView_icerik.setText(haber_icerigi);
+            Activity activity = getActivity();
 
-            adapter=new dialogbox_adapter(resim_linkleri,getContext());
+            if (activity != null) {
+                textView_baslik.setText(haber_basligi);
+                textView_tarih.setText(haber_tarihi);
+                textView_icerik.setText(haber_icerigi);
 
-            recyclerView.setAdapter(adapter);
+                adapter = new dialogbox_adapter(resim_linkleri, getContext());
+
+                recyclerView.setAdapter(adapter);
 
 
-            if(!haberdeki_link.equals("")){
-                haberdeki_link=getResources().getString(R.string.okul_sitesi)+haberdeki_link;
+                if (!haberdeki_link.equals("")) {
+                    haberdeki_link = getString(R.string.okul_sitesi) + haberdeki_link;
 
-                textView_icerik.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i=new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(haberdeki_link));
-                        startActivity(i);
-                    }
-                });
+                    textView_icerik.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(haberdeki_link));
+                            startActivity(i);
+                        }
+                    });
+                }
             }
-
-
-
-
-
         }
     }
 }

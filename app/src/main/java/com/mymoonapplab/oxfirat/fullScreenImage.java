@@ -1,11 +1,9 @@
 package com.mymoonapplab.oxfirat;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
@@ -23,7 +21,7 @@ public class fullScreenImage extends AppCompatActivity {
         setContentView(R.layout.activity_full_screen_image);
 
         imageView = findViewById(R.id.activity_full_screen_imageview);
-        progress_bar=findViewById(R.id.activity_full_screen_progress_avi);
+        progress_bar = findViewById(R.id.activity_full_screen_progress_avi);
 
         Intent getIntent = getIntent();
 
@@ -35,7 +33,7 @@ public class fullScreenImage extends AppCompatActivity {
 
             @Override
             public void onError(Exception e) {
-                Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

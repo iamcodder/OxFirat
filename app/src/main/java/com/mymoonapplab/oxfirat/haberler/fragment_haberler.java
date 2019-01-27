@@ -59,7 +59,7 @@ public class fragment_haberler extends Fragment {
         haberCekObject = new haberCek();
         haberCekObject.execute();
 
-        progress_bar=rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);
         textview_text_cekilemedi.setText(R.string.haberler_cekilemedi);
@@ -158,7 +158,7 @@ public class fragment_haberler extends Fragment {
 
             progress_bar.smoothToHide();
 
-            if(swipeRefreshLayout.isRefreshing()){
+            if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -168,6 +168,13 @@ public class fragment_haberler extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (progress_bar.isEnabled())
+            progress_bar.smoothToHide();
+
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+
         if (haberCekObject != null && haberCekObject.cancel(true)) {
             haberCekObject = null;
         }
