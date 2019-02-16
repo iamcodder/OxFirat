@@ -39,7 +39,7 @@ public class fragment_yemekhane extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview= inflater.inflate(R.layout.fragment_yemekhane, container, false);
+        View rootview= inflater.inflate(R.layout.fragment_yemekhane, null);
 
         yemekCekObject=new yemekCek();
         yemekCekObject.execute();

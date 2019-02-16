@@ -26,7 +26,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
-public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
+public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_haberler_adapter.ViewHolder> {
 
     private Context mContext;
     private List<String> haber_baslik;
@@ -35,7 +35,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     private FragmentManager manager;
 
 
-    adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki, FragmentManager manager) {
+    fragment_haberler_adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki, FragmentManager manager) {
         this.mContext = mContext;
         this.haber_baslik = haber_baslik;
         this.haber_resim = haber_resim;
@@ -49,7 +49,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_haberler_design,viewGroup,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_haberler_design,null);
 
 
         return new ViewHolder(view);

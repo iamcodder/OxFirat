@@ -46,9 +46,10 @@ public class fragment_etkinlik extends Fragment {
     private int son_etkinlik_konumu;
 
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_etkinlik,null);
 
         etkinlik_tarih = new ArrayList<>();
         etkinlik_icerik = new ArrayList<>();
@@ -151,6 +152,8 @@ public class fragment_etkinlik extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
+;
+            page_number++;
 
         }
     }
@@ -167,8 +170,16 @@ public class fragment_etkinlik extends Fragment {
         if (etkinlikCekObject != null && etkinlikCekObject.cancel(true)) {
             etkinlikCekObject = null;
         }
-        Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
-        page_number++;
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (getView() != null) {
+            ViewGroup parent = (ViewGroup) getView().getParent();
+            parent.removeAllViews();
+        }
+        super.onDestroyView();
     }
 
 }

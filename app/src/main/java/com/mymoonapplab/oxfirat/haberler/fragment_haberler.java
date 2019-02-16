@@ -34,7 +34,7 @@ public class fragment_haberler extends Fragment {
 
     private ArrayList<String> haberBasligi, haberResmi;
     public static ArrayList<String> haberLinki;
-    private adapter adapter;
+    private fragment_haberler_adapter fragment_haberler_adapter;
     private RecyclerView recyclerView;
     private AVLoadingIndicatorView progress_bar;
     private TextView textview_text_cekilemedi;
@@ -48,9 +48,10 @@ public class fragment_haberler extends Fragment {
     private haberCek haberCekObject = null;
 
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_haberler, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_haberler,null);
 
         haberBasligi = new ArrayList<>();
         haberLinki = new ArrayList<>();
@@ -151,8 +152,8 @@ public class fragment_haberler extends Fragment {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
             } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-                adapter = new adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
-                recyclerView.setAdapter(adapter);
+                fragment_haberler_adapter = new fragment_haberler_adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
+                recyclerView.setAdapter(fragment_haberler_adapter);
                 recyclerView.scrollToPosition(son_haber_konumu - 1);
             }
 
@@ -161,7 +162,6 @@ public class fragment_haberler extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
-            Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
             page_number++;
 
         }
@@ -179,8 +179,15 @@ public class fragment_haberler extends Fragment {
         if (haberCekObject != null && haberCekObject.cancel(true)) {
             haberCekObject = null;
         }
-        Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
-        page_number++;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (getView() != null) {
+            ViewGroup parent = (ViewGroup) getView().getParent();
+            parent.removeAllViews();
+        }
+        super.onDestroyView();
     }
 
 }

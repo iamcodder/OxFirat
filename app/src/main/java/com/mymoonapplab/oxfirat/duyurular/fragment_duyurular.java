@@ -45,9 +45,10 @@ public class fragment_duyurular extends Fragment {
 
     private duyuruCek duyuruCekObject = null;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_duyurular, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_duyurular,null);
 
         duyuru_linki = new ArrayList<>();
         duyuru_icerigi = new ArrayList<>();
@@ -152,7 +153,6 @@ public class fragment_duyurular extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
-            Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
             page_number++;
         }
     }
@@ -171,4 +171,12 @@ public class fragment_duyurular extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        if (getView() != null) {
+            ViewGroup parent = (ViewGroup) getView().getParent();
+            parent.removeAllViews();
+        }
+        super.onDestroyView();
+    }
 }
