@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -113,24 +114,22 @@ public class fragment_duyurular extends Fragment {
         protected Void doInBackground(Void... voids) {
 
 
-            if (getView() != null) {
-                try {
-                    Document document = Jsoup.connect(getResources().getString(R.string.duyurular_sitesi) + page_number).get();
-                    duyuruElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
-                    page_number++;
+            try {
+                Document document = Jsoup.connect(getResources().getString(R.string.duyurular_sitesi) + page_number).get();
+                duyuruElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
 
-                    for (int i = 0; i < duyuruElements.size(); i++) {
+                for (int i = 0; i < duyuruElements.size(); i++) {
 
-                        duyuru_icerigi.add(duyuruElements.get(i).select("div[class=top]").text());
-                        duyuru_tarihi.add(duyuruElements.get(i).select("span[class=day").text());
-                        duyuru_linki.add(getResources().getString(R.string.okul_sitesi) + duyuruElements.get(i).select("a").attr("href"));
+                    duyuru_icerigi.add(duyuruElements.get(i).select("div[class=top]").text());
+                    duyuru_tarihi.add(duyuruElements.get(i).select("span[class=day").text());
+                    duyuru_linki.add(getResources().getString(R.string.okul_sitesi) + duyuruElements.get(i).select("a").attr("href"));
 
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
 
             return null;
         }
@@ -153,13 +152,14 @@ public class fragment_duyurular extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
+            Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
+            page_number++;
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
+    public void onStop() {
+        super.onStop();
         if (progress_bar.isEnabled())
             progress_bar.smoothToHide();
 
@@ -170,4 +170,5 @@ public class fragment_duyurular extends Fragment {
             duyuruCekObject = null;
         }
     }
+
 }

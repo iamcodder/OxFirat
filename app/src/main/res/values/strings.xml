@@ -16,6 +16,8 @@
     <string name="yemekhane">Dining Hall</string>
 
     <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="sayfa_yuklendi">.page loaded</string>
+
 
 
     <string name="yemekhane_cekilemedi">The menu of the day could not be retrieved from the site.Please try to take the menu of the day by pulling your finger from top to bottom.</string>

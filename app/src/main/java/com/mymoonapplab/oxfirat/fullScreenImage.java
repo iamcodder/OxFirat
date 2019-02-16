@@ -1,13 +1,17 @@
 package com.mymoonapplab.oxfirat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class fullScreenImage extends AppCompatActivity {
@@ -20,22 +24,30 @@ public class fullScreenImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_image);
 
+
         imageView = findViewById(R.id.activity_full_screen_imageview);
         progress_bar = findViewById(R.id.activity_full_screen_progress_avi);
 
         Intent getIntent = getIntent();
 
-        Picasso.get().load(getIntent.getStringExtra("resim_linki")).into(imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                progress_bar.smoothToHide();
-            }
 
-            @Override
-            public void onError(Exception e) {
-                Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        Glide.with(getApplicationContext())
+                .load(getIntent.getStringExtra("resim_linki"))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        progress_bar.smoothToHide();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        progress_bar.smoothToHide();
+                        return false;
+                    }
+                })
+                .into(imageView);
+
 
     }
 

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -23,6 +24,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
@@ -115,13 +117,11 @@ public class fragment_haberler extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String okul_sitesi = getResources().getString(R.string.okul_sitesi);
+            String okul_sitesi = Objects.requireNonNull(getContext()).getResources().getString(R.string.okul_sitesi);
 
             try {
-
-                Document document = Jsoup.connect("http://www.firat.edu.tr/tr/haberler?page=" + page_number).get();
+                Document document = Jsoup.connect(getResources().getString(R.string.haber_sitesi) + page_number).get();
                 haber1 = document.select("div[class=row all-news]").select("div[class=banner col-xs-12 col-sm-4 col-md-4 col-lg-3]");
-                page_number++;
 
                 for (int i = 0; i < haber1.size(); i++) {
 
@@ -161,14 +161,15 @@ public class fragment_haberler extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
+            Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
+            page_number++;
 
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
+    public void onStop() {
+        super.onStop();
         if (progress_bar.isEnabled())
             progress_bar.smoothToHide();
 
@@ -178,5 +179,8 @@ public class fragment_haberler extends Fragment {
         if (haberCekObject != null && haberCekObject.cancel(true)) {
             haberCekObject = null;
         }
+        Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
+        page_number++;
     }
+
 }

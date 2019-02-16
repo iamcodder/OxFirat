@@ -36,7 +36,7 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
     @Override
     public etkinlikViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_etkinlik_design,viewGroup,false);
+        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_etkinlik_design,null);
 
         return new etkinlikViewHolder(view);
     }

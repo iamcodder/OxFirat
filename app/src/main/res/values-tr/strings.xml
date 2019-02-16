@@ -16,6 +16,7 @@
     <string name="yemekhane">Yemekhane</string>
 
     <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="sayfa_yuklendi">.sayfa yüklendi</string>
 
 
     <string name="yemekhane_cekilemedi">Günün menüsü siteden çekilemedi.Lütfen parmağınızı yukarıdan aşağıya çekerek günün menüsünü siteden tekrar çekmeye çalışın</string>

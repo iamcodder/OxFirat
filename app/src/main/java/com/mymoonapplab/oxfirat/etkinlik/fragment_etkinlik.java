@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -116,13 +117,12 @@ public class fragment_etkinlik extends Fragment {
 
                 Document document = Jsoup.connect(getResources().getString(R.string.etkinlik_sitesi) + page_number).get();
                 etkinlikElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
-                page_number++;
 
                 for (int i = 0; i < etkinlikElements.size(); i++) {
 
                     etkinlik_icerik.add(etkinlikElements.get(i).select("div[class=bottom").text());
                     etkinlik_tarih.add(etkinlikElements.get(i).select("span[class=day]").text());
-                    etkinlik_link.add(getView().getResources().getString(R.string.okul_sitesi) + etkinlikElements.get(i).select("a").attr("href"));
+                    etkinlik_link.add(getResources().getString(R.string.okul_sitesi) + etkinlikElements.get(i).select("a").attr("href"));
 
                 }
 
@@ -156,9 +156,8 @@ public class fragment_etkinlik extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
+    public void onStop() {
+        super.onStop();
         if (progress_bar.isEnabled())
             progress_bar.smoothToHide();
 
@@ -168,6 +167,8 @@ public class fragment_etkinlik extends Fragment {
         if (etkinlikCekObject != null && etkinlikCekObject.cancel(true)) {
             etkinlikCekObject = null;
         }
+        Toast.makeText(getContext(),page_number+getResources().getString(R.string.sayfa_yuklendi),Toast.LENGTH_SHORT).show();
+        page_number++;
     }
 
 }

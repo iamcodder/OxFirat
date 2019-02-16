@@ -37,7 +37,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     @Override
     public duyurularViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_duyurular_design,viewGroup,false);
+        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_duyurular_design,null);
 
         return new duyurularViewHolder(view);
     }
