@@ -1,6 +1,8 @@
 package com.mymoonapplab.oxfirat.etkinlik;
 
 
+import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -45,11 +46,11 @@ public class fragment_etkinlik extends Fragment {
 
     private int son_etkinlik_konumu;
 
-
+    private Resources res;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_etkinlik,null);
+        View rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
 
         etkinlik_tarih = new ArrayList<>();
         etkinlik_icerik = new ArrayList<>();
@@ -57,12 +58,14 @@ public class fragment_etkinlik extends Fragment {
 
         page_number = 1;
 
+        res = getResources();
+
         etkinlikCekObject = new etkinlikCek();
         etkinlikCekObject.execute();
 
         progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_etkinlikler_textview);
-        textview_text_cekilemedi.setText(R.string.etkinlikler_cekilemedi);
+        textview_text_cekilemedi.setText(res.getString(R.string.etkinlikler_cekilemedi));
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
         recyclerView = rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
@@ -106,6 +109,7 @@ public class fragment_etkinlik extends Fragment {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class etkinlikCek extends AsyncTask<Void, Void, Void> {
 
         private Elements etkinlikElements;
@@ -115,15 +119,17 @@ public class fragment_etkinlik extends Fragment {
         protected Void doInBackground(Void... voids) {
 
             try {
+                String etkinlik_sitesi = res.getString(R.string.etkinlik_sitesi);
+                String okul_sitesi = res.getString(R.string.okul_sitesi);
 
-                Document document = Jsoup.connect(getResources().getString(R.string.etkinlik_sitesi) + page_number).get();
+                Document document = Jsoup.connect(etkinlik_sitesi + page_number).get();
                 etkinlikElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3");
 
                 for (int i = 0; i < etkinlikElements.size(); i++) {
 
                     etkinlik_icerik.add(etkinlikElements.get(i).select("div[class=bottom").text());
                     etkinlik_tarih.add(etkinlikElements.get(i).select("span[class=day]").text());
-                    etkinlik_link.add(getResources().getString(R.string.okul_sitesi) + etkinlikElements.get(i).select("a").attr("href"));
+                    etkinlik_link.add(okul_sitesi + etkinlikElements.get(i).select("a").attr("href"));
 
                 }
 
@@ -152,7 +158,7 @@ public class fragment_etkinlik extends Fragment {
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
-;
+            ;
             page_number++;
 
         }
@@ -173,13 +179,5 @@ public class fragment_etkinlik extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        if (getView() != null) {
-            ViewGroup parent = (ViewGroup) getView().getParent();
-            parent.removeAllViews();
-        }
-        super.onDestroyView();
-    }
 
 }

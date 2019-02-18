@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         reklamlar();
 
+
         if (!InternetKontrol()) {
             Toast.makeText(this, getResources().getString(R.string.internet_acin), Toast.LENGTH_LONG).show();
         }

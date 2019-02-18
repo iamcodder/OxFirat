@@ -23,7 +23,6 @@ import java.io.IOException;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
-
 public class fragment_yemekhane extends Fragment {
 
 
@@ -34,23 +33,23 @@ public class fragment_yemekhane extends Fragment {
 
     private WaveSwipeRefreshLayout swipeRefreshLayout;
 
-    private yemekCek yemekCekObject=null;
+    private yemekCek yemekCekObject = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview= inflater.inflate(R.layout.fragment_yemekhane, null);
+        View rootview = inflater.inflate(R.layout.fragment_yemekhane, null);
 
-        yemekCekObject=new yemekCek();
+        yemekCekObject = new yemekCek();
         yemekCekObject.execute();
 
-        progress_bar=rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
+        progress_bar = rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
 
-        textView_liste =rootview.findViewById(R.id.yemek_listesi);
-        textView_menu=rootview.findViewById(R.id.menu);
-        textView_tarih=rootview.findViewById(R.id.textView_tarihh);
+        textView_liste = rootview.findViewById(R.id.yemek_listesi);
+        textView_menu = rootview.findViewById(R.id.menu);
+        textView_tarih = rootview.findViewById(R.id.textView_tarihh);
 
-        swipeRefreshLayout=rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
+        swipeRefreshLayout = rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
         swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -58,12 +57,13 @@ public class fragment_yemekhane extends Fragment {
             }
         });
 
+
         return rootview;
     }
 
 
     @SuppressLint("StaticFieldLeak")
-    private class yemekCek extends AsyncTask<Void,Void,Void> {
+    private class yemekCek extends AsyncTask<Void, Void, Void> {
 
         private String tarih;
         private String menu;
@@ -72,9 +72,9 @@ public class fragment_yemekhane extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            tarih=null;
-            menu=null;
-            yemeklerin_listesi="";
+            tarih = null;
+            menu = null;
+            yemeklerin_listesi = "";
         }
 
         @Override
@@ -82,20 +82,19 @@ public class fragment_yemekhane extends Fragment {
 
             try {
 
-                Document document=Jsoup.connect(getResources().getString(R.string.yemekhane_sitesi)).get();
+                Document document = Jsoup.connect(getResources().getString(R.string.yemekhane_sitesi)).get();
 
-                Elements elementsListe=document.select("div[class=views-field views-field-body]").select("p");
+                Elements elementsListe = document.select("div[class=views-field views-field-body]").select("p");
 
-                for (int i=0;i<elementsListe.size();i++){
+                for (int i = 0; i < elementsListe.size(); i++) {
                     yemeklerin_listesi = yemeklerin_listesi + (elementsListe.get(i).text() + "\n");
                 }
 
-                Elements elementsMenu=document.select("div[class=views-field views-field-title]");
-                menu=elementsMenu.get(0).text();
+                Elements elementsMenu = document.select("div[class=views-field views-field-title]");
+                menu = elementsMenu.get(0).text();
 
-                Elements elementsTarih=document.select("span[class=field-content");
-                tarih=elementsTarih.get(1).text();
-
+                Elements elementsTarih = document.select("span[class=field-content");
+                tarih = elementsTarih.get(1).text();
 
 
             } catch (IOException e) {
@@ -114,11 +113,11 @@ public class fragment_yemekhane extends Fragment {
             textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
 
-            if(swipeRefreshLayout.isRefreshing()){
+            if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-            if(textView_menu.getText()==""){
+            if (textView_menu.getText() == "") {
                 textView_liste.setText(R.string.yemekhane_cekilemedi);
             }
 
@@ -128,8 +127,8 @@ public class fragment_yemekhane extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(yemekCekObject!=null && yemekCekObject.cancel(true)){
-            yemekCekObject=null;
+        if (yemekCekObject != null && yemekCekObject.cancel(true)) {
+            yemekCekObject = null;
         }
     }
 }

@@ -39,7 +39,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     @Override
     public dialogViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.dialogbox_image_design, viewGroup,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialogbox_image_design, viewGroup, false);
 
 
         return new dialogViewHolder(view);

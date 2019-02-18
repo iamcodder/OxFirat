@@ -2,6 +2,7 @@ package com.mymoonapplab.oxfirat.haberler;
 
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -24,7 +24,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
@@ -45,13 +44,14 @@ public class fragment_haberler extends Fragment {
 
     private int son_haber_konumu;
 
-    private haberCek haberCekObject = null;
+    private haberCek haberCekObject;
 
+    private Resources res;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_haberler,null);
+        View rootView = inflater.inflate(R.layout.fragment_haberler, container, false);
 
         haberBasligi = new ArrayList<>();
         haberLinki = new ArrayList<>();
@@ -59,13 +59,15 @@ public class fragment_haberler extends Fragment {
 
         page_number = 1;
 
+        res = getResources();
+
         haberCekObject = new haberCek();
         haberCekObject.execute();
 
         progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);
-        textview_text_cekilemedi.setText(R.string.haberler_cekilemedi);
+        textview_text_cekilemedi.setText(res.getString(R.string.haberler_cekilemedi));
         textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
 
@@ -118,10 +120,11 @@ public class fragment_haberler extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String okul_sitesi = Objects.requireNonNull(getContext()).getResources().getString(R.string.okul_sitesi);
+            String okul_sitesi = res.getString(R.string.okul_sitesi);
+            String haber_sitesi = res.getString(R.string.haber_sitesi);
 
             try {
-                Document document = Jsoup.connect(getResources().getString(R.string.haber_sitesi) + page_number).get();
+                Document document = Jsoup.connect(haber_sitesi + page_number).get();
                 haber1 = document.select("div[class=row all-news]").select("div[class=banner col-xs-12 col-sm-4 col-md-4 col-lg-3]");
 
                 for (int i = 0; i < haber1.size(); i++) {
@@ -150,18 +153,23 @@ public class fragment_haberler extends Fragment {
 
             if (haberBasligi.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
                 fragment_haberler_adapter = new fragment_haberler_adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
                 recyclerView.setAdapter(fragment_haberler_adapter);
                 recyclerView.scrollToPosition(son_haber_konumu - 1);
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
+
 
             progress_bar.smoothToHide();
-
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
             page_number++;
 
         }
@@ -179,15 +187,6 @@ public class fragment_haberler extends Fragment {
         if (haberCekObject != null && haberCekObject.cancel(true)) {
             haberCekObject = null;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (getView() != null) {
-            ViewGroup parent = (ViewGroup) getView().getParent();
-            parent.removeAllViews();
-        }
-        super.onDestroyView();
     }
 
 }

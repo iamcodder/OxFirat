@@ -30,8 +30,7 @@ public class fullScreenImage extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
-
-        Glide.with(getApplicationContext())
+        Glide.with(getApplicationContext()).load(getIntent.getStringExtra("resim_linki"))
                 .load(getIntent.getStringExtra("resim_linki"))
                 .listener(new RequestListener<Drawable>() {
                     @Override

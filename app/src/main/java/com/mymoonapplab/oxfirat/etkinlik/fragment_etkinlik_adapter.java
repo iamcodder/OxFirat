@@ -24,19 +24,19 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
     private List<String> list_link;
     private FragmentManager manager;
 
-    fragment_etkinlik_adapter(Context mContext, List<String> list_tarih, List<String> list_icerik, List<String> list_link,FragmentManager manager) {
+    fragment_etkinlik_adapter(Context mContext, List<String> list_tarih, List<String> list_icerik, List<String> list_link, FragmentManager manager) {
         this.mContext = mContext;
         this.list_tarih = list_tarih;
         this.list_icerik = list_icerik;
         this.list_link = list_link;
-        this.manager=manager;
+        this.manager = manager;
     }
 
     @NonNull
     @Override
     public etkinlikViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_etkinlik_design,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_etkinlik_design, null);
 
         return new etkinlikViewHolder(view);
     }
@@ -51,8 +51,8 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox=new dialogBox(list_link.get(i));
-                dialogBox.show(manager,"hello");
+                dialogBox dialogBox = new dialogBox(list_link.get(i));
+                dialogBox.show(manager, "hello");
 
             }
         });
@@ -64,7 +64,7 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
         return list_icerik.size();
     }
 
-    class etkinlikViewHolder extends RecyclerView.ViewHolder{
+    class etkinlikViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tarih;
         private TextView icerik;
@@ -73,9 +73,9 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
         etkinlikViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tarih=itemView.findViewById(R.id.fragment_etkinlik_tarih);
-            icerik=itemView.findViewById(R.id.fragment_etkinlik_icerik);
-            mCardview=itemView.findViewById(R.id.fragment_etkinlik_cardview);
+            tarih = itemView.findViewById(R.id.fragment_etkinlik_tarih);
+            icerik = itemView.findViewById(R.id.fragment_etkinlik_icerik);
+            mCardview = itemView.findViewById(R.id.fragment_etkinlik_cardview);
 
         }
     }

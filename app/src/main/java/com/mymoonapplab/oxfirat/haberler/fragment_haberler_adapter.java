@@ -49,7 +49,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_haberler_design,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_haberler_design, null);
 
 
         return new ViewHolder(view);
