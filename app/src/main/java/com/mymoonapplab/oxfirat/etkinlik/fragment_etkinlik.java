@@ -153,12 +153,12 @@ public class fragment_etkinlik extends Fragment {
                 recyclerView.scrollToPosition(son_etkinlik_konumu - 2);
             }
 
-            progressBar_pacman.smoothToHide();
 
             if (swipeRefresh_damla.isRefreshing()) {
                 swipeRefresh_damla.setRefreshing(false);
             }
-            ;
+
+            progressBar_pacman.smoothToHide();
             sayfa_sayisi++;
 
         }

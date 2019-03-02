@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat;
+package com.mymoonapplab.oxfirat.fullScreenImage;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -12,6 +12,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class fullScreenImage extends AppCompatActivity {

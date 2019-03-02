@@ -64,6 +64,7 @@ public class fragment_haberler extends Fragment {
         asynTask_haberCek_object = new asynTask_haberCek();
         asynTask_haberCek_object.execute();
 
+
         progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);

@@ -150,18 +150,24 @@ public class fragment_duyurular extends Fragment {
 
             if (duyuru_icerigi.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
-            } else {
+
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
+            }
+            else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
                 adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, getFragmentManager());
                 recyclerView.setAdapter(adapter);
                 recyclerView.scrollToPosition(son_duyuru_konumu - 2);
+
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
             }
+
 
             progressBar_pacman.smoothToHide();
-
-            if (swipeRefresh_damla.isRefreshing()) {
-                swipeRefresh_damla.setRefreshing(false);
-            }
             sayfa_sayisi++;
         }
     }

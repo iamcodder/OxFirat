@@ -1,6 +1,7 @@
 package com.mymoonapplab.oxfirat;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,11 +23,12 @@ import com.mymoonapplab.oxfirat.haberler.fragment_haberler;
 import com.mymoonapplab.oxfirat.yemekhane.fragment_yemekhane;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private AdView mAdView;
     private AdRequest adRequest;
+    private Resources res;
 
     Fragment fragment = null;
 
@@ -34,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        res = getResources();
         reklamlar();
 
 
         if (!InternetKontrol()) {
-            Toast.makeText(this, getResources().getString(R.string.internet_acin), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, res.getString(R.string.internet_acin), Toast.LENGTH_LONG).show();
         }
 
 
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.main_activity_bottom_navigation_bar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(onListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         load_fragment(new fragment_haberler());
 
@@ -56,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void reklamlar() {
 
-        MobileAds.initialize(this, getResources().getString(R.string.Mobile_ads_code));
+        MobileAds.initialize(this, res.getString(R.string.Mobile_ads_code));
         mAdView = findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().addTestDevice(getResources().getString(R.string.Test_device)).build();
+        adRequest = new AdRequest.Builder().addTestDevice(res.getString(R.string.Test_device)).build();
         mAdView.loadAd(adRequest);
         mAdView.setAdListener(new AdListener() {
 
@@ -107,34 +110,28 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
 
-    BottomNavigationView.OnNavigationItemSelectedListener onListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                    switch (menuItem.getItemId()) {
-
-                        case R.id.menu_item_haberler:
-                            fragment = new fragment_haberler();
-                            mAdView.setVisibility(View.INVISIBLE);
-                            break;
-                        case R.id.menu_item_duyuru:
-                            fragment = new fragment_duyurular();
-                            mAdView.setVisibility(View.INVISIBLE);
-                            break;
-                        case R.id.menu_item_etkinlik:
-                            fragment = new fragment_etkinlik();
-                            mAdView.setVisibility(View.INVISIBLE);
-                            break;
-                        case R.id.menu_item_yemekhane:
-                            fragment = new fragment_yemekhane();
-                            mAdView.setVisibility(View.VISIBLE);
-                            break;
-                    }
-                    load_fragment(fragment);
-                    return true;
-                }
-            };
-
+            case R.id.menu_item_haberler:
+                fragment = new fragment_haberler();
+                mAdView.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.menu_item_duyuru:
+                fragment = new fragment_duyurular();
+                mAdView.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.menu_item_etkinlik:
+                fragment = new fragment_etkinlik();
+                mAdView.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.menu_item_yemekhane:
+                fragment = new fragment_yemekhane();
+                mAdView.setVisibility(View.VISIBLE);
+                break;
+        }
+        load_fragment(fragment);
+        return true;
+    }
 }

@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.fullScreenImage;
+import com.mymoonapplab.oxfirat.fullScreenImage.fullScreenImage;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
