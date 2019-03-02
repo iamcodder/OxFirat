@@ -18,19 +18,5 @@ https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat
 ![9](https://user-images.githubusercontent.com/25854605/50314851-88b0d400-04c1-11e9-8c1a-c2b90bb71c95.jpg)
 ![10](https://user-images.githubusercontent.com/25854605/50314852-88b0d400-04c1-11e9-9e5d-f190d7277960.jpg)
 
-The App may include the following open source software: WaveSwipeRefresh. 
-This software is governed by the following license:
 
-Copyright 2015 RECRUIT LIFESTYLE CO., LTD.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
