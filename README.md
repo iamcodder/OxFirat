@@ -1,15 +1,10 @@
 # OxFirat
 
-Açık kaynak kodlu olup Fırat Üniversitesi'ndeki haberleri,duyuruları,etkinlikleri takip edebileceğiniz; ayrıca yemekhanede o gün hangi yemeğin olduğunu görebileceğiniz bir mobil apklikasyon.
-
-### https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat
-
-
-
 ![1](https://user-images.githubusercontent.com/25854605/53684051-984a6580-3d19-11e9-99ef-29e47fb93802.jpg)
 
+Açık kaynak olacak şekilde kodladığım , Fırat Üniversitesi'ndeki haberleri,duyuruları,etkinlikleri takip edebileceğiniz ve ayrıca yemekhanede o gün hangi yemeğin olduğunu görebileceğiniz bir mobil apklikasyon.
 
-
+### https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat
 
 # Open Source Library
 
