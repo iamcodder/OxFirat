@@ -19,9 +19,9 @@ https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat
 ![10](https://user-images.githubusercontent.com/25854605/50314852-88b0d400-04c1-11e9-9e5d-f190d7277960.jpg)
 
 
-Open Source Library
+# Open Source Library
 
-Jsoup License (MIT License) : https://jsoup.org/license (\n)
+Jsoup License (MIT License) : https://jsoup.org/license 
 
 Glide License (BSD, part MIT and Apache 2.0) : https://github.com/bumptech/glide/blob/master/LICENSE
 
