@@ -33,17 +33,17 @@ public class fragment_duyurular extends Fragment {
     private RecyclerView recyclerView;
     private fragment_duyurular_adapter adapter;
 
-    private AVLoadingIndicatorView progress_bar;
+    private AVLoadingIndicatorView progressBar_pacman;
 
     private TextView textview_text_cekilemedi;
 
-    private WaveSwipeRefreshLayout swipeRefreshLayout;
+    private WaveSwipeRefreshLayout swipeRefresh_damla;
 
-    private int page_number;
+    private int sayfa_sayisi;
 
     private int son_duyuru_konumu;
 
-    private duyuruCek duyuruCekObject = null;
+    private asynTask_duyuruCek asynTask_duyuruCek_object = null;
 
     private Resources res;
 
@@ -56,15 +56,15 @@ public class fragment_duyurular extends Fragment {
         duyuru_icerigi = new ArrayList<>();
         duyuru_tarihi = new ArrayList<>();
 
-        page_number = 1;
+        sayfa_sayisi = 1;
 
 
         res = getResources();
 
-        duyuruCekObject = new duyuruCek();
-        duyuruCekObject.execute();
+        asynTask_duyuruCek_object = new asynTask_duyuruCek();
+        asynTask_duyuruCek_object.execute();
 
-        progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_duyurular_textview);
         textview_text_cekilemedi.setText(getResources().getText(R.string.duyurular_cekilemedi));
@@ -90,18 +90,18 @@ public class fragment_duyurular extends Fragment {
                 }
 
                 if (son_duyuru_konumu + 1 == toplam_duyuru) {
-                    new duyuruCek().execute();
-                    progress_bar.smoothToShow();
+                    new asynTask_duyuruCek().execute();
+                    progressBar_pacman.smoothToShow();
                 }
 
             }
         });
 
-        swipeRefreshLayout = rootView.findViewById(R.id.fragment_duyurular_waveswipe);
-        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+        swipeRefresh_damla = rootView.findViewById(R.id.fragment_duyurular_waveswipe);
+        swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new duyuruCek().execute();
+                new asynTask_duyuruCek().execute();
             }
         });
 
@@ -111,7 +111,7 @@ public class fragment_duyurular extends Fragment {
 
 
     @SuppressLint("StaticFieldLeak")
-    private class duyuruCek extends AsyncTask<Void, Void, Void> {
+    private class asynTask_duyuruCek extends AsyncTask<Void, Void, Void> {
 
         private Elements duyuruElements;
 
@@ -125,7 +125,7 @@ public class fragment_duyurular extends Fragment {
                 String okul_sitesi = res.getString(R.string.okul_sitesi);
                 String duyurular_sitesi = res.getString(R.string.duyurular_sitesi);
 
-                Document document = Jsoup.connect(duyurular_sitesi + page_number).get();
+                Document document = Jsoup.connect(duyurular_sitesi + sayfa_sayisi).get();
                 duyuruElements = document.select("div[class=banner col-xs-12 col-sm-4 col-lg-3]");
 
                 for (int i = 0; i < duyuruElements.size(); i++) {
@@ -154,29 +154,29 @@ public class fragment_duyurular extends Fragment {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
                 adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, getFragmentManager());
                 recyclerView.setAdapter(adapter);
-                recyclerView.scrollToPosition(son_duyuru_konumu - 1);
+                recyclerView.scrollToPosition(son_duyuru_konumu - 2);
             }
 
-            progress_bar.smoothToHide();
+            progressBar_pacman.smoothToHide();
 
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
+            if (swipeRefresh_damla.isRefreshing()) {
+                swipeRefresh_damla.setRefreshing(false);
             }
-            page_number++;
+            sayfa_sayisi++;
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (progress_bar.isEnabled())
-            progress_bar.smoothToHide();
+        if (progressBar_pacman.isEnabled())
+            progressBar_pacman.smoothToHide();
 
-        if (swipeRefreshLayout.isRefreshing())
-            swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh_damla.isRefreshing())
+            swipeRefresh_damla.setRefreshing(false);
 
-        if (duyuruCekObject != null && duyuruCekObject.cancel(true)) {
-            duyuruCekObject = null;
+        if (asynTask_duyuruCek_object != null && asynTask_duyuruCek_object.cancel(true)) {
+            asynTask_duyuruCek_object = null;
         }
     }
 

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 
@@ -36,7 +37,6 @@ public class dialogBox extends DialogFragment {
     private Resources res;
 
     private String okul_sitesi;
-
 
     public dialogBox() {
 
@@ -104,6 +104,17 @@ public class dialogBox extends DialogFragment {
 
                 haber_basligi = elements.select("div[class=row]").text();
 
+                haber_basligi=haber_basligi.trim();
+
+                //başlığı çekince sonunda "A" harfi oluyordu.length ile başlık uzunluğunu
+                //buldurduktan sonra StringBuffer ile sondaki "A" harfini siliyoruz.
+                int sayiii=haber_basligi.length();
+                StringBuffer sBuffer = new StringBuffer();
+                sBuffer.append(haber_basligi);
+                sBuffer.deleteCharAt(sayiii-1);
+
+                haber_basligi=sBuffer.toString();
+
                 haber_tarihi = elements.select("div[class=yellow-date]").text();
 
                 paragraf_sayisi = elements.select("div[class=text-resizable]").select("p").size();
@@ -149,7 +160,7 @@ public class dialogBox extends DialogFragment {
 
             if (activity != null) {
                 textView_baslik.setText(haber_basligi);
-                textView_tarih.setText(haber_tarihi);
+                textView_tarih.setText(haber_tarihi+"  ");
                 textView_icerik.setText(haber_icerigi);
 
                 adapter = new dialogbox_adapter(resim_linkleri, getContext());
@@ -157,7 +168,7 @@ public class dialogBox extends DialogFragment {
                 recyclerView.setAdapter(adapter);
 
 
-                if (!haberdeki_link.equals("")) {
+                if (!haberdeki_link.equals("") && !haberdeki_link.contains("http")) {
                     haberdeki_link = okul_sitesi + haberdeki_link;
 
                     textView_icerik.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +180,20 @@ public class dialogBox extends DialogFragment {
                         }
                     });
                 }
+
+                else if(haberdeki_link.contains("http")){
+                    textView_icerik.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(haberdeki_link));
+                            startActivity(i);
+                        }
+                    });
+                }
             }
+
+
         }
     }
 }

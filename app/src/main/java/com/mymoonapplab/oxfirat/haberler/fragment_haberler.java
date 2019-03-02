@@ -35,16 +35,16 @@ public class fragment_haberler extends Fragment {
     public static ArrayList<String> haberLinki;
     private fragment_haberler_adapter fragment_haberler_adapter;
     private RecyclerView recyclerView;
-    private AVLoadingIndicatorView progress_bar;
+    private AVLoadingIndicatorView progressBar_pacman;
     private TextView textview_text_cekilemedi;
 
-    private WaveSwipeRefreshLayout swipeRefreshLayout;
+    private WaveSwipeRefreshLayout swipeRefresh_damla;
 
-    private int page_number;
+    private int sayfa_sayisi;
 
     private int son_haber_konumu;
 
-    private haberCek haberCekObject;
+    private asynTask_haberCek asynTask_haberCek_object;
 
     private Resources res;
 
@@ -57,14 +57,14 @@ public class fragment_haberler extends Fragment {
         haberLinki = new ArrayList<>();
         haberResmi = new ArrayList<>();
 
-        page_number = 1;
+        sayfa_sayisi = 1;
 
         res = getResources();
 
-        haberCekObject = new haberCek();
-        haberCekObject.execute();
+        asynTask_haberCek_object = new asynTask_haberCek();
+        asynTask_haberCek_object.execute();
 
-        progress_bar = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);
         textview_text_cekilemedi.setText(res.getString(R.string.haberler_cekilemedi));
@@ -90,8 +90,8 @@ public class fragment_haberler extends Fragment {
                 }
 
                 if (son_haber_konumu + 1 == toplam_haber_sayisi) {
-                    new haberCek().execute();
-                    progress_bar.smoothToShow();
+                    new asynTask_haberCek().execute();
+                    progressBar_pacman.smoothToShow();
 
                 }
             }
@@ -99,11 +99,11 @@ public class fragment_haberler extends Fragment {
         });
 
 
-        swipeRefreshLayout = rootView.findViewById(R.id.fragment_haberler_waveswipe);
-        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+        swipeRefresh_damla = rootView.findViewById(R.id.fragment_haberler_waveswipe);
+        swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new haberCek().execute();
+                new asynTask_haberCek().execute();
             }
         });
 
@@ -113,7 +113,7 @@ public class fragment_haberler extends Fragment {
 
 
     @SuppressLint("StaticFieldLeak")
-    public class haberCek extends AsyncTask<Void, Void, Void> {
+    public class asynTask_haberCek extends AsyncTask<Void, Void, Void> {
 
         private Elements haber1;
 
@@ -124,7 +124,7 @@ public class fragment_haberler extends Fragment {
             String haber_sitesi = res.getString(R.string.haber_sitesi);
 
             try {
-                Document document = Jsoup.connect(haber_sitesi + page_number).get();
+                Document document = Jsoup.connect(haber_sitesi + sayfa_sayisi).get();
                 haber1 = document.select("div[class=row all-news]").select("div[class=banner col-xs-12 col-sm-4 col-md-4 col-lg-3]");
 
                 for (int i = 0; i < haber1.size(); i++) {
@@ -154,23 +154,23 @@ public class fragment_haberler extends Fragment {
             if (haberBasligi.isEmpty()) {
                 textview_text_cekilemedi.setVisibility(View.VISIBLE);
 
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
                 }
             } else {
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
                 fragment_haberler_adapter = new fragment_haberler_adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
                 recyclerView.setAdapter(fragment_haberler_adapter);
-                recyclerView.scrollToPosition(son_haber_konumu - 1);
+                recyclerView.scrollToPosition(son_haber_konumu - 2);
 
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
                 }
             }
 
 
-            progress_bar.smoothToHide();
-            page_number++;
+            progressBar_pacman.smoothToHide();
+            sayfa_sayisi++;
 
         }
     }
@@ -178,14 +178,14 @@ public class fragment_haberler extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if (progress_bar.isEnabled())
-            progress_bar.smoothToHide();
+        if (progressBar_pacman.isEnabled())
+            progressBar_pacman.smoothToHide();
 
-        if (swipeRefreshLayout.isRefreshing())
-            swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh_damla.isRefreshing())
+            swipeRefresh_damla.setRefreshing(false);
 
-        if (haberCekObject != null && haberCekObject.cancel(true)) {
-            haberCekObject = null;
+        if (asynTask_haberCek_object != null && asynTask_haberCek_object.cancel(true)) {
+            asynTask_haberCek_object = null;
         }
     }
 

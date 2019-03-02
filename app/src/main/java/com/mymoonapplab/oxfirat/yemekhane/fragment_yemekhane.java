@@ -29,31 +29,31 @@ public class fragment_yemekhane extends Fragment {
     private TextView textView_liste;
     private TextView textView_menu;
     private TextView textView_tarih;
-    private AVLoadingIndicatorView progress_bar;
+    private AVLoadingIndicatorView progressBar_pacman;
 
-    private WaveSwipeRefreshLayout swipeRefreshLayout;
+    private WaveSwipeRefreshLayout swipeRefresh_damla;
 
-    private yemekCek yemekCekObject = null;
+    private asyncTask_yemekCek asynTask_yemekCek_object = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootview = inflater.inflate(R.layout.fragment_yemekhane, null);
 
-        yemekCekObject = new yemekCek();
-        yemekCekObject.execute();
+        asynTask_yemekCek_object = new asyncTask_yemekCek();
+        asynTask_yemekCek_object.execute();
 
-        progress_bar = rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
+        progressBar_pacman = rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
 
         textView_liste = rootview.findViewById(R.id.yemek_listesi);
         textView_menu = rootview.findViewById(R.id.menu);
         textView_tarih = rootview.findViewById(R.id.textView_tarihh);
 
-        swipeRefreshLayout = rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
-        swipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+        swipeRefresh_damla = rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
+        swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new yemekCek().execute();
+                new asyncTask_yemekCek().execute();
             }
         });
 
@@ -63,7 +63,7 @@ public class fragment_yemekhane extends Fragment {
 
 
     @SuppressLint("StaticFieldLeak")
-    private class yemekCek extends AsyncTask<Void, Void, Void> {
+    private class asyncTask_yemekCek extends AsyncTask<Void, Void, Void> {
 
         private String tarih;
         private String menu;
@@ -108,13 +108,13 @@ public class fragment_yemekhane extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            progress_bar.smoothToHide();
+            progressBar_pacman.smoothToHide();
             textView_menu.setText(menu);
             textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
 
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
+            if (swipeRefresh_damla.isRefreshing()) {
+                swipeRefresh_damla.setRefreshing(false);
             }
 
             if (textView_menu.getText() == "") {
@@ -127,8 +127,8 @@ public class fragment_yemekhane extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if (yemekCekObject != null && yemekCekObject.cancel(true)) {
-            yemekCekObject = null;
+        if (asynTask_yemekCek_object != null && asynTask_yemekCek_object.cancel(true)) {
+            asynTask_yemekCek_object = null;
         }
     }
 }
