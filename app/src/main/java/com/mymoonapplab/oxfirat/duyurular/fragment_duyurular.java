@@ -5,11 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +20,12 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class fragment_duyurular extends Fragment {
@@ -154,10 +155,10 @@ public class fragment_duyurular extends Fragment {
                 if (swipeRefresh_damla.isRefreshing()) {
                     swipeRefresh_damla.setRefreshing(false);
                 }
-            }
-            else {
+            } else {
+                FragmentManager manager = getFragmentManager();
                 textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-                adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, getFragmentManager());
+                adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, manager);
                 recyclerView.setAdapter(adapter);
                 recyclerView.scrollToPosition(son_duyuru_konumu - 2);
 

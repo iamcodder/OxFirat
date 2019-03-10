@@ -4,15 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -22,15 +17,20 @@ import com.mymoonapplab.oxfirat.etkinlik.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.haberler.fragment_haberler;
 import com.mymoonapplab.oxfirat.yemekhane.fragment_yemekhane;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity {
 
 
     private AdView mAdView;
     private AdRequest adRequest;
     private Resources res;
 
-    Fragment fragment = null;
+    private Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +45,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
 
-        //Toolbar ekleme
-        Toolbar toolbar = findViewById(R.id.fragment_tutucu_toolBar);
-        setSupportActionBar(toolbar);
+        MeowBottomNavigation bottomNavigation = findViewById(R.id.main_activity_bottom_navigation_bar);
+        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.newspaper));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.bullhorn));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.account_group));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_restaurant_menu_black_24dp));
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.main_activity_bottom_navigation_bar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
+            @Override
+            public Unit invoke(MeowBottomNavigation.Model model) {
+
+                switch (model.getId()) {
+
+                    case 1:
+                        fragment = new fragment_haberler();
+                        mAdView.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        fragment = new fragment_duyurular();
+                        mAdView.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        fragment = new fragment_etkinlik();
+                        mAdView.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        fragment = new fragment_yemekhane();
+                        mAdView.setVisibility(View.VISIBLE);
+                        break;
+                }
+                load_fragment(fragment);
+                return null;
+            }
+        });
 
         load_fragment(new fragment_haberler());
 
@@ -110,28 +137,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .commit();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
 
-            case R.id.menu_item_haberler:
-                fragment = new fragment_haberler();
-                mAdView.setVisibility(View.INVISIBLE);
-                break;
-            case R.id.menu_item_duyuru:
-                fragment = new fragment_duyurular();
-                mAdView.setVisibility(View.INVISIBLE);
-                break;
-            case R.id.menu_item_etkinlik:
-                fragment = new fragment_etkinlik();
-                mAdView.setVisibility(View.INVISIBLE);
-                break;
-            case R.id.menu_item_yemekhane:
-                fragment = new fragment_yemekhane();
-                mAdView.setVisibility(View.VISIBLE);
-                break;
-        }
-        load_fragment(fragment);
-        return true;
-    }
 }

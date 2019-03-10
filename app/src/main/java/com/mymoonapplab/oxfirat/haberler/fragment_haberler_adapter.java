@@ -3,11 +3,6 @@ package com.mymoonapplab.oxfirat.haberler;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +20,12 @@ import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_haberler_adapter.ViewHolder> {
 

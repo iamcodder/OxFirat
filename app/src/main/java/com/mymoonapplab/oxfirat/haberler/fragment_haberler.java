@@ -5,15 +5,11 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -25,6 +21,11 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
@@ -63,7 +64,6 @@ public class fragment_haberler extends Fragment {
 
         asynTask_haberCek_object = new asynTask_haberCek();
         asynTask_haberCek_object.execute();
-
 
         progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
 

@@ -2,10 +2,6 @@ package com.mymoonapplab.oxfirat.duyurular;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,12 @@ import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
 
 import java.util.List;
 
-public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_duyurular_adapter.duyurularViewHolder>{
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_duyurular_adapter.duyurularViewHolder> {
 
     private Context mContext;
     private List<String> list_icerik;
@@ -24,12 +25,13 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     private List<String> list_link;
     private FragmentManager manager;
 
-    fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link,FragmentManager manager) {
+
+    fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link, FragmentManager manager) {
         this.mContext = mContext;
         this.list_icerik = list_icerik;
         this.list_tarih = list_tarih;
         this.list_link = list_link;
-        this.manager=manager;
+        this.manager = manager;
     }
 
 
@@ -37,7 +39,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     @Override
     public duyurularViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view=LayoutInflater.from(mContext).inflate(R.layout.fragment_duyurular_design,null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_duyurular_design, null);
 
         return new duyurularViewHolder(view);
     }
@@ -51,8 +53,8 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox=new dialogBox(list_link.get(i));
-                dialogBox.show(manager,"hi");
+                dialogBox dialogBox = new dialogBox(list_link.get(i));
+                dialogBox.show(manager, "hi");
             }
         });
     }
@@ -62,7 +64,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
         return list_tarih.size();
     }
 
-    class duyurularViewHolder extends RecyclerView.ViewHolder{
+    class duyurularViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tarih;
         private TextView icerik;
@@ -70,9 +72,9 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
 
         duyurularViewHolder(@NonNull View itemView) {
             super(itemView);
-            tarih=itemView.findViewById(R.id.fragment_duyurular_tarih);
-            icerik=itemView.findViewById(R.id.fragment_duyurular_icerik);
-            mCardview=itemView.findViewById(R.id.fragment_duyurular_cardview);
+            tarih = itemView.findViewById(R.id.fragment_duyurular_tarih);
+            icerik = itemView.findViewById(R.id.fragment_duyurular_icerik);
+            mCardview = itemView.findViewById(R.id.fragment_duyurular_cardview);
         }
     }
 }

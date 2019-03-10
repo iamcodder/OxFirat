@@ -7,16 +7,10 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mymoonapplab.oxfirat.R;
 
@@ -26,6 +20,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class dialogBox extends DialogFragment {
 
@@ -104,16 +104,16 @@ public class dialogBox extends DialogFragment {
 
                 haber_basligi = elements.select("div[class=row]").text();
 
-                haber_basligi=haber_basligi.trim();
+                haber_basligi = haber_basligi.trim();
 
                 //başlığı çekince sonunda "A" harfi oluyordu.length ile başlık uzunluğunu
                 //buldurduktan sonra StringBuffer ile sondaki "A" harfini siliyoruz.
-                int sayiii=haber_basligi.length();
+                int sayiii = haber_basligi.length();
                 StringBuffer sBuffer = new StringBuffer();
                 sBuffer.append(haber_basligi);
-                sBuffer.deleteCharAt(sayiii-1);
+                sBuffer.deleteCharAt(sayiii - 1);
 
-                haber_basligi=sBuffer.toString();
+                haber_basligi = sBuffer.toString();
 
                 haber_tarihi = elements.select("div[class=yellow-date]").text();
 
@@ -160,7 +160,7 @@ public class dialogBox extends DialogFragment {
 
             if (activity != null) {
                 textView_baslik.setText(haber_basligi);
-                textView_tarih.setText(haber_tarihi+"  ");
+                textView_tarih.setText(haber_tarihi + "  ");
                 textView_icerik.setText(haber_icerigi);
 
                 adapter = new dialogbox_adapter(resim_linkleri, getContext());
@@ -179,9 +179,7 @@ public class dialogBox extends DialogFragment {
                             startActivity(i);
                         }
                     });
-                }
-
-                else if(haberdeki_link.contains("http")){
+                } else if (haberdeki_link.contains("http")) {
                     textView_icerik.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

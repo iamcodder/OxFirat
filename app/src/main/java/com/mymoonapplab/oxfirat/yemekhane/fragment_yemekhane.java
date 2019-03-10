@@ -4,8 +4,6 @@ package com.mymoonapplab.oxfirat.yemekhane;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 

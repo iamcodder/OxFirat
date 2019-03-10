@@ -2,10 +2,6 @@ package com.mymoonapplab.oxfirat.etkinlik;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +11,11 @@ import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etkinlik_adapter.etkinlikViewHolder> {
 

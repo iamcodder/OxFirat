@@ -3,8 +3,6 @@ package com.mymoonapplab.oxfirat.fullScreenImage;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -14,6 +12,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class fullScreenImage extends AppCompatActivity {
 
