@@ -27,4 +27,5 @@ AVLoadingIndicatorView (Apache 2.0 License) : https://github.com/81813780/AVLoad
 MeowBottomNavigation (No License but Thanks Hamidreza): https://github.com/shetmobile/MeowBottomNavigation
 
 LottieFiles (Creative Commons License) : https://lottiefiles.com/page/license
+
 Thank you Tu Nguyen For the Animations : https://lottiefiles.com/4760-no-internet-connection
