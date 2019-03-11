@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -34,7 +37,9 @@ public class fragment_etkinlik extends Fragment {
     private ArrayList<String> etkinlik_link;
     private RecyclerView recyclerView;
     private fragment_etkinlik_adapter adapter;
-    private TextView textview_text_cekilemedi;
+
+    private LayoutAnimationController controller;
+
 
     private AVLoadingIndicatorView progressBar_pacman;
 
@@ -47,11 +52,28 @@ public class fragment_etkinlik extends Fragment {
     private int son_etkinlik_konumu;
 
     private Resources res;
+    private View rootView;
+
+    private LottieAnimationView no_internet_animation;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
+        rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
 
+        casting();
+        recycler_islemleri();
+        swipe_refresh();
+
+
+
+
+
+
+        return rootView;
+    }
+
+    private void casting(){
         etkinlik_tarih = new ArrayList<>();
         etkinlik_icerik = new ArrayList<>();
         etkinlik_link = new ArrayList<>();
@@ -64,13 +86,18 @@ public class fragment_etkinlik extends Fragment {
         asynTask_etkinlikCek_object.execute();
 
         progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
-        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_etkinlikler_textview);
-        textview_text_cekilemedi.setText(res.getString(R.string.etkinlikler_cekilemedi));
-        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
 
+        no_internet_animation=rootView.findViewById(R.id.fragment_etkinlik_no_internet_animation);
+        no_internet_animation.pauseAnimation();
+    }
+
+    private void recycler_islemleri(){
         recyclerView = rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        controller=AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_down_to_up);
+
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -94,8 +121,9 @@ public class fragment_etkinlik extends Fragment {
 
             }
         });
+    }
 
-
+    private void swipe_refresh(){
         swipeRefresh_damla = rootView.findViewById(R.id.fragment_etkinlik_waveswipe);
         swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -104,10 +132,7 @@ public class fragment_etkinlik extends Fragment {
             }
         });
 
-
-        return rootView;
     }
-
 
     @SuppressLint("StaticFieldLeak")
     private class asynTask_etkinlikCek extends AsyncTask<Void, Void, Void> {
@@ -145,18 +170,24 @@ public class fragment_etkinlik extends Fragment {
             super.onPostExecute(aVoid);
 
             if (etkinlik_icerik.isEmpty()) {
-                textview_text_cekilemedi.setVisibility(View.VISIBLE);
-            } else {
-                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+                no_internet_animation.playAnimation();
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
+            }
+            else {
+                no_internet_animation.pauseAnimation();
                 adapter = new fragment_etkinlik_adapter(getContext(), etkinlik_tarih, etkinlik_icerik, etkinlik_link, getFragmentManager());
                 recyclerView.setAdapter(adapter);
                 recyclerView.scrollToPosition(son_etkinlik_konumu - 2);
+                recyclerView.setLayoutAnimation(controller);
+                recyclerView.scheduleLayoutAnimation();
+
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
             }
 
-
-            if (swipeRefresh_damla.isRefreshing()) {
-                swipeRefresh_damla.setRefreshing(false);
-            }
 
             progressBar_pacman.smoothToHide();
             sayfa_sayisi++;

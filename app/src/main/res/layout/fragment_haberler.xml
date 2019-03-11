@@ -29,11 +29,12 @@
 
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/fragment_haberler_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_margin="10dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/fragment_haberler_textview_no_internet_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:lottie_rawRes="@raw/interneterroranimation"
+        app:lottie_loop="true" />
 
 </FrameLayout>

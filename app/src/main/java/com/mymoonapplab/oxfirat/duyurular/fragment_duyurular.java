@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -32,11 +35,12 @@ public class fragment_duyurular extends Fragment {
 
     private ArrayList<String> duyuru_linki, duyuru_icerigi, duyuru_tarihi;
     private RecyclerView recyclerView;
+    private LayoutAnimationController controller;
+
     private fragment_duyurular_adapter adapter;
 
     private AVLoadingIndicatorView progressBar_pacman;
 
-    private TextView textview_text_cekilemedi;
 
     private WaveSwipeRefreshLayout swipeRefresh_damla;
 
@@ -48,17 +52,31 @@ public class fragment_duyurular extends Fragment {
 
     private Resources res;
 
+    private View rootView;
+
+    private LottieAnimationView no_internet_animation;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_duyurular, container, false);
+        rootView = inflater.inflate(R.layout.fragment_duyurular, container, false);
 
+        casting();
+        recyler_islemleri();
+        swipe_refresh();
+
+
+
+
+        return rootView;
+    }
+
+    private void casting(){
         duyuru_linki = new ArrayList<>();
         duyuru_icerigi = new ArrayList<>();
         duyuru_tarihi = new ArrayList<>();
 
         sayfa_sayisi = 1;
-
 
         res = getResources();
 
@@ -66,14 +84,16 @@ public class fragment_duyurular extends Fragment {
         asynTask_duyuruCek_object.execute();
 
         progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        no_internet_animation=rootView.findViewById(R.id.fragment_duyurular_no_internet_animation);
+    }
 
-        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_duyurular_textview);
-        textview_text_cekilemedi.setText(getResources().getText(R.string.duyurular_cekilemedi));
-        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-
+    private void recyler_islemleri(){
         recyclerView = rootView.findViewById(R.id.fragment_duyurular_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        controller=AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_down_to_up);
+
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -97,6 +117,9 @@ public class fragment_duyurular extends Fragment {
 
             }
         });
+    }
+
+    private void swipe_refresh(){
 
         swipeRefresh_damla = rootView.findViewById(R.id.fragment_duyurular_waveswipe);
         swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -105,9 +128,6 @@ public class fragment_duyurular extends Fragment {
                 new asynTask_duyuruCek().execute();
             }
         });
-
-
-        return rootView;
     }
 
 
@@ -150,17 +170,20 @@ public class fragment_duyurular extends Fragment {
             super.onPostExecute(aVoid);
 
             if (duyuru_icerigi.isEmpty()) {
-                textview_text_cekilemedi.setVisibility(View.VISIBLE);
+                no_internet_animation.playAnimation();
 
                 if (swipeRefresh_damla.isRefreshing()) {
                     swipeRefresh_damla.setRefreshing(false);
                 }
-            } else {
-                FragmentManager manager = getFragmentManager();
-                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
-                adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, manager);
+            }
+            else {
+
+                no_internet_animation.pauseAnimation();
+                adapter = new fragment_duyurular_adapter(getContext(), duyuru_icerigi, duyuru_tarihi, duyuru_linki, getFragmentManager());
                 recyclerView.setAdapter(adapter);
                 recyclerView.scrollToPosition(son_duyuru_konumu - 2);
+                recyclerView.setLayoutAnimation(controller);
+                recyclerView.scheduleLayoutAnimation();
 
                 if (swipeRefresh_damla.isRefreshing()) {
                     swipeRefresh_damla.setRefreshing(false);

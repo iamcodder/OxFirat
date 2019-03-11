@@ -1,6 +1,5 @@
 package com.mymoonapplab.oxfirat.haberler;
 
-
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -8,9 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -36,24 +37,31 @@ public class fragment_haberler extends Fragment {
     public static ArrayList<String> haberLinki;
     private fragment_haberler_adapter fragment_haberler_adapter;
     private RecyclerView recyclerView;
+    private LayoutAnimationController controller;
     private AVLoadingIndicatorView progressBar_pacman;
-    private TextView textview_text_cekilemedi;
-
     private WaveSwipeRefreshLayout swipeRefresh_damla;
-
     private int sayfa_sayisi;
-
     private int son_haber_konumu;
-
     private asynTask_haberCek asynTask_haberCek_object;
-
     private Resources res;
+    private View rootView;
+    private LottieAnimationView no_internet_animation;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_haberler, container, false);
+        rootView = inflater.inflate(R.layout.fragment_haberler, container, false);
 
+        casting();
+
+        recycler_islevleri();
+
+        swipe_refresh();
+
+        return rootView;
+    }
+
+    private void casting(){
         haberBasligi = new ArrayList<>();
         haberLinki = new ArrayList<>();
         haberResmi = new ArrayList<>();
@@ -66,15 +74,17 @@ public class fragment_haberler extends Fragment {
         asynTask_haberCek_object.execute();
 
         progressBar_pacman = rootView.findViewById(R.id.fragmentyemekhane_progress_avi);
+        no_internet_animation=rootView.findViewById(R.id.fragment_haberler_textview_no_internet_animation);
+        no_internet_animation.pauseAnimation();
 
-        textview_text_cekilemedi = rootView.findViewById(R.id.fragment_haberler_textview);
-        textview_text_cekilemedi.setText(res.getString(R.string.haberler_cekilemedi));
-        textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+    }
 
-
+    private void recycler_islevleri(){
         recyclerView = rootView.findViewById(R.id.fragment_haberler_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        controller=AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation_down_to_up);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -98,8 +108,9 @@ public class fragment_haberler extends Fragment {
             }
 
         });
+    }
 
-
+    private void swipe_refresh(){
         swipeRefresh_damla = rootView.findViewById(R.id.fragment_haberler_waveswipe);
         swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,9 +118,6 @@ public class fragment_haberler extends Fragment {
                 new asynTask_haberCek().execute();
             }
         });
-
-
-        return rootView;
     }
 
 
@@ -117,6 +125,16 @@ public class fragment_haberler extends Fragment {
     public class asynTask_haberCek extends AsyncTask<Void, Void, Void> {
 
         private Elements haber1;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -136,15 +154,10 @@ public class fragment_haberler extends Fragment {
                     String parcalama[] = haber1.get(i).select("div").attr("style").split("'");
 
                     haberResmi.add(parcalama[1]);
-
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
             return null;
         }
 
@@ -153,16 +166,18 @@ public class fragment_haberler extends Fragment {
             super.onPostExecute(aVoid);
 
             if (haberBasligi.isEmpty()) {
-                textview_text_cekilemedi.setVisibility(View.VISIBLE);
-
+                no_internet_animation.playAnimation();
                 if (swipeRefresh_damla.isRefreshing()) {
                     swipeRefresh_damla.setRefreshing(false);
                 }
+
             } else {
-                textview_text_cekilemedi.setVisibility(View.INVISIBLE);
+                no_internet_animation.pauseAnimation();
                 fragment_haberler_adapter = new fragment_haberler_adapter(getContext(), haberBasligi, haberResmi, haberLinki, getFragmentManager());
                 recyclerView.setAdapter(fragment_haberler_adapter);
                 recyclerView.scrollToPosition(son_haber_konumu - 2);
+                recyclerView.setLayoutAnimation(controller);
+                recyclerView.scheduleLayoutAnimation();
 
                 if (swipeRefresh_damla.isRefreshing()) {
                     swipeRefresh_damla.setRefreshing(false);

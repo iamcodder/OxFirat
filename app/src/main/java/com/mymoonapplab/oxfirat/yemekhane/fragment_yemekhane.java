@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.mymoonapplab.oxfirat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -35,20 +38,40 @@ public class fragment_yemekhane extends Fragment {
 
     private asyncTask_yemekCek asynTask_yemekCek_object = null;
 
+    private View rootview;
+
+    private LottieAnimationView no_internet_animation;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview = inflater.inflate(R.layout.fragment_yemekhane, null);
+        rootview = inflater.inflate(R.layout.fragment_yemekhane, null);
 
+       casting();
+       swipe_refresh();
+
+
+
+        return rootview;
+    }
+
+    private void casting(){
         asynTask_yemekCek_object = new asyncTask_yemekCek();
         asynTask_yemekCek_object.execute();
 
         progressBar_pacman = rootview.findViewById(R.id.fragmentyemekhane_progress_avi);
+        no_internet_animation= rootview.findViewById(R.id.fragment_yemekhane_no_internet_animation);
+        no_internet_animation.pauseAnimation();
 
         textView_liste = rootview.findViewById(R.id.yemek_listesi);
         textView_menu = rootview.findViewById(R.id.menu);
         textView_tarih = rootview.findViewById(R.id.textView_tarihh);
 
+
+    }
+
+    private void swipe_refresh(){
         swipeRefresh_damla = rootview.findViewById(R.id.fragment_yemekhane_waveswipe);
         swipeRefresh_damla.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,11 +79,7 @@ public class fragment_yemekhane extends Fragment {
                 new asyncTask_yemekCek().execute();
             }
         });
-
-
-        return rootview;
     }
-
 
     @SuppressLint("StaticFieldLeak")
     private class asyncTask_yemekCek extends AsyncTask<Void, Void, Void> {
@@ -113,12 +132,22 @@ public class fragment_yemekhane extends Fragment {
             textView_liste.setText(yemeklerin_listesi);
             textView_tarih.setText(tarih);
 
-            if (swipeRefresh_damla.isRefreshing()) {
-                swipeRefresh_damla.setRefreshing(false);
-            }
+            textView_menu.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.left_to_right));
+            textView_liste.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.down_to_up));
+            textView_tarih.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.right_to_left));
 
             if (textView_menu.getText() == "") {
-                textView_liste.setText(R.string.yemekhane_cekilemedi);
+                no_internet_animation.playAnimation();
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
+            }
+
+            else{
+                no_internet_animation.pauseAnimation();
+                if (swipeRefresh_damla.isRefreshing()) {
+                    swipeRefresh_damla.setRefreshing(false);
+                }
             }
 
         }
@@ -130,5 +159,8 @@ public class fragment_yemekhane extends Fragment {
         if (asynTask_yemekCek_object != null && asynTask_yemekCek_object.cancel(true)) {
             asynTask_yemekCek_object = null;
         }
+        textView_menu.clearAnimation();
+        textView_liste.clearAnimation();
+        textView_tarih.clearAnimation();
     }
 }
