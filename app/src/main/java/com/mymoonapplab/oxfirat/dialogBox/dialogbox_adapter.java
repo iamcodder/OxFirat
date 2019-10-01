@@ -16,7 +16,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.fullScreenImage.fullScreenImage;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -50,22 +49,17 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     public void onBindViewHolder(@NonNull final dialogViewHolder dialogViewHolder, final int i) {
 
 
-        dialogViewHolder.bar.smoothToShow();
-
-
         Glide.with(mContext)
                 .load(resim_linkleri.get(i))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        dialogViewHolder.bar.smoothToHide();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        dialogViewHolder.bar.smoothToHide();
                         return false;
                     }
                 })
@@ -93,13 +87,11 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     class dialogViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView image;
-        private AVLoadingIndicatorView bar;
 
         dialogViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.dialogbox_design_imageView);
-            bar = itemView.findViewById(R.id.dialogbox_design_progress_avi);
 
         }
     }

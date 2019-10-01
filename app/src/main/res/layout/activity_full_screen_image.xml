@@ -15,13 +15,4 @@
         tools:background="@mipmap/ic_launcher"
         android:layout_centerInParent="true"/>
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/activity_full_screen_progress_avi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:indicatorName="BallTrianglePathIndicator"
-        android:layout_centerInParent="true"
-        app:indicatorColor="@color/colorPrimary"
-        style="@style/AVLoadingIndicatorView.Large"/>
-
 </RelativeLayout>

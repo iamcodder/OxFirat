@@ -17,7 +17,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -61,7 +60,6 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
 
         String link = mContext.getResources().getString(R.string.okul_sitesi);
 
-        viewHolder.mBar.smoothToShow();
         viewHolder.mTextview.setText(haber_baslik.get(i));
 
         Glide.with(mContext)
@@ -70,13 +68,11 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        viewHolder.mBar.smoothToHide();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        viewHolder.mBar.smoothToHide();
                         return false;
                     }
                 })
@@ -87,7 +83,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox = new dialogBox(fragment_haberler.haberLinki.get(i));
+                dialogBox dialogBox = new dialogBox(haber_linki.get(i));
 
                 dialogBox.show(manager, "dialogbox_showed");
 
@@ -104,7 +100,6 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
         private CardView mCardview;
         private ImageView mImageview;
         private TextView mTextview;
-        private AVLoadingIndicatorView mBar;
 
 
         ViewHolder(@NonNull View itemView) {
@@ -112,7 +107,6 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
             mCardview = itemView.findViewById(R.id.fragment_haberler_carview_design);
             mImageview = itemView.findViewById(R.id.cardView_resim);
             mTextview = itemView.findViewById(R.id.cardView_baslik);
-            mBar = itemView.findViewById(R.id.cardView_progress_avi);
         }
     }
 }

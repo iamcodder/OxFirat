@@ -1,67 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".yemekhane.fragment_yemekhane">
+    tools:context=".yemekhane.fragment_yemek">
 
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-        android:id="@+id/fragment_yemekhane_waveswipe"
+    <TextView
+        android:id="@+id/yemek_listesi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/fragmentyemekhane_progress_avi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:indicatorName="PacmanIndicator"
-                android:layout_centerInParent="true"
-                app:indicatorColor="@color/colorPrimary"/>
-
-
-            <TextView
-                android:id="@+id/yemek_listesi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textAlignment="center"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/yemek_listesi"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView_tarihh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/yemek_listesi"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/fragment_yemekhane_no_internet_animation"
+    <TextView
+        android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:lottie_rawRes="@raw/interneterroranimation"
-        app:lottie_loop="true" />
+        android:layout_above="@id/yemek_listesi"
+        android:layout_marginBottom="16dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/yemek_listesi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView_tarihh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yemek_listesi" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

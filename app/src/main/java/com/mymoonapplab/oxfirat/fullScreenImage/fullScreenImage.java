@@ -11,7 +11,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class fullScreenImage extends AppCompatActivity {
 
     private ImageView imageView;
-    private AVLoadingIndicatorView progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +26,6 @@ public class fullScreenImage extends AppCompatActivity {
 
 
         imageView = findViewById(R.id.activity_full_screen_imageview);
-        progress_bar = findViewById(R.id.activity_full_screen_progress_avi);
 
         Intent getIntent = getIntent();
 
@@ -37,13 +34,11 @@ public class fullScreenImage extends AppCompatActivity {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        progress_bar.smoothToHide();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        progress_bar.smoothToHide();
                         return false;
                     }
                 })
