@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/bar_app"
+        android:id="@+id/appbar"/>
+
+    <FrameLayout
+        android:id="@+id/content_main_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar"/>
+
+    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+        android:id="@+id/content_main_bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bar_bottom"
+        android:elevation="8dp"
+        android:padding="12dp"
+        app:bnc_mode="spread">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/bottom_bar_haberler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="true"
+            app:bt_colorActive="@color/haberler"
+            app:bt_colorInactive="#000000"
+            app:bt_icon="@drawable/icon_haberler"
+            app:bt_title="@string/haberler"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/bottom_bar_duyurlar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/duyurular"
+            app:bt_colorInactive="#000000"
+            app:bt_icon="@drawable/icon_duyurular"
+            app:bt_title="@string/duyurular"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/bottom_bar_etkinlikler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/etkinlikler"
+            app:bt_colorInactive="#000000"
+            app:bt_icon="@drawable/icon_etkinlikler"
+            app:bt_title="@string/etkinlikler"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/bottom_bar_yemekhane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/yemekhane"
+            app:bt_colorInactive="#000000"
+            app:bt_icon="@drawable/icon_yemekhane"
+            app:bt_title="@string/yemekhane"/>
+
+        <!-- Add more child items here - max upto 5 -->
+
+    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+
+</RelativeLayout>

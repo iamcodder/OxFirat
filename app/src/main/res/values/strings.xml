@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">OxFırat</string>
 
-    <string name="Mobile_ads_code">ca-app-pub-1818679104699845~1785629318</string>
-    <string name="Test_device">D239974A1C94D237A5745EC53CF138BE</string>
-
     <string name="okul_sitesi">http://www.firat.edu.tr</string>
     <string name="yemekhane_sitesi">http://uevi.firat.edu.tr</string>
     <string name="haber_sitesi">http://www.firat.edu.tr/tr/haberler?page=</string>
@@ -18,8 +15,6 @@
     <string name="hello_blank_fragment">hello_blank_fragment</string>
     <string name="sayfa_yuklendi">.page loaded</string>
 
-
-
     <string name="yemekhane_cekilemedi">The menu of the day could not be retrieved from the site.Please try to take the menu of the day by pulling your finger from top to bottom.</string>
     <string name="haberler_cekilemedi">News could not be retrieved from the site.Please pull your finger down from the top to try to get the news again from the site</string>
     <string name="duyurular_cekilemedi">Announcements could not be retrieved from the site.Please pull your finger down from the top to try to get an announcement from the site again</string>
@@ -28,5 +23,8 @@
 
     <string name="internet_acin">Please open the internet connection</string>
     <string name="menu">menu</string>
+
+    <string name="navigation_drawer_open">Navigation drawer is open.</string>
+    <string name="navigation_drawer_close">Navigation drawer is close.</string>
 
 </resources>

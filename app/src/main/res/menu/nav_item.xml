@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/duyu"
+        android:title="duyuru"
+        android:icon="@drawable/icon_duyurular"/>
+
+    <item android:id="@+id/etk"
+        android:title="etkinlik"
+        android:icon="@drawable/icon_etkinlikler"/>
+
+    <item android:id="@+id/haber"
+        android:title="haber"
+        android:icon="@drawable/icon_haberler"/>
+
+</menu>

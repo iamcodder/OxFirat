@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">OxFırat</string>
 
-    <string name="Mobile_ads_code">ca-app-pub-1818679104699845~1785629318</string>
-    <string name="Test_device">D239974A1C94D237A5745EC53CF138BE</string>
 
     <string name="okul_sitesi">http://www.firat.edu.tr</string>
     <string name="yemekhane_sitesi">http://uevi.firat.edu.tr</string>
@@ -28,5 +26,7 @@
 
 
     <string name="internet_acin">Lütfen internetinizi açın</string>
+    <string name="navigation_drawer_close">Navigation drawer kapalı</string>
+    <string name="navigation_drawer_open">Navigation drawer açık</string>
 
 </resources>
