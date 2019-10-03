@@ -48,7 +48,7 @@ public class async_yemekhane extends AsyncTask<String,Void,Void> {
 
         }
         catch (Exception e){
-            Log.d("Error : ", Objects.requireNonNull(e.getLocalizedMessage()));
+                Log.d("Error : ", "");
         }
 
         return null;

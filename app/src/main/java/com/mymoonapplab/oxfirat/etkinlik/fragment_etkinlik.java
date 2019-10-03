@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.mymoonapplab.oxfirat.R;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
     private ArrayList<String> list_etkinlik_tarih,list_etkinlik_baslik,list_etkinlik_link;
     private RecyclerView recyclerView;
     private fragment_etkinlik_adapter adapter;
+    private ProgressBar progressBar;
 
     private int son_etkinlik_konumu;
 
@@ -35,6 +38,9 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
         list_etkinlik_link = new ArrayList<>();
         list_etkinlik_baslik = new ArrayList<>();
         sayfa_sayisi = 1;
+
+        progressBar=rootView.findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         gorev_calistir();
 
@@ -76,6 +82,7 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
     private void gorev_calistir() {
         new async_etkinlik(this).execute(getResources().getString(R.string.etkinlik_sitesi),
                 getResources().getString(R.string.okul_sitesi));
+        progressBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -91,6 +98,6 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
         recyclerView.scrollToPosition(son_etkinlik_konumu - 2);
         recyclerView.scheduleLayoutAnimation();
         sayfa_sayisi++;
-
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

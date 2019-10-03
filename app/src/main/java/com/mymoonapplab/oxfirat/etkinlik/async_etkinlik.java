@@ -49,7 +49,7 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
 
         }
         catch (Exception e){
-            Log.d("Error",e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return null;

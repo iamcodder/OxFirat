@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -61,6 +62,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
         String link = mContext.getResources().getString(R.string.okul_sitesi);
 
         viewHolder.mTextview.setText(haber_baslik.get(i));
+        viewHolder.mProgressBar.setVisibility(View.VISIBLE);
 
         Glide.with(mContext)
                 .load(link + haber_resim.get(i))
@@ -68,11 +70,13 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        viewHolder.mProgressBar.setVisibility(View.INVISIBLE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        viewHolder.mProgressBar.setVisibility(View.INVISIBLE);
                         return false;
                     }
                 })
@@ -100,6 +104,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
         private CardView mCardview;
         private ImageView mImageview;
         private TextView mTextview;
+        private ProgressBar mProgressBar;
 
 
         ViewHolder(@NonNull View itemView) {
@@ -107,6 +112,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
             mCardview = itemView.findViewById(R.id.fragment_haberler_carview_design);
             mImageview = itemView.findViewById(R.id.cardView_resim);
             mTextview = itemView.findViewById(R.id.cardView_baslik);
+            mProgressBar=itemView.findViewById(R.id.fragment_haberler_carview_design_progress);
         }
     }
 }

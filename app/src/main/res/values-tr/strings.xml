@@ -7,6 +7,7 @@
     <string name="haber_sitesi">http://www.firat.edu.tr/tr/haberler?page=</string>
     <string name="etkinlik_sitesi">http://www.firat.edu.tr/tr/etkinlikler?page=</string>
     <string name="duyurular_sitesi">http://www.firat.edu.tr/tr/duyurular?page=</string>
+    <string name="akademik_takvim_sitesi">http://www.firat.edu.tr/tr/ogrenciler/akademik-takvim</string>
 
     <string name="haberler">Haberler</string>
     <string name="duyurular">Duyurular</string>

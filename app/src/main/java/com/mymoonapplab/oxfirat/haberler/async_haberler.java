@@ -51,7 +51,6 @@ public class async_haberler extends AsyncTask<String,Void,Void> {
             }
         }
         catch(Exception e){
-                Log.d("Error : ", Objects.requireNonNull(e.getLocalizedMessage()));
             }
 
             return null;

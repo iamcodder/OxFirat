@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
@@ -34,7 +35,8 @@ public class dialogBox extends DialogFragment {
     private dialogbox_adapter adapter;
     private String URL_LINKI;
 
-    private Resources res;
+    private ProgressBar progressBar;
+
 
     private String okul_sitesi;
 
@@ -42,7 +44,6 @@ public class dialogBox extends DialogFragment {
 
     }
 
-    @SuppressLint("ValidFragment")
     public dialogBox(String URL_LINKI) {
         this.URL_LINKI = URL_LINKI;
     }
@@ -53,12 +54,13 @@ public class dialogBox extends DialogFragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialogbox, container, false);
 
 
-        res = getResources();
-        okul_sitesi = res.getString(R.string.okul_sitesi);
+        okul_sitesi = getResources().getString(R.string.okul_sitesi);
         new haberi_cek().execute();
         textView_baslik = view.findViewById(R.id.dialogbox_baslik);
         textView_tarih = view.findViewById(R.id.dialogbox_tarih);
         textView_icerik = view.findViewById(R.id.dialogbox_icerik);
+        progressBar=view.findViewById(R.id.dialog_progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = view.findViewById(R.id.dialogbox_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,6 +92,7 @@ public class dialogBox extends DialogFragment {
             super.onPreExecute();
             haber_icerigi = "";
             resim_linkleri = new ArrayList<>();
+
 
         }
 
@@ -155,6 +158,7 @@ public class dialogBox extends DialogFragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.INVISIBLE);
 
             Activity activity = getActivity();
 

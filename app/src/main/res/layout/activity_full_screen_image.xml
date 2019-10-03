@@ -8,11 +8,17 @@
     tools:context=".fullScreenImage.fullScreenImage"
     android:background="#000000">
 
-    <com.easyzoom.EasyZoomImageViewer
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/activity_full_screen_imageview"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="fitCenter" />
+
+    <ProgressBar
+        android:id="@+id/full_screnn_progress"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:background="@mipmap/ic_launcher"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class fragment_yemek extends Fragment implements interface_yemekhane {
 
     private TextView txt_liste,txt_menu,txt_tarih;
-
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -29,6 +30,8 @@ public class fragment_yemek extends Fragment implements interface_yemekhane {
         txt_liste=rootView.findViewById(R.id.yemek_listesi);
         txt_menu=rootView.findViewById(R.id.menu);
         txt_tarih=rootView.findViewById(R.id.textView_tarihh);
+        progressBar=rootView.findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         new async_yemekhane(this).execute(getResources().getString(R.string.yemekhane_sitesi));
 
@@ -48,5 +51,7 @@ public class fragment_yemek extends Fragment implements interface_yemekhane {
             liste.append(yemek_listesi.get(i)).append("\n");
         }
         txt_liste.setText(liste.toString());
+        progressBar.setVisibility(View.INVISIBLE);
+
     }
 }

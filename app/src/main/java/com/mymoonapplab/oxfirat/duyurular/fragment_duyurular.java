@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
@@ -33,6 +34,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
     private fragment_duyurular_adapter adapter;
     private int son_duyuru_konumu;
     private View rootView;
+    private ProgressBar progressBar;
 
     private ArrayList<String> list_duyuru_linki, list_duyuru_basligi, list_duyuru_tarihi;
     public static int sayfa_sayisi;
@@ -46,6 +48,9 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
         list_duyuru_basligi = new ArrayList<>();
         list_duyuru_tarihi = new ArrayList<>();
         sayfa_sayisi = 1;
+
+        progressBar=rootView.findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         gorev_calistir();
 
@@ -85,6 +90,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
     private void gorev_calistir() {
         new async_duyuru(this).execute(getResources().getString(R.string.okul_sitesi),
                 getResources().getString(R.string.duyurular_sitesi));
+        progressBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -100,6 +106,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
         recyclerView.scrollToPosition(son_duyuru_konumu - 2);
         recyclerView.scheduleLayoutAnimation();
         sayfa_sayisi++;
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 

@@ -15,7 +15,7 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
     private ArrayList<String> list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link;
     private interface_duyurular interface_duyurular;
 
-    public async_duyuru(com.mymoonapplab.oxfirat.duyurular.interface_duyurular interface_duyurular) {
+    async_duyuru(com.mymoonapplab.oxfirat.duyurular.interface_duyurular interface_duyurular) {
         this.interface_duyurular = interface_duyurular;
     }
 
@@ -41,7 +41,7 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
             for (int i = 0; i < elements_duyuru.size(); i++) {
 
                 list_etkinlik_baslik.add(elements_duyuru.get(i).select("div[class=top]").text());
-                list_etkinlik_tarih.add(elements_duyuru.get(i).select("span[class=day").text());
+                list_etkinlik_tarih.add(elements_duyuru.get(i).select("span[class=day]").text());
                 list_etkinlik_link.add((site_okul) + elements_duyuru.get(i).select("a").attr("href"));
 
             }

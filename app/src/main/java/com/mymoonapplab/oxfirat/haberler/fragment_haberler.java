@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.mymoonapplab.oxfirat.R;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class fragment_haberler extends Fragment implements interface_haberler {
     private RecyclerView recyclerView;
     private int son_haber_konumu;
     private View rootView;
+    private ProgressBar progressBar;
 
     private ArrayList<String> list_haber_basligi,list_haber_linki,list_haber_resmi;
 
@@ -36,6 +39,9 @@ public class fragment_haberler extends Fragment implements interface_haberler {
         list_haber_linki=new ArrayList<>();
         list_haber_resmi=new ArrayList<>();
         sayi_sayfa=1;
+
+        progressBar=rootView.findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
         gorev_calistir();
 
@@ -77,6 +83,8 @@ public class fragment_haberler extends Fragment implements interface_haberler {
     public void gorev_calistir(){
         new async_haberler(this).execute(getResources().getString(R.string.okul_sitesi),
                 getResources().getString(R.string.haber_sitesi));
+        progressBar.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -91,6 +99,8 @@ public class fragment_haberler extends Fragment implements interface_haberler {
         recyclerView.scrollToPosition(son_haber_konumu - 2);
         recyclerView.scheduleLayoutAnimation();
         sayi_sayfa++;
+        progressBar.setVisibility(View.INVISIBLE);
+
     }
 
 

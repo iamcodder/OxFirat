@@ -20,11 +20,11 @@
     <string name="duyurular_cekilemedi">Announcements could not be retrieved from the site.Please pull your finger down from the top to try to get an announcement from the site again</string>
     <string name="etkinlikler_cekilemedi">Events could not be retrieved from the site.To try to get an event from the site again, please pull your finger down from the top.</string>
 
-
     <string name="internet_acin">Please open the internet connection</string>
     <string name="menu">menu</string>
 
     <string name="navigation_drawer_open">Navigation drawer is open.</string>
     <string name="navigation_drawer_close">Navigation drawer is close.</string>
+    <string name="akademik_takvim_sitesi">http://www.firat.edu.tr/tr/ogrenciler/akademik-takvim</string>
 
 </resources>

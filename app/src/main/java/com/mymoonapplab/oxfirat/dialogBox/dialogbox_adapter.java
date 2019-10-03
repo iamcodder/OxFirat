@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -48,6 +49,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     @Override
     public void onBindViewHolder(@NonNull final dialogViewHolder dialogViewHolder, final int i) {
 
+        dialogViewHolder.progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(mContext)
                 .load(resim_linkleri.get(i))
@@ -55,11 +57,13 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        dialogViewHolder.progressBar.setVisibility(View.INVISIBLE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        dialogViewHolder.progressBar.setVisibility(View.INVISIBLE);
                         return false;
                     }
                 })
@@ -87,11 +91,13 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     class dialogViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView image;
+        private ProgressBar progressBar;
 
         dialogViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.dialogbox_design_imageView);
+            progressBar=itemView.findViewById(R.id.dialog_progress_img);
 
         }
     }
