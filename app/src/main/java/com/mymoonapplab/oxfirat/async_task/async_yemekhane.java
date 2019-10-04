@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.yemekhane;
+package com.mymoonapplab.oxfirat.async_task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,15 +8,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class async_yemekhane extends AsyncTask<String,Void,Void> {
 
     private String tarih;
     private ArrayList<String> liste_yemek;
-    private interface_yemekhane interface_yemekhane;
+    private com.mymoonapplab.oxfirat.interfacee.interface_yemekhane interface_yemekhane;
 
-    public async_yemekhane(com.mymoonapplab.oxfirat.yemekhane.interface_yemekhane interface_yemekhane) {
+    public async_yemekhane(com.mymoonapplab.oxfirat.interfacee.interface_yemekhane interface_yemekhane) {
         this.interface_yemekhane = interface_yemekhane;
     }
 

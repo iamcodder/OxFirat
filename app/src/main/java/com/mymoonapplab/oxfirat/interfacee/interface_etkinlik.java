@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.etkinlik;
+package com.mymoonapplab.oxfirat.interfacee;
 
 import java.util.ArrayList;
 

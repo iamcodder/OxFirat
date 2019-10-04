@@ -1,19 +1,14 @@
-package com.mymoonapplab.oxfirat;
+package com.mymoonapplab.oxfirat.activity;
 
+import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-
-import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
-import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
-import com.mymoonapplab.oxfirat.akademik_takvim.fragment_akademik_takvim;
-import com.mymoonapplab.oxfirat.duyurular.fragment_duyurular;
-import com.mymoonapplab.oxfirat.etkinlik.fragment_etkinlik;
-import com.mymoonapplab.oxfirat.haberler.fragment_haberler;
-import com.mymoonapplab.oxfirat.navigationMenu.ExpandableListAdapter;
-import com.mymoonapplab.oxfirat.navigationMenu.model_menu;
-import com.mymoonapplab.oxfirat.navigationMenu.statik_class;
-import com.mymoonapplab.oxfirat.yemekhane.fragment_yemek;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,17 +19,32 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
+import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
+import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.fragment.fragment_akademik_takvim;
+import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
+import com.mymoonapplab.oxfirat.fragment.fragment_etkinlik;
+import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
+import com.mymoonapplab.oxfirat.interfacee.interface_network_control;
+import com.mymoonapplab.oxfirat.navigationMenu.ExpandableListAdapter;
+import com.mymoonapplab.oxfirat.navigationMenu.model_menu;
+import com.mymoonapplab.oxfirat.navigationMenu.statik_class;
+import com.mymoonapplab.oxfirat.fragment.fragment_yemek;
+import com.mymoonapplab.oxfirat.service.yemekhane_servis;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements interface_network_control {
 
     private BubbleNavigationConstraintView bottomBar;
-    private Fragment frag_ekranda_gozuken,fragment;
+    private Fragment frag_ekranda_gozuken, fragment;
     private String str_tag;
-    private boolean is_first_time;
+    private boolean is_first_time, is_connected_network = false;
 
     private DrawerLayout drawerLayout;
 
@@ -42,22 +52,19 @@ public class HomeActivity extends AppCompatActivity {
     List<model_menu> list_parent = new ArrayList<>();
     HashMap<model_menu, List<model_menu>> list_child = new HashMap<>();
 
+    private static final String LOG_TAG = "Otomatik internet Kontrol¸";
+    private NetworkChangeReceiver receiver;//Network dinleyen receiver objemizin referans˝
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startService(new Intent(this, yemekhane_servis.class));
+
         setup();
 
-        fragment = new fragment_yemek();
-        str_tag = "frag_yemek";
-        fragment_change(fragment, str_tag);
-
-        fragment = new fragment_haberler();
-        str_tag = "frag_haber";
-        fragment_change(fragment, str_tag);
-
-        expandableListView = findViewById(R.id.main_expandable);
         expandable_listview();
         ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(this, list_parent, list_child);
         expandableListView.setAdapter(expandableListAdapter);
@@ -65,27 +72,34 @@ public class HomeActivity extends AppCompatActivity {
         run();
 
 
-
     }
 
-    private void setup(){
-        is_first_time=false;
+    private void setup() {
 
-        Toolbar toolbar=findViewById(R.id.app_bar_toolbar);
+        //Receiverımızı register ediyoruz
+        //Yani Çalıştırıyoruz
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkChangeReceiver(this);
+        registerReceiver(receiver, filter);
+
+        is_first_time = false;
+
+        Toolbar toolbar = findViewById(R.id.app_bar_toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout=findViewById(R.id.activity_main_drawerLayout);
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout = findViewById(R.id.activity_main_drawerLayout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         bottomBar = findViewById(R.id.content_main_bottom_navigation_view);
+        expandableListView = findViewById(R.id.main_expandable);
+
 
     }
 
-    private void run(){
+    private void run() {
         bottomBar.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
             public void onNavigationChanged(View view, int position) {
@@ -95,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                         str_tag = "frag_haber";
                         break;
                     case 1:
-                        fragment= new fragment_duyurular();
+                        fragment = new fragment_duyurular();
                         str_tag = "frag_duyuru";
                         break;
                     case 2:
@@ -116,10 +130,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                fragment=new fragment_akademik_takvim();
-                str_tag="akademik";
+                fragment = new fragment_akademik_takvim();
+                str_tag = "akademik";
 
-                statik_class.PDF_ISMI ="akademiktakvim_"+(childPosition+1);
+                statik_class.PDF_ISMI = "akademiktakvim_" + (childPosition + 1);
 
                 fragment_change(fragment, str_tag);
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -133,41 +147,38 @@ public class HomeActivity extends AppCompatActivity {
 
     private void fragment_change(Fragment frag_new, String fragment_tag) {
 
-        //frag_x: stackte o tag ile ekli fragment oluo olmadığını tutuyor.
-        Fragment frag_x=getSupportFragmentManager().findFragmentByTag(fragment_tag);
-        FragmentTransaction tr=getSupportFragmentManager().beginTransaction();
+        if (this.is_connected_network) {
+            //frag_x: stackte o tag ile ekli fragment oluo olmadığını tutuyor.
+            Fragment frag_x = getSupportFragmentManager().findFragmentByTag(fragment_tag);
+            FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
 
-        //conteiner boş
-        if(!is_first_time){
-            tr.add(R.id.content_main_frame_layout,frag_new,fragment_tag);
-            is_first_time=true;
-            frag_ekranda_gozuken=frag_new;
+            //conteiner boş
+            if (!is_first_time) {
+                tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag);
+                is_first_time = true;
+                frag_ekranda_gozuken = frag_new;
+            } else if (fragment_tag.equals("akademik") && frag_x != null) {
+
+                frag_x.onDestroy();
+                tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
+                        .hide(this.frag_ekranda_gozuken);
+                frag_ekranda_gozuken = frag_new;
+
+            } else if (frag_x != null && frag_x.isAdded()) {
+
+                tr.hide(this.frag_ekranda_gozuken).show(frag_x);
+                frag_ekranda_gozuken = frag_x;
+
+            } else {
+
+                tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
+                        .hide(this.frag_ekranda_gozuken);
+                frag_ekranda_gozuken = frag_new;
+            }
+
+            tr.commit();
         }
 
-        else if(fragment_tag.equals("akademik") && frag_x!=null){
-
-            frag_x.onDestroy();
-            tr.add(R.id.content_main_frame_layout,frag_new,fragment_tag)
-                    .hide(this.frag_ekranda_gozuken);
-            frag_ekranda_gozuken=frag_new;
-
-        }
-
-        else if (frag_x != null && frag_x.isAdded()) {
-
-            tr.hide(this.frag_ekranda_gozuken).show(frag_x);
-            frag_ekranda_gozuken=frag_x;
-
-        }
-
-        else {
-
-            tr.add(R.id.content_main_frame_layout,frag_new,fragment_tag)
-                    .hide(this.frag_ekranda_gozuken);
-            frag_ekranda_gozuken=frag_new;
-        }
-
-        tr.commit();
     }
 
 
@@ -204,4 +215,32 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);//receiver durduruluyor
+
+    }
+
+    @Override
+    public void result(boolean is_connected) {
+
+        if (is_connected) {
+            this.is_connected_network = true;
+            fragment = new fragment_yemek();
+            str_tag = "frag_yemek";
+            fragment_change(fragment, str_tag);
+
+            fragment = new fragment_haberler();
+            str_tag = "frag_haber";
+            fragment_change(fragment, str_tag);
+
+        } else {
+            Toast.makeText(this, "İnternet bağlantısını kontrol edin", Toast.LENGTH_SHORT).show();
+            this.is_connected_network = false;
+
+        }
+
+    }
 }

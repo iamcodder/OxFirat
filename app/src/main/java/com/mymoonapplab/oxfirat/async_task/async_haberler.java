@@ -1,19 +1,20 @@
-package com.mymoonapplab.oxfirat.haberler;
+package com.mymoonapplab.oxfirat.async_task;
 
 import android.os.AsyncTask;
-import android.util.Log;
+
+import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
+import com.mymoonapplab.oxfirat.interfacee.interface_haberler;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class async_haberler extends AsyncTask<String,Void,Void> {
 
     ArrayList<String> list_haber_basligi, list_haber_resmi, list_haber_linki;
-    private interface_haberler interface_haberler;
+    private com.mymoonapplab.oxfirat.interfacee.interface_haberler interface_haberler;
 
     public async_haberler(interface_haberler interface_haberler){
         this.interface_haberler=interface_haberler;

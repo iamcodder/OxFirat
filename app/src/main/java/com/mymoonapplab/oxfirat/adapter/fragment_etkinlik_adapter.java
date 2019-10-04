@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.etkinlik;
+package com.mymoonapplab.oxfirat.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
+import com.mymoonapplab.oxfirat.fragment.fragment_dialogbox;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
     private List<String> list_link;
     private FragmentManager manager;
 
-    fragment_etkinlik_adapter(Context mContext, List<String> list_tarih, List<String> list_icerik, List<String> list_link, FragmentManager manager) {
+    public fragment_etkinlik_adapter(Context mContext, List<String> list_tarih, List<String> list_icerik, List<String> list_link, FragmentManager manager) {
         this.mContext = mContext;
         this.list_tarih = list_tarih;
         this.list_icerik = list_icerik;
@@ -52,8 +52,8 @@ public class fragment_etkinlik_adapter extends RecyclerView.Adapter<fragment_etk
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox = new dialogBox(list_link.get(i));
-                dialogBox.show(manager, "hello");
+                fragment_dialogbox fragment_dialogbox = new fragment_dialogbox(list_link.get(i));
+                fragment_dialogbox.show(manager, "hello");
 
             }
         });

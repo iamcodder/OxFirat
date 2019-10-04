@@ -1,21 +1,22 @@
-package com.mymoonapplab.oxfirat.duyurular;
+package com.mymoonapplab.oxfirat.async_task;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class async_duyuru extends AsyncTask<String,Void,Void> {
 
     private ArrayList<String> list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link;
-    private interface_duyurular interface_duyurular;
+    private com.mymoonapplab.oxfirat.interfacee.interface_duyurular interface_duyurular;
 
-    async_duyuru(com.mymoonapplab.oxfirat.duyurular.interface_duyurular interface_duyurular) {
+    public async_duyuru(com.mymoonapplab.oxfirat.interfacee.interface_duyurular interface_duyurular) {
         this.interface_duyurular = interface_duyurular;
     }
 
@@ -49,7 +50,7 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
         }
 
         catch (Exception e){
-            Log.d("Error : ", Objects.requireNonNull(e.getLocalizedMessage()));
+            Log.d("Sülo : ", "error duy");
         }
 
         return null;

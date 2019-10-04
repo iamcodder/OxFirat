@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.dialogBox;
+package com.mymoonapplab.oxfirat.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.fullScreenImage.fullScreenImage;
+import com.mymoonapplab.oxfirat.activity.fullScreenImage;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
     private Context mContext;
 
 
-    dialogbox_adapter(List<String> resim_linkleri, Context mContext) {
+    public dialogbox_adapter(List<String> resim_linkleri, Context mContext) {
         this.resim_linkleri = resim_linkleri;
         this.mContext = mContext;
 

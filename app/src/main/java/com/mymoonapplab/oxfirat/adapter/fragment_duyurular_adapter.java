@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.duyurular;
+package com.mymoonapplab.oxfirat.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
+import com.mymoonapplab.oxfirat.fragment.fragment_dialogbox;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
     private FragmentManager manager;
 
 
-    fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link, FragmentManager manager) {
+    public fragment_duyurular_adapter(Context mContext, List<String> list_icerik, List<String> list_tarih, List<String> list_link, FragmentManager manager) {
         this.mContext = mContext;
         this.list_icerik = list_icerik;
         this.list_tarih = list_tarih;
@@ -53,8 +53,8 @@ public class fragment_duyurular_adapter extends RecyclerView.Adapter<fragment_du
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox = new dialogBox(list_link.get(i));
-                dialogBox.show(manager, "hi");
+                fragment_dialogbox fragment_dialogbox = new fragment_dialogbox(list_link.get(i));
+                fragment_dialogbox.show(manager, "hi");
             }
         });
     }

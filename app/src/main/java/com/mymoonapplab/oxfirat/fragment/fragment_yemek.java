@@ -1,7 +1,6 @@
-package com.mymoonapplab.oxfirat.yemekhane;
+package com.mymoonapplab.oxfirat.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.async_task.async_yemekhane;
+import com.mymoonapplab.oxfirat.interfacee.interface_yemekhane;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.etkinlik;
+package com.mymoonapplab.oxfirat.async_task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,9 +13,9 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
 
     ArrayList<String> list_baslik,list_tarih,list_link;
 
-    interface_etkinlik interface_etkinlik;
+    com.mymoonapplab.oxfirat.interfacee.interface_etkinlik interface_etkinlik;
 
-    public async_etkinlik(com.mymoonapplab.oxfirat.etkinlik.interface_etkinlik interface_etkinlik) {
+    public async_etkinlik(com.mymoonapplab.oxfirat.interfacee.interface_etkinlik interface_etkinlik) {
         this.interface_etkinlik = interface_etkinlik;
     }
 
@@ -49,7 +49,7 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
 
         }
         catch (Exception e){
-            e.printStackTrace();
+            Log.d("Sülo","Error etk");
         }
 
         return null;

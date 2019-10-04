@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.fullScreenImage;
+package com.mymoonapplab.oxfirat.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

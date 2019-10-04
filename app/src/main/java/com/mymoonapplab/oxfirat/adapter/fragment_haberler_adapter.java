@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.haberler;
+package com.mymoonapplab.oxfirat.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.dialogBox.dialogBox;
+import com.mymoonapplab.oxfirat.fragment.fragment_dialogbox;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
     private FragmentManager manager;
 
 
-    fragment_haberler_adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki, FragmentManager manager) {
+    public fragment_haberler_adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki, FragmentManager manager) {
         this.mContext = mContext;
         this.haber_baslik = haber_baslik;
         this.haber_resim = haber_resim;
@@ -87,9 +87,9 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
             @Override
             public void onClick(View v) {
 
-                dialogBox dialogBox = new dialogBox(haber_linki.get(i));
+                fragment_dialogbox fragment_dialogbox = new fragment_dialogbox(haber_linki.get(i));
 
-                dialogBox.show(manager, "dialogbox_showed");
+                fragment_dialogbox.show(manager, "dialogbox_showed");
 
             }
         });

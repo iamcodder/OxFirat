@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.etkinlik;
+package com.mymoonapplab.oxfirat.fragment;
 
 
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.async_task.async_etkinlik;
+import com.mymoonapplab.oxfirat.adapter.fragment_etkinlik_adapter;
+import com.mymoonapplab.oxfirat.interfacee.interface_etkinlik;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.akademik_takvim;
+package com.mymoonapplab.oxfirat.fragment;
 
 
 import android.os.Bundle;

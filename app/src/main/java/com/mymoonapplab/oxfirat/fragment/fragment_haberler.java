@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.haberler;
+package com.mymoonapplab.oxfirat.fragment;
 
 
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.async_task.async_haberler;
+import com.mymoonapplab.oxfirat.adapter.fragment_haberler_adapter;
+import com.mymoonapplab.oxfirat.interfacee.interface_haberler;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class fragment_haberler extends Fragment implements interface_haberler {
 
 
-    private fragment_haberler_adapter fragment_haberler_adapter;
+    private com.mymoonapplab.oxfirat.adapter.fragment_haberler_adapter fragment_haberler_adapter;
     private RecyclerView recyclerView;
     private int son_haber_konumu;
     private View rootView;

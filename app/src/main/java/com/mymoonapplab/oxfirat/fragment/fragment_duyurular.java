@@ -1,25 +1,17 @@
-package com.mymoonapplab.oxfirat.duyurular;
+package com.mymoonapplab.oxfirat.fragment;
 
 
-import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.async_task.async_duyuru;
+import com.mymoonapplab.oxfirat.adapter.fragment_duyurular_adapter;
+import com.mymoonapplab.oxfirat.interfacee.interface_duyurular;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
