@@ -70,6 +70,8 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
                 .into(dialogViewHolder.image);
 
 
+
+
         dialogViewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

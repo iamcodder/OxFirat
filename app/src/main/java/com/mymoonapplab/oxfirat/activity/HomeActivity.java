@@ -1,11 +1,10 @@
 package com.mymoonapplab.oxfirat.activity;
 
-import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -18,28 +17,28 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
-import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
 import com.mymoonapplab.oxfirat.fragment.fragment_akademik_takvim;
 import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 import com.mymoonapplab.oxfirat.fragment.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
-import com.mymoonapplab.oxfirat.interfacee.interface_network_control;
+import com.mymoonapplab.oxfirat.fragment.fragment_yemek;
+import com.mymoonapplab.oxfirat.interfacee.interface_receiver_network;
 import com.mymoonapplab.oxfirat.navigationMenu.ExpandableListAdapter;
 import com.mymoonapplab.oxfirat.navigationMenu.model_menu;
 import com.mymoonapplab.oxfirat.navigationMenu.statik_class;
-import com.mymoonapplab.oxfirat.fragment.fragment_yemek;
-import com.mymoonapplab.oxfirat.service.yemekhane_servis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class HomeActivity extends AppCompatActivity implements interface_network_control {
+public class HomeActivity extends AppCompatActivity implements interface_receiver_network {
 
     private BubbleNavigationConstraintView bottomBar;
     private Fragment frag_ekranda_gozuken, fragment;
@@ -52,25 +51,29 @@ public class HomeActivity extends AppCompatActivity implements interface_network
     List<model_menu> list_parent = new ArrayList<>();
     HashMap<model_menu, List<model_menu>> list_child = new HashMap<>();
 
-    private static final String LOG_TAG = "Otomatik internet Kontrol¸";
     private NetworkChangeReceiver receiver;//Network dinleyen receiver objemizin referans˝
+
+    private Intent intent_service;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, yemekhane_servis.class));
-
         setup();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("internet-kontrolu"));
+
 
         expandable_listview();
         ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(this, list_parent, list_child);
         expandableListView.setAdapter(expandableListAdapter);
 
         run();
-
 
     }
 
@@ -215,18 +218,20 @@ public class HomeActivity extends AppCompatActivity implements interface_network
 
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(receiver);//receiver durduruluyor
-
     }
 
     @Override
-    public void result(boolean is_connected) {
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
 
-        if (is_connected) {
+    @Override
+    public void is_connected(boolean connected) {
+        if (connected) {
             this.is_connected_network = true;
             fragment = new fragment_yemek();
             str_tag = "frag_yemek";
@@ -241,6 +246,5 @@ public class HomeActivity extends AppCompatActivity implements interface_network
             this.is_connected_network = false;
 
         }
-
     }
 }

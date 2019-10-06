@@ -29,7 +29,6 @@
             android:theme="@style/fullScreenImage">
         </activity>
 
-        <service android:name=".service.yemekhane_servis"/>
 
     </application>
 

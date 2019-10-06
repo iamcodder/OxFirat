@@ -6,15 +6,15 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.mymoonapplab.oxfirat.interfacee.interface_network_control;
+import com.mymoonapplab.oxfirat.interfacee.interface_receiver_network;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
-    static boolean isConnected = false;
-    private interface_network_control network_control;
+    interface_receiver_network network;
+    private boolean is_connected;
 
-    public NetworkChangeReceiver(interface_network_control network_control) {
-        this.network_control = network_control;
+    public NetworkChangeReceiver(interface_receiver_network network){
+        this.network=network;
     }
 
     @Override
@@ -24,7 +24,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
     }
 
-    private boolean isNetworkAvailable(Context context) {
+    public void isNetworkAvailable(Context context) {
+        is_connected=false;
+
         ConnectivityManager connectivity = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE); //Sistem ağını dinliyor internet var mı yok mu
 
@@ -32,18 +34,12 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             for (NetworkInfo networkInfo : info) {
                 if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-
-                    if (!isConnected) { //internet varsa
-                        isConnected = true;
-                        network_control.result(true);
-                    }
-                    return true;
+                    is_connected=true;
                 }
             }
+            if(is_connected) network.is_connected(true);
+            else network.is_connected(false);
         }
-        isConnected = false;
-        network_control.result(false);
-        return false;
     }
 }
 
