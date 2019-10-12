@@ -12,7 +12,8 @@
         android:id="@+id/content_main_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/appbar"/>
+        android:layout_above="@+id/content_main_bottom_navigation_view"
+        android:layout_below="@id/appbar" />
 
     <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
         android:id="@+id/content_main_bottom_navigation_view"
@@ -25,7 +26,8 @@
         android:background="@drawable/bar_bottom"
         android:elevation="8dp"
         android:padding="12dp"
-        app:bnc_mode="spread">
+        app:bnc_mode="spread"
+        >
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/bottom_bar_haberler"

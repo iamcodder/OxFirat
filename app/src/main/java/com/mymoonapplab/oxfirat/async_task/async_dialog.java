@@ -105,7 +105,12 @@ public class async_dialog extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        interface_dialogbox.async_sonucu(haber_basligi,haber_tarihi,haber_icerigi,haberdeki_link,resim_linkleri);
 
+        if(!haber_basligi.isEmpty() && !haber_tarihi.isEmpty()){
+            interface_dialogbox.async_sonucu(haber_basligi,haber_tarihi,haber_icerigi,haberdeki_link,resim_linkleri);
+        }
+        else {
+            new async_dialog(interface_dialogbox).execute();
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -22,16 +24,18 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.bildirim.Service_Kontrol;
 import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
+import com.mymoonapplab.oxfirat.constant.statik_class;
 import com.mymoonapplab.oxfirat.fragment.fragment_akademik_takvim;
 import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 import com.mymoonapplab.oxfirat.fragment.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
+import com.mymoonapplab.oxfirat.fragment.fragment_telefon_genel;
 import com.mymoonapplab.oxfirat.fragment.fragment_yemek;
 import com.mymoonapplab.oxfirat.interfacee.interface_receiver_network;
+import com.mymoonapplab.oxfirat.model.model_menu;
 import com.mymoonapplab.oxfirat.navigationMenu.ExpandableListAdapter;
-import com.mymoonapplab.oxfirat.navigationMenu.model_menu;
-import com.mymoonapplab.oxfirat.navigationMenu.statik_class;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,20 +57,19 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
     private NetworkChangeReceiver receiver;//Network dinleyen receiver objemizin referans˝
 
-    private Intent intent_service;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
+
+        startService(new Intent(getApplicationContext(), Service_Kontrol.class));
 
         setup();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("internet-kontrolu"));
+//        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("internet-kontrolu"));
 
 
         expandable_listview();
@@ -76,6 +79,7 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
         run();
 
     }
+
 
     private void setup() {
 
@@ -103,6 +107,7 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
     }
 
     private void run() {
+
         bottomBar.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
             public void onNavigationChanged(View view, int position) {
@@ -129,17 +134,32 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
             }
         });
 
+
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                fragment = new fragment_akademik_takvim();
-                str_tag = "akademik";
+                Log.d("SÜlo", String.valueOf(groupPosition));
 
-                statik_class.PDF_ISMI = "akademiktakvim_" + (childPosition + 1);
+                if (groupPosition == 0) {
+                    fragment = new fragment_akademik_takvim();
+                    str_tag = "akademik";
 
-                fragment_change(fragment, str_tag);
-                drawerLayout.closeDrawer(GravityCompat.START);
+                    statik_class.PDF_ISMI = "akademiktakvim_" + (childPosition + 1);
+
+                    fragment_change(fragment, str_tag);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else if (groupPosition == 1) {
+
+                    fragment = new fragment_telefon_genel();
+                    str_tag = "telefon_numaralari";
+
+                    statik_class.MENU_NUMARA = "" + childPosition;
+
+                    fragment_change(fragment, str_tag);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+
+                }
 
                 return false;
             }
@@ -160,7 +180,15 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
                 tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag);
                 is_first_time = true;
                 frag_ekranda_gozuken = frag_new;
+
             } else if (fragment_tag.equals("akademik") && frag_x != null) {
+
+                frag_x.onDestroy();
+                tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
+                        .hide(this.frag_ekranda_gozuken);
+                frag_ekranda_gozuken = frag_new;
+
+            } else if (fragment_tag.equals("telefon_numaralari") && frag_x != null) {
 
                 frag_x.onDestroy();
                 tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
@@ -176,6 +204,7 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
                 tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
                         .hide(this.frag_ekranda_gozuken);
+
                 frag_ekranda_gozuken = frag_new;
             }
 
@@ -206,27 +235,18 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
         childModelsList.add(new model_menu("12- EK SINAV TAKVİMİ", false, false));
         childModelsList.add(new model_menu("13- RESMİ TATİLLER", false, false));
 
-
-        if (menuModel.hasChildren) {
-            list_child.put(menuModel, childModelsList);
-        }
+        list_child.put(menuModel, childModelsList);
 
 
-        menuModel = new model_menu("qqq Takvim", true, true);
-        list_parent.add(menuModel);
+        model_menu new_menu = new model_menu("Telefon Numaraları", true, true);
+        list_parent.add(new_menu);
 
+        List<model_menu> child_model_list = new ArrayList<>();
+        child_model_list.add(new model_menu("Genel", false, false));
+        child_model_list.add(new model_menu("Fakülte,MYO ve Enstitü", false, false));
 
-    }
+        list_child.put(new_menu, child_model_list);
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -247,4 +267,20 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
 }

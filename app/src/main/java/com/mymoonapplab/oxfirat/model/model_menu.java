@@ -1,4 +1,4 @@
-package com.mymoonapplab.oxfirat.navigationMenu;
+package com.mymoonapplab.oxfirat.model;
 
 public class model_menu {
 

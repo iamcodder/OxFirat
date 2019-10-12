@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mymoonapplab.oxfirat">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <application
         android:allowBackup="true"
@@ -29,6 +34,10 @@
             android:theme="@style/fullScreenImage">
         </activity>
 
+        <receiver android:name=".broadcast_receiver.NetworkChangeReceiver"/>
+        <receiver android:name=".bildirim.Broadcast_Internet"/>
+        <service android:name=".bildirim.Service_Kontrol"/>
+        <service android:name=".bildirim.Service_Yemek"/>
 
     </application>
 

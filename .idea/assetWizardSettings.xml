@@ -74,8 +74,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="icon_takvim" />
-                            <entry key="sourceFile" value="C:\Users\iamcodder" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_icon_firat" />
+                            <entry key="sourceFile" value="C:\Users\iamcodder\Desktop\icon_firat.svg" />
                           </map>
                         </option>
                       </PersistentState>

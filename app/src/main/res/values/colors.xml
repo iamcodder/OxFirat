@@ -10,4 +10,8 @@
     <color name="duyurular">#D81B60</color>
     <color name="etkinlikler">#7CB342</color>
     <color name="yemekhane">#039BE5</color>
+
+    <color name="gri">#9E9E9E</color>
+    <color name="app_bar_start">#E91E63</color>
+    <color name="app_bar_end">#E91E63</color>
 </resources>

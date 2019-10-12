@@ -57,8 +57,14 @@ public class async_yemekhane extends AsyncTask<String,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        interface_yemekhane.bilgi_aktar(liste_yemek,tarih);
 
+        if(!liste_yemek.isEmpty() && !tarih.isEmpty()){
+            interface_yemekhane.bilgi_aktar(liste_yemek,tarih);
+        }
+
+        else {
+            new async_yemekhane(interface_yemekhane).execute();
+        }
 
     }
 }

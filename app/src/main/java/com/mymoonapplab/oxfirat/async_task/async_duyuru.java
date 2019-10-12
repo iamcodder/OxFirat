@@ -60,7 +60,13 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        interface_duyurular.duyuru_bilgisi_aktarimi(list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link);
 
+
+        if(!list_etkinlik_baslik.isEmpty() && !list_etkinlik_tarih.isEmpty() && !list_etkinlik_link.isEmpty()){
+            interface_duyurular.duyuru_bilgisi_aktarimi(list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link);
+        }
+        else {
+            new async_duyuru(interface_duyurular).execute();
+        }
     }
 }

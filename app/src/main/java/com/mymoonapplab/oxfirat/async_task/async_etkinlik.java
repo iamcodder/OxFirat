@@ -59,7 +59,12 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        interface_etkinlik.etkinlik_bilgisi_aktarimi(list_baslik,list_tarih,list_link);
 
+        if(!list_baslik.isEmpty() && !list_tarih.isEmpty() && !list_link.isEmpty()){
+            interface_etkinlik.etkinlik_bilgisi_aktarimi(list_baslik,list_tarih,list_link);
+        }
+        else {
+            new async_etkinlik(interface_etkinlik).execute();
+        }
     }
 }

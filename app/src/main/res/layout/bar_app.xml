@@ -19,8 +19,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll">
+            android:layout_height="?attr/actionBarSize">
 
             <ImageView
                 android:id="@+id/toolbar_img"

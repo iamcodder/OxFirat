@@ -61,6 +61,12 @@ public class async_haberler extends AsyncTask<String,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        interface_haberler.haber_bilgisi_aktarimi(list_haber_basligi,list_haber_resmi,list_haber_linki);
+
+        if(!list_haber_basligi.isEmpty() && !list_haber_resmi.isEmpty() && !list_haber_linki.isEmpty()){
+            interface_haberler.haber_bilgisi_aktarimi(list_haber_basligi,list_haber_resmi,list_haber_linki);
+        }
+        else {
+            new async_haberler(interface_haberler).execute();
+        }
     }
 }

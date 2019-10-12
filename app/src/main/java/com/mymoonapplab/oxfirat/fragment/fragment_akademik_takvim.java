@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.navigationMenu.statik_class;
+import com.mymoonapplab.oxfirat.constant.statik_class;
 
 public class fragment_akademik_takvim extends Fragment {
 
