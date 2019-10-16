@@ -1,10 +1,13 @@
 package com.mymoonapplab.oxfirat.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -14,12 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
@@ -27,6 +28,7 @@ import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.bildirim.Service_Kontrol;
 import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
 import com.mymoonapplab.oxfirat.constant.statik_class;
+import com.mymoonapplab.oxfirat.deneme.AlarmNotificationReceiver;
 import com.mymoonapplab.oxfirat.fragment.fragment_akademik_takvim;
 import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 import com.mymoonapplab.oxfirat.fragment.fragment_etkinlik;
@@ -38,6 +40,7 @@ import com.mymoonapplab.oxfirat.model.model_menu;
 import com.mymoonapplab.oxfirat.navigationMenu.ExpandableListAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,16 +64,9 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(getApplicationContext(), Service_Kontrol.class));
-
         setup();
-
-//        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("internet-kontrolu"));
-
 
         expandable_listview();
         ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(this, list_parent, list_child);
@@ -78,7 +74,30 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
         run();
 
+        startAlarm(true,true);
     }
+
+    private void startAlarm(boolean isNotification, boolean isRepeat) {
+        AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent;
+        PendingIntent pendingIntent;
+
+        // SET TIME HERE
+        Calendar calendar= Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,10);
+        calendar.set(Calendar.MINUTE,10);
+
+
+        myIntent = new Intent(HomeActivity.this, AlarmNotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this,0,myIntent,0);
+
+
+        if(!isRepeat)
+            manager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime()+3000,pendingIntent);
+        else
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY,pendingIntent);
+    }
+
 
 
     private void setup() {

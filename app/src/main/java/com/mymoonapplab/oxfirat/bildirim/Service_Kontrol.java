@@ -44,7 +44,6 @@ public class Service_Kontrol extends Service {
         super.onCreate();
 
 
-
         list_haftasonlari = new ArrayList<>();
 
         filter = new IntentFilter();
@@ -82,19 +81,18 @@ public class Service_Kontrol extends Service {
                     if (bugunun_tarihi != yemekhane_tarihi) {
 
                         //Saat 10 olduysa internet açık mı kontrol et.
-                        if (hour > 10) {
+                        if (hour > 10 && hour < 13) {
                             registerReceiver(broadcast_internet, filter);
                         }
                     }
 
                 }
 
-                handler.postDelayed(runnable, 60000*20);
+                handler.postDelayed(runnable, 60000);
             }
         };
 
-        //60 dakikada bir
-        handler.postDelayed(runnable, 60000*20);
+        handler.postDelayed(runnable, 10000);
     }
 
     private void yazma() {
@@ -108,7 +106,8 @@ public class Service_Kontrol extends Service {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("bugünün_tarihi", bugunun_tarihi);
-        editor.apply(); }
+        editor.apply();
+    }
 
 
     private void hafta_sonu_kontrolu() {

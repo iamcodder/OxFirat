@@ -2,25 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mymoonapplab.oxfirat">
 
-
-
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-
-        <activity android:name=".activity.HomeActivity"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,14 +21,33 @@
 
         <activity
             android:name=".activity.fullScreenImage"
-            android:theme="@style/fullScreenImage">
-        </activity>
+            android:theme="@style/fullScreenImage"></activity>
 
-        <receiver android:name=".broadcast_receiver.NetworkChangeReceiver"/>
-        <receiver android:name=".bildirim.Broadcast_Internet"/>
-        <service android:name=".bildirim.Service_Kontrol"/>
-        <service android:name=".bildirim.Service_Yemek"/>
+        <receiver
+            android:name=".deneme.BootReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
+        <receiver
+            android:name=".deneme.AlarmNotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".deneme.MyService"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <receiver android:name=".broadcast_receiver.NetworkChangeReceiver" />
+        <receiver android:name=".bildirim.Broadcast_Internet" />
+
+        <service android:name=".bildirim.Service_Kontrol" />
+        <service android:name=".bildirim.Service_Yemek" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 </manifest>

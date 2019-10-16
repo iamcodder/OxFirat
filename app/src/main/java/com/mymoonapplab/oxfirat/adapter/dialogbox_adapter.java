@@ -58,6 +58,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         dialogViewHolder.progressBar.setVisibility(View.INVISIBLE);
+
                         return false;
                     }
 
@@ -67,6 +68,7 @@ public class dialogbox_adapter extends RecyclerView.Adapter<dialogbox_adapter.di
                         return false;
                     }
                 })
+                .error(R.drawable.error)
                 .into(dialogViewHolder.image);
 
 

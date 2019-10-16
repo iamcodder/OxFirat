@@ -39,12 +39,10 @@ public class Service_Yemek extends Service {
                     new async_yemekhane(getApplicationContext()).execute();
                 }
 
-
-                handler.postDelayed(runnable,60000*2);
             }
         };
 
-        handler.postDelayed(runnable,60000*2);
+        handler.postDelayed(runnable,1000);
     }
 
     private void yemek_kontrol(){

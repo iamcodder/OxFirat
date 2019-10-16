@@ -108,9 +108,6 @@ class async_yemekhane extends AsyncTask<Void, Void, Void> {
 
         }
 
-        else {
-            new async_yemekhane(mContext).execute();
-        }
     }
 
     private void bildirim() {
