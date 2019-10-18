@@ -10,4 +10,6 @@ public class statik_class {
     public static String YEMEK3="";
     public static String YEMEK4="";
 
+    public static String URL_LINKI="";
+
 }

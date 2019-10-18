@@ -1,7 +1,11 @@
 package com.mymoonapplab.oxfirat.async_task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,9 +18,11 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
     ArrayList<String> list_baslik,list_tarih,list_link;
 
     com.mymoonapplab.oxfirat.interfacee.interface_etkinlik interface_etkinlik;
+    private Context mContext;
 
-    public async_etkinlik(com.mymoonapplab.oxfirat.interfacee.interface_etkinlik interface_etkinlik) {
+    public async_etkinlik(com.mymoonapplab.oxfirat.interfacee.interface_etkinlik interface_etkinlik,Context mContext) {
         this.interface_etkinlik = interface_etkinlik;
+        this.mContext=mContext;
     }
 
     @Override
@@ -64,7 +70,9 @@ public class async_etkinlik extends AsyncTask<String ,Void ,Void> {
             interface_etkinlik.etkinlik_bilgisi_aktarimi(list_baslik,list_tarih,list_link);
         }
         else {
-            new async_etkinlik(interface_etkinlik).execute();
+            new async_etkinlik(interface_etkinlik,mContext).execute(mContext.getResources().getString(R.string.etkinlik_sitesi),
+                    mContext.getResources().getString(R.string.okul_sitesi));
+            Toast.makeText(mContext,"İnternet hızınız yavaş",Toast.LENGTH_SHORT).show();
         }
     }
 }

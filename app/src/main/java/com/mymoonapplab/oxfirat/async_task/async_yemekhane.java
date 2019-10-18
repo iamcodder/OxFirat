@@ -1,7 +1,11 @@
 package com.mymoonapplab.oxfirat.async_task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.mymoonapplab.oxfirat.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,9 +18,11 @@ public class async_yemekhane extends AsyncTask<String,Void,Void> {
     private String tarih;
     private ArrayList<String> liste_yemek;
     private com.mymoonapplab.oxfirat.interfacee.interface_yemekhane interface_yemekhane;
+    private Context mContext;
 
-    public async_yemekhane(com.mymoonapplab.oxfirat.interfacee.interface_yemekhane interface_yemekhane) {
+    public async_yemekhane(com.mymoonapplab.oxfirat.interfacee.interface_yemekhane interface_yemekhane,Context mContext) {
         this.interface_yemekhane = interface_yemekhane;
+        this.mContext=mContext;
     }
 
     @Override
@@ -63,7 +69,9 @@ public class async_yemekhane extends AsyncTask<String,Void,Void> {
         }
 
         else {
-            new async_yemekhane(interface_yemekhane).execute();
+            new async_yemekhane(interface_yemekhane,mContext).execute(mContext.getResources().getString(R.string.yemekhane_sitesi));
+            Toast.makeText(mContext,"İnternet hızınız yavaş",Toast.LENGTH_SHORT).show();
+
         }
 
     }

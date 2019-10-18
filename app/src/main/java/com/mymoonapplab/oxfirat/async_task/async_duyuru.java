@@ -1,8 +1,11 @@
 package com.mymoonapplab.oxfirat.async_task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 
 import org.jsoup.Jsoup;
@@ -15,9 +18,11 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
 
     private ArrayList<String> list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link;
     private com.mymoonapplab.oxfirat.interfacee.interface_duyurular interface_duyurular;
+    private Context mContext;
 
-    public async_duyuru(com.mymoonapplab.oxfirat.interfacee.interface_duyurular interface_duyurular) {
+    public async_duyuru(com.mymoonapplab.oxfirat.interfacee.interface_duyurular interface_duyurular,Context mContext) {
         this.interface_duyurular = interface_duyurular;
+        this.mContext=mContext;
     }
 
     @Override
@@ -66,7 +71,10 @@ public class async_duyuru extends AsyncTask<String,Void,Void> {
             interface_duyurular.duyuru_bilgisi_aktarimi(list_etkinlik_baslik,list_etkinlik_tarih,list_etkinlik_link);
         }
         else {
-            new async_duyuru(interface_duyurular).execute();
+            new async_duyuru(interface_duyurular,mContext).execute(mContext.getResources().getString(R.string.okul_sitesi),
+                    mContext.getResources().getString(R.string.duyurular_sitesi));
+            Toast.makeText(mContext,"İnternet hızınız yavaş",Toast.LENGTH_SHORT).show();
+
         }
     }
 }

@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.cleveroad.pulltorefresh.firework.Configuration;
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_duyuru;
 import com.mymoonapplab.oxfirat.adapter.fragment_duyurular_adapter;
@@ -30,6 +33,8 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
 
     private ArrayList<String> list_duyuru_linki, list_duyuru_basligi, list_duyuru_tarihi;
     public static int sayfa_sayisi;
+    private FireworkyPullToRefreshLayout mPullToRefresh;
+
 
 
     @Override
@@ -47,6 +52,22 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
         gorev_calistir();
 
         recyler_islemleri();
+
+        mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
+
+        mPullToRefresh.getConfig().setBackground(R.drawable.background);
+
+        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
+
+        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
+
+        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                gorev_calistir();
+                Toast.makeText(getContext(),"Güncelleniyor",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
@@ -80,7 +101,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
 
 
     private void gorev_calistir() {
-        new async_duyuru(this).execute(getResources().getString(R.string.okul_sitesi),
+        new async_duyuru(this,getContext()).execute(getResources().getString(R.string.okul_sitesi),
                 getResources().getString(R.string.duyurular_sitesi));
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -99,6 +120,9 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
         recyclerView.scheduleLayoutAnimation();
         sayfa_sayisi++;
         progressBar.setVisibility(View.INVISIBLE);
+
+        mPullToRefresh.setRefreshing(false);
+
     }
 
 

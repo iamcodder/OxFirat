@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.cleveroad.pulltorefresh.firework.Configuration;
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_etkinlik;
 import com.mymoonapplab.oxfirat.adapter.fragment_etkinlik_adapter;
@@ -32,6 +35,8 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
     private View rootView;
 
     public static int sayfa_sayisi;
+    private FireworkyPullToRefreshLayout mPullToRefresh;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +53,22 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
         gorev_calistir();
 
         recycler_islemleri();
+
+        mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
+
+        mPullToRefresh.getConfig().setBackground(R.drawable.background);
+
+        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
+
+        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
+
+        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                gorev_calistir();
+                Toast.makeText(getContext(),"Güncelleniyor",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
@@ -83,7 +104,7 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
 
 
     private void gorev_calistir() {
-        new async_etkinlik(this).execute(getResources().getString(R.string.etkinlik_sitesi),
+        new async_etkinlik(this,getContext()).execute(getResources().getString(R.string.etkinlik_sitesi),
                 getResources().getString(R.string.okul_sitesi));
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -102,5 +123,8 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
         recyclerView.scheduleLayoutAnimation();
         sayfa_sayisi++;
         progressBar.setVisibility(View.INVISIBLE);
+
+        mPullToRefresh.setRefreshing(false);
+
     }
 }

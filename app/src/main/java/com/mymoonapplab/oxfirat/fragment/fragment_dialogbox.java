@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_dialog;
 import com.mymoonapplab.oxfirat.adapter.dialogbox_adapter;
+import com.mymoonapplab.oxfirat.constant.statik_class;
 import com.mymoonapplab.oxfirat.interfacee.interface_dialogbox;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class fragment_dialogbox extends DialogFragment implements interface_dial
 
     public fragment_dialogbox(String URL_LINKI) {
         this.URL_LINKI = URL_LINKI;
+        statik_class.URL_LINKI=URL_LINKI;
     }
 
     @Nullable
@@ -50,7 +52,7 @@ public class fragment_dialogbox extends DialogFragment implements interface_dial
 
         okul_sitesi = getResources().getString(R.string.okul_sitesi);
 
-        new async_dialog(this).execute(URL_LINKI, okul_sitesi);
+        new async_dialog(this,getContext()).execute(URL_LINKI, okul_sitesi);
 
         textView_baslik = view.findViewById(R.id.dialogbox_baslik);
         textView_tarih = view.findViewById(R.id.dialogbox_tarih);

@@ -23,31 +23,12 @@
             android:name=".activity.fullScreenImage"
             android:theme="@style/fullScreenImage"></activity>
 
-        <receiver
-            android:name=".deneme.BootReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <receiver
-            android:name=".deneme.AlarmNotificationReceiver"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name=".deneme.MyService"
-            android:enabled="true"
-            android:exported="true"/>
-
         <receiver android:name=".broadcast_receiver.NetworkChangeReceiver" />
-        <receiver android:name=".bildirim.Broadcast_Internet" />
 
-        <service android:name=".bildirim.Service_Kontrol" />
-        <service android:name=".bildirim.Service_Yemek" />
     </application>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 </manifest>

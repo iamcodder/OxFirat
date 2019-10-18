@@ -1,12 +1,16 @@
 package com.mymoonapplab.oxfirat.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.cleveroad.pulltorefresh.firework.Configuration;
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_haberler;
 import com.mymoonapplab.oxfirat.adapter.fragment_haberler_adapter;
@@ -33,6 +37,8 @@ public class fragment_haberler extends Fragment implements interface_haberler {
     private ArrayList<String> list_haber_basligi,list_haber_linki,list_haber_resmi;
 
     public static int sayi_sayfa;
+    private FireworkyPullToRefreshLayout mPullToRefresh;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +55,24 @@ public class fragment_haberler extends Fragment implements interface_haberler {
         gorev_calistir();
 
         recycler_islevleri();
+
+        mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
+
+        mPullToRefresh.getConfig().setBackground(R.drawable.background);
+        mPullToRefresh.getConfig().setFireworkColors(R.array.ptr_defColorSet);
+
+        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
+
+        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
+
+        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                gorev_calistir();
+                Toast.makeText(getContext(),"Güncelleniyor",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
         return rootView;
@@ -84,8 +108,10 @@ public class fragment_haberler extends Fragment implements interface_haberler {
     }
 
     public void gorev_calistir(){
-        new async_haberler(this).execute(getResources().getString(R.string.okul_sitesi),
+        new async_haberler(this,getContext()).execute(getResources().getString(R.string.okul_sitesi),
                 getResources().getString(R.string.haber_sitesi));
+
+
         progressBar.setVisibility(View.VISIBLE);
 
     }
@@ -103,6 +129,9 @@ public class fragment_haberler extends Fragment implements interface_haberler {
         recyclerView.scheduleLayoutAnimation();
         sayi_sayfa++;
         progressBar.setVisibility(View.INVISIBLE);
+
+
+        mPullToRefresh.setRefreshing(false);
 
     }
 

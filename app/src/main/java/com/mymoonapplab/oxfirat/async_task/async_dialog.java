@@ -1,6 +1,11 @@
 package com.mymoonapplab.oxfirat.async_task;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.mymoonapplab.oxfirat.R;
+import com.mymoonapplab.oxfirat.constant.statik_class;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,11 +28,13 @@ public class async_dialog extends AsyncTask<String,Void,String> {
     private ArrayList<String> resim_linkleri;
 
     private int tablo_sayisi;
+    private Context mContext;
 
     private com.mymoonapplab.oxfirat.interfacee.interface_dialogbox interface_dialogbox;
 
-    public async_dialog(com.mymoonapplab.oxfirat.interfacee.interface_dialogbox interface_dialogbox) {
+    public async_dialog(com.mymoonapplab.oxfirat.interfacee.interface_dialogbox interface_dialogbox,Context mContext) {
         this.interface_dialogbox = interface_dialogbox;
+        this.mContext=mContext;
     }
 
     @Override
@@ -110,7 +117,9 @@ public class async_dialog extends AsyncTask<String,Void,String> {
             interface_dialogbox.async_sonucu(haber_basligi,haber_tarihi,haber_icerigi,haberdeki_link,resim_linkleri);
         }
         else {
-            new async_dialog(interface_dialogbox).execute();
+            new async_dialog(interface_dialogbox,mContext).execute(statik_class.URL_LINKI,mContext.getResources().getString(R.string.okul_sitesi));
+            Toast.makeText(mContext,"İnternet hızınız yavaş",Toast.LENGTH_SHORT).show();
+
         }
     }
 }

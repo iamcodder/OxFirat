@@ -1,7 +1,10 @@
 package com.mymoonapplab.oxfirat.async_task;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
 import com.mymoonapplab.oxfirat.interfacee.interface_haberler;
 
@@ -15,9 +18,11 @@ public class async_haberler extends AsyncTask<String,Void,Void> {
 
     ArrayList<String> list_haber_basligi, list_haber_resmi, list_haber_linki;
     private com.mymoonapplab.oxfirat.interfacee.interface_haberler interface_haberler;
+    private Context mContext;
 
-    public async_haberler(interface_haberler interface_haberler){
+    public async_haberler(interface_haberler interface_haberler,Context mContext){
         this.interface_haberler=interface_haberler;
+        this.mContext=mContext;
     }
 
     @Override
@@ -66,7 +71,9 @@ public class async_haberler extends AsyncTask<String,Void,Void> {
             interface_haberler.haber_bilgisi_aktarimi(list_haber_basligi,list_haber_resmi,list_haber_linki);
         }
         else {
-            new async_haberler(interface_haberler).execute();
+            new async_haberler(interface_haberler,mContext).execute(mContext.getResources().getString(R.string.okul_sitesi),
+                    mContext.getResources().getString(R.string.haber_sitesi));
+            Toast.makeText(mContext,"İnternet hızınız yavaş",Toast.LENGTH_SHORT).show();
         }
     }
 }
