@@ -1,31 +1,47 @@
-![1](https://user-images.githubusercontent.com/25854605/54138950-91b2a100-4431-11e9-97d6-caf6436c114e.jpg)
+![oxfirat](https://user-images.githubusercontent.com/25854605/67428844-9f472080-f5e7-11e9-8090-c655c7235b8c.png)
 
-Açık kaynak olacak şekilde kodladığım , Fırat Üniversitesi'ndeki haberleri,duyuruları,etkinlikleri takip edebileceğiniz ve ayrıca yemekhanede o gün hangi yemeğin olduğunu görebileceğiniz bir mobil apklikasyon.
-##
-##
-
-### https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat
-
-##
-##
-##
-##
+# OxFırat - Fırat Üniversitesi Uygulaması
 
 
-# Open Source Library
+## İçerdikleri
 
-Jsoup License (MIT License) : https://jsoup.org/license 
+* Fırat Üniversitesi haberleri
+* Fırat Üniversitesi duyurları
+* Fırat Üniversitesi etkinlikleri
+* Fırat Üniversitesi yemekhanedeki yemek menüsü
+* Akademik Takvim
+* Üniversite telefon numaraları
 
-Glide License (BSD, part MIT and Apache 2.0) : https://github.com/bumptech/glide/blob/master/LICENSE
 
-EasyZoom Library (Apache 2.0 License) : https://github.com/CHIRANJIT1988/easyzoom-android-library
 
-WaveSwipeRefresh Layout (Apache 2.0 License) : https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
+[![N|play_store](https://user-images.githubusercontent.com/25854605/67431801-b12bc200-f5ed-11e9-9475-4ad1202ec2f1.png)](https://play.google.com/store/apps/details?id=com.mymoonapplab.oxfirat)
 
-AVLoadingIndicatorView (Apache 2.0 License) : https://github.com/81813780/AVLoadingIndicatorView
 
-MeowBottomNavigation (No License but Thanks Hamidreza): https://github.com/shetmobile/MeowBottomNavigation
+## Kullanım
 
-LottieFiles (Creative Commons License) : https://lottiefiles.com/page/license
+```Android Studio
+Proje için Android Studio min 3.3 sürümü kullanılmalıdır.
+Uygulaması için android sürümü min Api 19-Kitkat olmaldıdır.
+```
 
-Thank you Tu Nguyen For the Animations : https://lottiefiles.com/4760-no-internet-connection
+## Katkı
+Pull request ile işleme başlayabilirsiniz. Büyük değişiklikler için öncelikle tartışma oluşturun.
+Değişiklik sonrası test etmeyi unutmayın.
+
+## Lisans Hakkı
+```License
+Copyright 2019 Süleyman Sezer
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.```
+```
+
