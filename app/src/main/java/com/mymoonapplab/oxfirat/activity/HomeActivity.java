@@ -18,8 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
-import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.MenuItem;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
 import com.mymoonapplab.oxfirat.constant.statik_class;
@@ -40,7 +40,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements interface_receiver_network {
 
-    private BubbleNavigationConstraintView bottomBar;
+    private BottomNavigationView bottomBar;
     private Fragment frag_ekranda_gozuken, fragment;
     private String str_tag;
     private boolean is_first_time, is_connected_network = false;
@@ -97,29 +97,25 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
     private void run() {
 
-        bottomBar.setNavigationChangeListener(new BubbleNavigationChangeListener() {
+        bottomBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
-            public void onNavigationChanged(View view, int position) {
-                switch (position) {
-                    case 0:
-                        fragment = new fragment_haberler();
-                        str_tag = "frag_haber";
-                        break;
-                    case 1:
-                        fragment = new fragment_duyurular();
-                        str_tag = "frag_duyuru";
-                        break;
-                    case 2:
-                        fragment = new fragment_etkinlik();
-                        str_tag = "frag_etkinlik";
-                        break;
-                    case 3:
-                        fragment = new fragment_yemek();
-                        str_tag = "frag_yemek";
-                        break;
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bottom_bar_haberler) {
+                    fragment = new fragment_haberler();
+                    str_tag = "frag_haber";
+                } else if (itemId == R.id.bottom_bar_duyurlar) {
+                    fragment = new fragment_duyurular();
+                    str_tag = "frag_duyuru";
+                } else if (itemId == R.id.bottom_bar_etkinlikler) {
+                    fragment = new fragment_etkinlik();
+                    str_tag = "frag_etkinlik";
+                } else if (itemId == R.id.bottom_bar_yemekhane) {
+                    fragment = new fragment_yemek();
+                    str_tag = "frag_yemek";
                 }
                 fragment_change(fragment, str_tag);
-
+                return true;
             }
         });
 

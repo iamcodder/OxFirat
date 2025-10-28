@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.cleveroad.pulltorefresh.firework.Configuration;
-import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_etkinlik;
 import com.mymoonapplab.oxfirat.adapter.fragment_etkinlik_adapter;
@@ -35,7 +34,7 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
     private View rootView;
 
     public static int sayfa_sayisi;
-    private FireworkyPullToRefreshLayout mPullToRefresh;
+    private SwipeRefreshLayout mPullToRefresh;
 
 
     @Override
@@ -56,13 +55,7 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
 
         mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
 
-        mPullToRefresh.getConfig().setBackground(R.drawable.background);
-
-        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
-
-        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
-
-        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+        mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 gorev_calistir();

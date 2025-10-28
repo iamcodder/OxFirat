@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.cleveroad.pulltorefresh.firework.Configuration;
-import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_duyuru;
 import com.mymoonapplab.oxfirat.adapter.fragment_duyurular_adapter;
@@ -33,7 +32,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
 
     private ArrayList<String> list_duyuru_linki, list_duyuru_basligi, list_duyuru_tarihi;
     public static int sayfa_sayisi;
-    private FireworkyPullToRefreshLayout mPullToRefresh;
+    private SwipeRefreshLayout mPullToRefresh;
 
 
 
@@ -55,13 +54,7 @@ public class fragment_duyurular extends Fragment implements interface_duyurular 
 
         mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
 
-        mPullToRefresh.getConfig().setBackground(R.drawable.background);
-
-        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
-
-        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
-
-        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+        mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 gorev_calistir();

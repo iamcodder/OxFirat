@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.cleveroad.pulltorefresh.firework.Configuration;
-import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.async_task.async_haberler;
 import com.mymoonapplab.oxfirat.adapter.fragment_haberler_adapter;
@@ -37,7 +36,7 @@ public class fragment_haberler extends Fragment implements interface_haberler {
     private ArrayList<String> list_haber_basligi,list_haber_linki,list_haber_resmi;
 
     public static int sayi_sayfa;
-    private FireworkyPullToRefreshLayout mPullToRefresh;
+    private SwipeRefreshLayout mPullToRefresh;
 
 
     @Override
@@ -56,16 +55,9 @@ public class fragment_haberler extends Fragment implements interface_haberler {
 
         recycler_islevleri();
 
-        mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
+        mPullToRefresh = rootView.findViewById(R.id.pullToRefresh);
 
-        mPullToRefresh.getConfig().setBackground(R.drawable.background);
-        mPullToRefresh.getConfig().setFireworkColors(R.array.ptr_defColorSet);
-
-        mPullToRefresh.getConfig().setFireworkStyle(Configuration.FireworkStyle.MODERN);
-
-        mPullToRefresh.getConfig().setRocketAnimDuration(1000L);
-
-        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+        mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 gorev_calistir();

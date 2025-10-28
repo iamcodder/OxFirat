@@ -1,1 +1,2 @@
+rootProject.name = "OxFirat"
 include ':app'

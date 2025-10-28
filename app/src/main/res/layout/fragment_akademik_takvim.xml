@@ -7,7 +7,7 @@
     tools:context=".fragment.fragment_akademik_takvim">
 
 
-    <com.github.barteksc.pdfviewer.PDFView
+    <WebView
         android:id="@+id/fragment_akademik_takvim_pdf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
