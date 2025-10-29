@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">OxFırat</string>
 
-    <string name="okul_sitesi">http://www.firat.edu.tr</string>
+    <string name="okul_sitesi">https://www.firat.edu.tr</string>
     <string name="yemekhane_sitesi">http://uevi.firat.edu.tr</string>
-    <string name="haber_sitesi">http://www.firat.edu.tr/tr/haberler?page=</string>
-    <string name="etkinlik_sitesi">http://www.firat.edu.tr/tr/etkinlikler?page=</string>
+    <string name="haber_sitesi">https://www.firat.edu.tr/tr/page/news?page=</string>
+    <string name="etkinlik_sitesi">https://www.firat.edu.tr/tr/page/event?page=</string>
     <string name="duyurular_sitesi">http://www.firat.edu.tr/tr/duyurular?page=</string>
 
     <string name="haberler">News</string>

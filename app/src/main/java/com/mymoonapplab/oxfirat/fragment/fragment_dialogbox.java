@@ -6,34 +6,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.async_task.async_dialog;
-import com.mymoonapplab.oxfirat.adapter.dialogbox_adapter;
-import com.mymoonapplab.oxfirat.constant.statik_class;
-import com.mymoonapplab.oxfirat.interfacee.interface_dialogbox;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-public class fragment_dialogbox extends DialogFragment implements interface_dialogbox {
+public class fragment_dialogbox extends DialogFragment {
 
-    private TextView textView_baslik, textView_tarih, textView_icerik;
-    private RecyclerView recyclerView;
-    private dialogbox_adapter adapter;
-    private String URL_LINKI, haber_linki;
-
+    private WebView webView;
     private ProgressBar progressBar;
-
-
-    private String okul_sitesi;
+    private String URL_LINKI;
 
     public fragment_dialogbox() {
 
@@ -41,62 +28,55 @@ public class fragment_dialogbox extends DialogFragment implements interface_dial
 
     public fragment_dialogbox(String URL_LINKI) {
         this.URL_LINKI = URL_LINKI;
-        statik_class.URL_LINKI=URL_LINKI;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Dialog'un dışına basınca kapanmasını sağla
+        setCancelable(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialogbox, container, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialogbox_webview, container, false);
 
-
-        okul_sitesi = getResources().getString(R.string.okul_sitesi);
-
-        new async_dialog(this,getContext()).execute(URL_LINKI, okul_sitesi);
-
-        textView_baslik = view.findViewById(R.id.dialogbox_baslik);
-        textView_tarih = view.findViewById(R.id.dialogbox_tarih);
-        textView_icerik = view.findViewById(R.id.dialogbox_icerik);
+        webView = view.findViewById(R.id.dialogbox_webview);
         progressBar = view.findViewById(R.id.dialog_progress);
-        progressBar.setVisibility(View.VISIBLE);
 
-        recyclerView = view.findViewById(R.id.dialogbox_recycleview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
 
-        textView_icerik.setOnClickListener(new View.OnClickListener() {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(haber_linki));
-                startActivity(i);
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
+        if (URL_LINKI != null && !URL_LINKI.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+            webView.loadUrl(URL_LINKI);
+        }
 
         return view;
     }
 
     @Override
-    public void async_sonucu(String haber_basligi, String haber_tarihi, String haber_icerigi, String haber_linki, List<String> list_resim_linkleri) {
-
-        textView_baslik.setText(haber_basligi);
-        textView_tarih.setText(haber_tarihi);
-        textView_icerik.setText(haber_icerigi);
-        adapter = new dialogbox_adapter(list_resim_linkleri, getContext());
-        recyclerView.setAdapter(adapter);
-
-        this.haber_linki = haber_linki;
-
-        progressBar.setVisibility(View.INVISIBLE);
-
-
-        if (haber_linki != null && !haber_linki.equals("") && !haber_linki.contains("http")) {
-            this.haber_linki = okul_sitesi + haber_linki;
-
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            // Ekran genişliğinin %90'ını al
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+            // Yükseklik wrap_content olsun
+            getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.MATCH_PARENT);
         }
-
     }
-
-
 }
 

@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.broadcast_receiver.NetworkChangeReceiver;
 import com.mymoonapplab.oxfirat.constant.statik_class;
-import com.mymoonapplab.oxfirat.fragment.fragment_akademik_takvim;
 import com.mymoonapplab.oxfirat.fragment.fragment_duyurular;
 import com.mymoonapplab.oxfirat.fragment.fragment_etkinlik;
 import com.mymoonapplab.oxfirat.fragment.fragment_haberler;
@@ -127,14 +126,6 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
                 Log.d("SÜlo", String.valueOf(groupPosition));
 
                 if (groupPosition == 0) {
-                    fragment = new fragment_akademik_takvim();
-                    str_tag = "akademik";
-
-                    statik_class.PDF_ISMI = "akademiktakvim_" + (childPosition + 1);
-
-                    fragment_change(fragment, str_tag);
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                } else if (groupPosition == 1) {
 
                     fragment = new fragment_telefon_genel();
                     str_tag = "telefon_numaralari";
@@ -166,13 +157,6 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
                 is_first_time = true;
                 frag_ekranda_gozuken = frag_new;
 
-            } else if (fragment_tag.equals("akademik") && frag_x != null) {
-
-                frag_x.onDestroy();
-                tr.add(R.id.content_main_frame_layout, frag_new, fragment_tag)
-                        .hide(this.frag_ekranda_gozuken);
-                frag_ekranda_gozuken = frag_new;
-
             } else if (fragment_tag.equals("telefon_numaralari") && frag_x != null) {
 
                 frag_x.onDestroy();
@@ -201,28 +185,6 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
 
     private void expandable_listview() {
 
-        List<model_menu> childModelsList = new ArrayList<>();
-
-        model_menu menuModel = new model_menu("Akademik Takvim", true, true);
-        list_parent.add(menuModel);
-
-        childModelsList.add(new model_menu("1- LİSANS/ ÖNLİSANS GENEL AKADEMİK_TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("2- TIP FAKÜLTESİ AKADEMİK TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("3- DİŞ HEKİMLİĞİ FAKÜLTESİ AKADEMİK TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("4- 2019 YAZ OKULU AKADEMİK TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("5- 2020 YAZ OKULU AKADEMİK TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("6- LİSANSÜSTÜ AKADEMİK TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("7- KURUM İÇİ YATAY GEÇİŞ (ÖNLİSANS- LİSANS) BAŞVURU VE KABUL TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("8- KURUMLARARASI YATAY GEÇİŞ (ÖNLİSANS-LİSANS) BAŞVURU VE KABUL TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("9- MERKEZİ YERLEŞTİRME PUANI (ÖSYM) İLE YATAY GEÇİŞ", false, false));
-        childModelsList.add(new model_menu("10- ÇİFT ANADAL VE YANDAL PROGRAMI BAŞVURU VE KABUL TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("11- ÖZEL ÖĞRENCİ (ÖNLİSANS-LİSANS) BAŞVURU VE KABUL TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("12- EK SINAV TAKVİMİ", false, false));
-        childModelsList.add(new model_menu("13- RESMİ TATİLLER", false, false));
-
-        list_child.put(menuModel, childModelsList);
-
-
         model_menu new_menu = new model_menu("Telefon Numaraları", true, true);
         list_parent.add(new_menu);
 
@@ -245,16 +207,11 @@ public class HomeActivity extends AppCompatActivity implements interface_receive
             fragment = new fragment_haberler();
             str_tag = "frag_haber";
             fragment_change(fragment, str_tag);
-
         } else {
             Toast.makeText(this, "İnternet bağlantısını kontrol edin", Toast.LENGTH_SHORT).show();
             this.is_connected_network = false;
 
         }
-    }
-
-    @Override
-    public void onBackPressed() {
     }
 
     @Override

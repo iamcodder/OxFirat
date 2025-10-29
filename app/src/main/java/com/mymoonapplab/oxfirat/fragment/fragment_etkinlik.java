@@ -2,6 +2,7 @@ package com.mymoonapplab.oxfirat.fragment;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,13 @@ import android.widget.Toast;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.mymoonapplab.oxfirat.R;
-import com.mymoonapplab.oxfirat.async_task.async_etkinlik;
 import com.mymoonapplab.oxfirat.adapter.fragment_etkinlik_adapter;
-import com.mymoonapplab.oxfirat.interfacee.interface_etkinlik;
+import com.mymoonapplab.oxfirat.model.ApiResponse;
+import com.mymoonapplab.oxfirat.model.Event;
+import com.mymoonapplab.oxfirat.network.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,9 +25,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class fragment_etkinlik extends Fragment implements interface_etkinlik {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private ArrayList<String> list_etkinlik_tarih,list_etkinlik_baslik,list_etkinlik_link;
+public class fragment_etkinlik extends Fragment {
+
+    private static final String TAG = "fragment_etkinlik";
     private RecyclerView recyclerView;
     private fragment_etkinlik_adapter adapter;
     private ProgressBar progressBar;
@@ -33,7 +40,11 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
 
     private View rootView;
 
-    public static int sayfa_sayisi;
+    private ArrayList<Event> eventList;
+    private int currentOffset = 0;
+    private final int LIMIT = 10;
+    private boolean isLoading = false;
+
     private SwipeRefreshLayout mPullToRefresh;
 
 
@@ -41,25 +52,22 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_etkinlik, container, false);
 
-        list_etkinlik_tarih = new ArrayList<>();
-        list_etkinlik_link = new ArrayList<>();
-        list_etkinlik_baslik = new ArrayList<>();
-        sayfa_sayisi = 1;
+        eventList = new ArrayList<>();
+        currentOffset = 0;
 
-        progressBar=rootView.findViewById(R.id.progress);
+        progressBar = rootView.findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
-
-        gorev_calistir();
 
         recycler_islemleri();
 
-        mPullToRefresh=rootView.findViewById(R.id.pullToRefresh);
+        loadEvents();
+
+        mPullToRefresh = rootView.findViewById(R.id.pullToRefresh);
 
         mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                gorev_calistir();
-                Toast.makeText(getContext(),"Güncelleniyor",Toast.LENGTH_SHORT).show();
+                refreshEvents();
             }
         });
 
@@ -69,55 +77,84 @@ public class fragment_etkinlik extends Fragment implements interface_etkinlik {
 
     private void recycler_islemleri() {
         recyclerView = rootView.findViewById(R.id.fragment_etkinlik_recyclerview);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int toplam_etkinlik_sayisi = layoutManager.getItemCount();
+                son_etkinlik_konumu = layoutManager.findLastVisibleItemPosition();
 
-                int toplam_etkinlik_sayisi = 0;
-                son_etkinlik_konumu = 0;
-
-                if (manager != null) {
-                    toplam_etkinlik_sayisi = manager.getItemCount();
-                    son_etkinlik_konumu = manager.findLastVisibleItemPosition();
+                if (!isLoading && son_etkinlik_konumu + 1 == toplam_etkinlik_sayisi) {
+                    loadEvents();
                 }
-
-                if (son_etkinlik_konumu + 1 == toplam_etkinlik_sayisi) {
-                    gorev_calistir();
-                }
-
-
             }
         });
     }
 
 
-    private void gorev_calistir() {
-        new async_etkinlik(this,getContext()).execute(getResources().getString(R.string.etkinlik_sitesi),
-                getResources().getString(R.string.okul_sitesi));
+    private void loadEvents() {
+        if (isLoading) return;
+
+        isLoading = true;
         progressBar.setVisibility(View.VISIBLE);
+
+        RetrofitClient.getInstance().getApiService()
+                .getEvents("tr", currentOffset, LIMIT)
+                .enqueue(new Callback<ApiResponse<Event>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<Event>> call, Response<ApiResponse<Event>> response) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        mPullToRefresh.setRefreshing(false);
+                        isLoading = false;
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            List<Event> fetchedEvents = response.body().getSuccess();
+                            if (fetchedEvents != null && !fetchedEvents.isEmpty()) {
+                                int positionStart = eventList.size();
+                                eventList.addAll(fetchedEvents);
+
+                                if (adapter == null) {
+                                    adapter = new fragment_etkinlik_adapter(
+                                            getContext(), eventList, getFragmentManager());
+                                    recyclerView.setAdapter(adapter);
+                                } else {
+                                    adapter.notifyItemRangeInserted(positionStart, fetchedEvents.size());
+                                }
+
+                                currentOffset += LIMIT;
+                            }
+                        } else {
+                            if (getContext() != null) {
+                                Toast.makeText(getContext(), "Etkinlikler yüklenirken hata oluştu", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<Event>> call, Throwable t) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        mPullToRefresh.setRefreshing(false);
+                        isLoading = false;
+
+                        Log.e(TAG, "Error loading events", t);
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Bağlantı hatası: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 
-    @Override
-    public void etkinlik_bilgisi_aktarimi(ArrayList<String> etkinlik_basligi, ArrayList<String> etkinlik_tarihi, ArrayList<String> etkinlik_linki) {
-
-        list_etkinlik_baslik.addAll(etkinlik_basligi);
-        list_etkinlik_tarih.addAll(etkinlik_tarihi);
-        list_etkinlik_link.addAll(etkinlik_tarihi);
-
-        adapter=new fragment_etkinlik_adapter(getContext(),etkinlik_tarihi,etkinlik_basligi,etkinlik_linki,getFragmentManager());
-        recyclerView.setAdapter(adapter);
-        recyclerView.scrollToPosition(son_etkinlik_konumu - 2);
-        recyclerView.scheduleLayoutAnimation();
-        sayfa_sayisi++;
-        progressBar.setVisibility(View.INVISIBLE);
-
-        mPullToRefresh.setRefreshing(false);
-
+    private void refreshEvents() {
+        currentOffset = 0;
+        eventList.clear();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+        loadEvents();
     }
 }

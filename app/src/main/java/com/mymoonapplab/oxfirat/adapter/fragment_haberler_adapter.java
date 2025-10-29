@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mymoonapplab.oxfirat.R;
 import com.mymoonapplab.oxfirat.fragment.fragment_dialogbox;
+import com.mymoonapplab.oxfirat.model.News;
 
 import java.util.List;
 
@@ -30,20 +31,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_haberler_adapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> haber_baslik;
-    private List<String> haber_resim;
-    private List<String> haber_linki;
+    private List<News> newsList;
     private FragmentManager manager;
 
-
-    public fragment_haberler_adapter(Context mContext, List<String> haber_baslik, List<String> haber_resim, List<String> haber_linki, FragmentManager manager) {
+    public fragment_haberler_adapter(Context mContext, List<News> newsList, FragmentManager manager) {
         this.mContext = mContext;
-        this.haber_baslik = haber_baslik;
-        this.haber_resim = haber_resim;
-        this.haber_linki = haber_linki;
+        this.newsList = newsList;
         this.manager = manager;
-
-
     }
 
     @NonNull
@@ -58,14 +52,30 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
+        News news = newsList.get(i);
 
-        String link = mContext.getResources().getString(R.string.okul_sitesi);
+        viewHolder.mTextview.setText(news.getTitle());
 
-        viewHolder.mTextview.setText(haber_baslik.get(i));
+        // İçeriği HTML taglerinden temizleyip göster
+        String content = news.getContent();
+        if (content != null && !content.isEmpty()) {
+            // HTML taglerini kaldır
+            String plainText = android.text.Html.fromHtml(content, android.text.Html.FROM_HTML_MODE_LEGACY).toString().trim();
+            viewHolder.mContentTextview.setText(plainText);
+            viewHolder.mContentTextview.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.mContentTextview.setVisibility(View.GONE);
+        }
+
         viewHolder.mProgressBar.setVisibility(View.VISIBLE);
 
+        // Görsel URL'ini oluştur
+        String imageUrl = "https://www.firat.edu.tr" + news.getContentImage();
+        final String defaultImage = "https://www.firat.edu.tr/front/images/about/index1/12.jpg";
+
         Glide.with(mContext)
-                .load(link + haber_resim.get(i))
+                .load(imageUrl)
+                .error(Glide.with(mContext).load(defaultImage))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -82,37 +92,34 @@ public class fragment_haberler_adapter extends RecyclerView.Adapter<fragment_hab
                 })
                 .into(viewHolder.mImageview);
 
-
         viewHolder.mCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                fragment_dialogbox fragment_dialogbox = new fragment_dialogbox(haber_linki.get(i));
-
+                fragment_dialogbox fragment_dialogbox = new fragment_dialogbox(news.getContentPageUrl());
                 fragment_dialogbox.show(manager, "dialogbox_showed");
-
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return haber_baslik.size();
+        return newsList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardview;
         private ImageView mImageview;
         private TextView mTextview;
+        private TextView mContentTextview;
         private ProgressBar mProgressBar;
-
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             mCardview = itemView.findViewById(R.id.fragment_haberler_carview_design);
             mImageview = itemView.findViewById(R.id.cardView_resim);
             mTextview = itemView.findViewById(R.id.cardView_baslik);
-            mProgressBar=itemView.findViewById(R.id.fragment_haberler_carview_design_progress);
+            mContentTextview = itemView.findViewById(R.id.cardView_icerik);
+            mProgressBar = itemView.findViewById(R.id.fragment_haberler_carview_design_progress);
         }
     }
 }
