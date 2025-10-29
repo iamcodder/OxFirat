@@ -10,7 +10,7 @@ android {
         applicationId "com.mymoonapplab.oxfirat"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 31
+        versionCode 32
         versionName "3.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
